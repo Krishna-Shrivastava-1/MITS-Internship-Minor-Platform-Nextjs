@@ -47,7 +47,7 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
             const resp = await axios.get(`/api/nocrequests/getnocrequestforcoordinator${nameOfApi}?assignedDepartment=${coordinatorDepartment}&page=${page}&limit=${limit}`)
             if (resp?.data?.success) {
                 setloading(false)
-                console.log(resp?.data)
+                // console.log(resp?.data)
                 settotalPages(Math.ceil((resp?.data?.countOfNocRequests) / limit))
                 setnocRequestsDataPending(resp?.data?.getNocRequestArePending)
 

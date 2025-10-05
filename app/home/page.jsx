@@ -8,7 +8,7 @@ import React from 'react'
 
 const page = () => {
     const {fetchUserByIdState,userIdFromToken} = DataProviderContextAPI()
-    console.log(fetchUserByIdState)
+    // console.log(fetchUserByIdState)
   return (
     <div>
       Home

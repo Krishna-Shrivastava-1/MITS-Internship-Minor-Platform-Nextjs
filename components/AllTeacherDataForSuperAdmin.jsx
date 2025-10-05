@@ -31,14 +31,14 @@ const AllTeacherDataForSuperAdmin = ({ allTeacherDataProp }) => {
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   // console.log(newTeacherName)
   // console.log(newDepartmentValue)
-  console.log(newassignedNOCDepartment)
+  // console.log(newassignedNOCDepartment)
   useEffect(() => {
     if(Array.isArray(allTeacherDataProp) && allTeacherDataProp.length > 0){
       setAllTeacherData(allTeacherDataProp ||[])
     }
   }, [allTeacherDataProp])
   
-  console.log(allTeacherData)
+  // console.log(allTeacherData)
   const openDialog = (teacher) => {
   setSelectedTeacher(teacher);
   setnewTeacherName(teacher.name);
@@ -111,7 +111,7 @@ const AllTeacherDataForSuperAdmin = ({ allTeacherDataProp }) => {
           {
             allTeacherData?.map((e) => (
               <TableRow key={e?._id}>
-                {console.log(e)}
+                {/* {console.log(e)} */}
                 <TableCell className="font-semibold">{e?.name}</TableCell>
                 <TableCell>{e?.department}</TableCell>
                 <TableCell>{e?.assignedDepartmentForNocRequest || 'Not Assigned'}</TableCell>

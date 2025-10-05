@@ -9,7 +9,7 @@ import { Loader2 } from 'lucide-react'
 import axios from 'axios'
 const page = () => {
   const { fetchUserByIdState } = DataProviderContextAPI()
-  console.log(fetchUserByIdState)
+  // console.log(fetchUserByIdState)
   const [logger, setlogger] = useState('SignUp')
   const [name, setname] = useState('')
   const [enrollmentNumber, setenrollmentNumber] = useState('')
@@ -35,7 +35,7 @@ const [role, setrole] = useState("student")
       if (resp?.data?.success) {
         // toast.success(resp?.data?.message)
         setloading(false)
-        console.log((resp?.data?.message))
+        // console.log((resp?.data?.message))
       setname('')
       setemail('')
       setpassword('')
@@ -57,8 +57,8 @@ const [role, setrole] = useState("student")
     setrole(e)
 
   }
-  console.log(role)
-  console.log(department)
+  // console.log(role)
+  // console.log(department)
   return (
     <div>
       <h1>If you are creating teacher account no need to enter enrollment number.</h1>

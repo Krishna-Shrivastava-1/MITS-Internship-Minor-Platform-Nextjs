@@ -29,13 +29,13 @@ const page = () => {
 
             if (!resp?.data?.success) {
                 toast.error(resp?.data?.message)
-                console.log(resp?.data?.message)
+                // console.log(resp?.data?.message)
 
             }
             if (resp?.data?.success) {
                 toast.success(resp?.data?.message)
                 setloading(false)
-                console.log((resp?.data?.message))
+                // console.log((resp?.data?.message))
                 setlogger('Login')
 
             }
@@ -57,27 +57,27 @@ const page = () => {
             if (!resp?.data?.success) {
                 setloading(false)
                 toast.error(resp?.data?.message)
-                console.log((resp?.data?.message))
+                // console.log((resp?.data?.message))
 
             }
             // console.log(resp?.data?.role)
             if (resp?.data?.success && resp?.data?.role === 'superadmin') {
                 setloading(false)
                 toast.success(resp?.data?.message)
-                console.log(resp?.data?.message)
+                // console.log(resp?.data?.message)
                  window.location.href = '/superadmin'
 
                 // setfetchedUserData(resp?.data)
             } else if (resp?.data?.success && resp?.data?.role === 'teacher') {
                 setloading(false)
                 toast.success(resp?.data?.message)
-                console.log(resp?.data?.message)
+                // console.log(resp?.data?.message)
                 // router.push('/admin')
                 window.location.href = '/admin'
             } else if (resp?.data?.success && resp?.data?.role === 'student') {
                 setloading(false)
                 toast.success(resp?.data?.message)
-                console.log(resp?.data?.message)
+                // console.log(resp?.data?.message)
                 window.location.href = '/home'
             }
 

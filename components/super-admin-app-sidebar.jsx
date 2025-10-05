@@ -85,18 +85,18 @@ const {fetchUserByIdState} = DataProviderContextAPI()
       icon: UserRoundPlus,
     
     },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
+    // {
+    //   title: "Documentation",
+    //   url: "#",
+    //   icon: BookOpen,
     
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
+    // },
+    // {
+    //   title: "Settings",
+    //   url: "#",
+    //   icon: Settings2,
      
-    },
+    // },
   ]
 
 }
