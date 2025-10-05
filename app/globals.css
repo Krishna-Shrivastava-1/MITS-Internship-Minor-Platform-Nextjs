@@ -163,4 +163,18 @@ mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, transparent 100%);
 
   z-index: 0;
 }
+.backbanForUnauthorized {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: 
+    linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0,0,0,0) 90%), /* dark bottom overlay */
+    url('https://assets.nflxext.com/ffe/siteui/pages/errors/bg-lost-in-space.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: black;
+
+  z-index: 0;
+}
 
