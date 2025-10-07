@@ -28,7 +28,6 @@ export async function GET(req) {
     );
     const profile = await response.json();
     const { email, name, picture, id } = profile;
-
     // Connect DB
     await database();
 

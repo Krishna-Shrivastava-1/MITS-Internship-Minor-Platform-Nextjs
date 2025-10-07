@@ -36,7 +36,7 @@ const page = () => {
   const [loading, setloading] = useState(false)
    const [file, setFile] = useState(null)
     const [uploading, setUploading] = useState(false)
-    const [url, setUrl] = useState(null)
+
   useEffect(() => {
     if (fetchUserByIdState?.department) {
       setdepartment(fetchUserByIdState?.department)
@@ -130,11 +130,12 @@ const page = () => {
         recieverDesignation
       }
       const resp = await axios.post(`/api/student/createnocrequest/${userIdFromToken?.id}`, payload)
-      console.log('Submitting:', payload)
+      // console.log('Submitting:', payload)
       if (resp?.data?.success) {
         setloading(false)
-        console.log(resp?.data?.message)
-        console.log(resp?.data)
+        toast.success(resp?.data?.message)
+        // console.log(resp?.data?.message)
+        // console.log(resp?.data)
         setCompanyName('')
         setYearOfStudy('')
         setSemester('')
@@ -155,6 +156,7 @@ const page = () => {
         setFile(null)
       }
     } catch (error) {
+      toast.error("Error in Request Generation")
       console.log(error)
       setloading(false)
     }

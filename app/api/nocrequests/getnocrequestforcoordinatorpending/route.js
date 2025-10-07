@@ -17,7 +17,7 @@ export async function GET(req,res) {
             })
         }
         const countOfNocRequests = await nocModel.countDocuments({department:assignedDepartment,teacherAction:'Pending'})
-        const getNocRequestArePending = await nocModel.find({department:assignedDepartment,teacherAction:'Pending'}).sort({createdAt:-1}).populate({path:'student',select:'-password -email -enrollmentNumber   -internshipDetails -nocRequests -role'}).skip((page - 1) * limit).limit(limit)
+        const getNocRequestArePending = await nocModel.find({department:assignedDepartment,teacherAction:'Pending'}).sort({updatedAt:-1}).populate({path:'student',select:'-password -email -enrollmentNumber   -internshipDetails -nocRequests -role'}).skip((page - 1) * limit).limit(limit)
         if(!getNocRequestArePending){
             return NextResponse.json({
                 message:'No NOC Request are here',

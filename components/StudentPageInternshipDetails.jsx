@@ -59,6 +59,8 @@ const StudentPageInternshipDetails = ({ studentId }) => {
                         <TableHead>Semester</TableHead>
                         <TableHead>Session Half</TableHead>
                         <TableHead>Session Year</TableHead>
+                        <TableHead>Offer Letter</TableHead>
+                        <TableHead>Completion Certificate</TableHead>
 
                     </TableRow>
                 </TableHeader>
@@ -85,6 +87,39 @@ const StudentPageInternshipDetails = ({ studentId }) => {
                                 <TableCell>{e?.semester}</TableCell>
                                 <TableCell>{e?.sessionHalf}</TableCell>
                                 <TableCell>{e?.sessionYear}</TableCell>
+                                <TableCell>
+                                    {e?.offerLetter ? (
+                                        <a
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            href={e?.offerLetter}
+                                            className="text-blue-600 font-semibold text-md cursor-pointer select-none hover:underline hover:text-blue-500"
+                                        >
+                                            View
+                                        </a>
+                                    ) : (
+                                        <span className="text-gray-400 font-semibold text-md select-none cursor-not-allowed">
+                                            No File
+                                        </span>
+                                    )}
+                                </TableCell>
+                                <TableCell>
+                                    {e?.completionCertificate ? (
+                                        <a
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            href={e?.completionCertificate}
+                                            className="text-blue-600 font-semibold text-md cursor-pointer select-none hover:underline hover:text-blue-500"
+                                        >
+                                            View
+                                        </a>
+                                    ) : (
+                                        <span className="text-gray-400 font-semibold text-md select-none cursor-not-allowed">
+                                            No File
+                                        </span>
+                                    )}
+                                </TableCell>
+
                             </TableRow>
                         ))
                     ) : (

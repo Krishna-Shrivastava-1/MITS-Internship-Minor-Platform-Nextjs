@@ -53,7 +53,7 @@ const AllTeacherDataForSuperAdmin = ({ allTeacherDataProp }) => {
       newDepartmentValue === selectedTeacher?.department &&
       newassignedNOCDepartment === (selectedTeacher?.assignedDepartmentForNocRequest || "")
     ) {
-      console.log('nope')
+      // console.log('nope')
       // toast("N")
        toast("No changes detected — nothing to update.", {
     icon: 'ℹ️',
@@ -81,6 +81,7 @@ const AllTeacherDataForSuperAdmin = ({ allTeacherDataProp }) => {
         name: newTeacherName
       })
         if(!resp?.data?.success){
+          toast.error(resp?.data?.message)
         console.log(resp?.data?.message)
       
         setdialogueOpen(false)
@@ -115,37 +116,65 @@ const AllTeacherDataForSuperAdmin = ({ allTeacherDataProp }) => {
                 <TableCell className="font-semibold">{e?.name}</TableCell>
                 <TableCell>{e?.department}</TableCell>
                 <TableCell>{e?.assignedDepartmentForNocRequest || 'Not Assigned'}</TableCell>
-                <TableCell>
-                 <Dialog open={dialogueOpen} onOpenChange={setdialogueOpen}>
-  <DialogTrigger onClick={() => openDialog(e)}><span className='bg-neutral-950 p-2 rounded-md cursor-pointer select-none text-white font-semibold hover:bg-neutral-900'>Actions</span></DialogTrigger>
-  <DialogContent>
-    {selectedTeacher && (
-      <DialogHeader>
-        <DialogTitle>Assign NOC Coordinator</DialogTitle>
-        <h2>Teacher Name</h2>
-        <Input value={newTeacherName} onChange={(e) => setnewTeacherName(e.target.value)} />
+             <TableCell>
+  <span
+    onClick={() => openDialog(e)}
+    className="bg-neutral-950 p-2 rounded-md cursor-pointer select-none text-white font-semibold hover:bg-neutral-900"
+  >
+    Actions
+  </span>
 
-        <h2>Teacher Department</h2>
-        <DepartmentSelectorforStudentRegister
-          initialDepartment={newDepartmentValue}
-          getDepartmentValue={setnewDepartmentValue}
-          settheme={'light'}
-        />
+  {dialogueOpen && (
+    <div  onClick={() => setdialogueOpen(false)} className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+      <div onClick={(e)=>e.stopPropagation()} className="bg-white dark:bg-neutral-900 p-6 rounded-xl shadow-xl w-[90%] max-w-md border border-neutral-200 dark:border-neutral-800">
+        <h2 className="text-lg font-semibold mb-3">Assign NOC Coordinator</h2>
 
-        <h2>Assigned NOC Department</h2>
-        <DepartmentSelectorforStudentRegister
-          initialDepartment={newassignedNOCDepartment}
-          getDepartmentValue={setnewassignedNOCDepartment}
-          settheme={'light'}
-        />
+        <div className="space-y-3">
+          <div>
+            <h3 className="font-medium text-sm mb-1">Teacher Name</h3>
+            <Input
+              value={newTeacherName}
+              onChange={(e) => setnewTeacherName(e.target.value)}
+            />
+          </div>
 
-        <Button className='cursor-pointer select-none font-semibold' onClick={() => updateTeacher(selectedTeacher._id)}>Update</Button>
-      </DialogHeader>
-    )}
-  </DialogContent>
-</Dialog>
+          <div>
+            <h3 className="font-medium text-sm mb-1">Teacher Department</h3>
+            <DepartmentSelectorforStudentRegister
+              initialDepartment={newDepartmentValue}
+              getDepartmentValue={setnewDepartmentValue}
+              settheme={"light"}
+            />
+          </div>
 
-                </TableCell>
+          <div>
+            <h3 className="font-medium text-sm mb-1">Assigned NOC Department</h3>
+            <DepartmentSelectorforStudentRegister
+              initialDepartment={newassignedNOCDepartment}
+              getDepartmentValue={setnewassignedNOCDepartment}
+              settheme={"light"}
+            />
+          </div>
+
+          <div className="flex justify-end mt-5 gap-3">
+            <Button
+              variant="secondary"
+              onClick={() => setdialogueOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => updateTeacher(selectedTeacher._id)}
+            >
+              Update
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</TableCell>
+
 
               </TableRow>
             ))

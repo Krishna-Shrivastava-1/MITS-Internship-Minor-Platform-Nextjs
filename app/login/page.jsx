@@ -29,6 +29,7 @@ const page = () => {
 
             if (!resp?.data?.success) {
                 toast.error(resp?.data?.message)
+                 setloading(false)
                 // console.log(resp?.data?.message)
 
             }
@@ -41,6 +42,7 @@ const page = () => {
             }
         } catch (error) {
             console.log(error.message)
+             setloading(false)
         }
     }
 
@@ -83,6 +85,7 @@ const page = () => {
 
         } catch (error) {
             console.log(error.message)
+             setloading(false)
         }
     }
 
@@ -102,7 +105,7 @@ const page = () => {
             </div>
             <div className='backban w-full h-screen bg-black flex items-center justify-center text-white '>
 
-                <div className='z-30 md:w-[60%] w-[90%] text-center '>
+                <div className='z-30 md:w-[60%] w-[95%] text-center '>
                     <div className='w-full flex items-center justify-center ' style={{ margin: '4px' }}>
                         <div style={{ padding: '10px' }} className='md:w-[50%] w-[90%] bg-black/70  shadow-xl shadow-black rounded-sm backdrop-blur-lg relative'>
                             {

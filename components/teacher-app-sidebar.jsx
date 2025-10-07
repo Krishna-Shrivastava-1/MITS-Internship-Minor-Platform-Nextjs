@@ -110,10 +110,10 @@ const {fetchUserByIdState} = DataProviderContextAPI()
 }
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className='bg-[#f0f4f9]'>
+      <SidebarHeader className='bg-[#f0f4f9] '>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
-      <SidebarContent className='bg-[#f0f4f9]'>
+      <SidebarContent className='bg-[#f0f4f9] '>
         <NavMain items={data.navMain} />
       
       </SidebarContent>

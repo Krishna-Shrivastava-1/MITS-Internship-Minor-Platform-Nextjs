@@ -5,6 +5,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button'
 import axios from 'axios'
 import { DataProviderContextAPI } from '@/components/ContextApi'
+import toast from 'react-hot-toast'
+import { supabase } from '@/lib/supabase'
+import { Spinner } from '@/components/ui/spinner'
 const page = () => {
   const { userIdFromToken, fetchUserByIdState } = DataProviderContextAPI()
   // console.log(fetchUserByIdState)
@@ -24,15 +27,124 @@ const page = () => {
   const [role, setrole] = useState('')
   const [jobDescription, setjobDescription] = useState('')
   const [department, setdepartment] = useState(fetchUserByIdState?.department || '')
+     const [offerFile, setofferFile] = useState(null)
+     const [completionCertificateFile, setcompletionCertificateFile] = useState(null)
+     const [loading, setloading] = useState(false)
+   const handleOfferLetterChange = (e)=>{
+    setofferFile(e?.target?.files[0])
+
+  }
+   const handleCompletionCertificateChange = (e)=>{
+
+    setcompletionCertificateFile(e?.target?.files[0])
+  }
+
+
+
   useEffect(() => {
     if (fetchUserByIdState?.department) {
       setdepartment(fetchUserByIdState?.department)
     }
   }, [fetchUserByIdState])
 
+
+// Offer Letter Upload Function
+    const handleOfferLetterUpload = async () => {
+    if (!offerFile) {
+      toast.error('Please select a PDF first')
+      return
+    }
+
+   
+
+    const filePath = `pdfs/${Date.now()}_${offerFile.name}`
+
+    const { data, error } = await supabase.storage
+      .from('internshipofferletters') //  bucket name
+      .upload(filePath, offerFile)
+
+    
+
+    if (error) {
+      console.error(error)
+      toast.error('Upload failed')
+      return
+    }
+
+    // Get public URL
+    const { data: publicUrlData } = supabase.storage
+      .from('internshipofferletters')
+      .getPublicUrl(filePath)
+
+    // setOfferLetter(publicUrlData.publicUrl)
+    // console.log('offer leter url state ',publicUrlData.publicUrl)
+    return publicUrlData.publicUrl
+    // toast.success('File uploaded successfully!')
+  }
+// Completion Letter Upload Function
+    const handleCompletionLetterUpload = async () => {
+    if (!completionCertificateFile) {
+      toast.error('Please select a PDF first')
+      return
+    }
+
+   
+
+    const filePath = `pdfs/${Date.now()}_${completionCertificateFile.name}`
+
+    const { data, error } = await supabase.storage
+      .from('internshipcompletionletters') //  bucket name
+      .upload(filePath, completionCertificateFile)
+
+    
+
+    if (error) {
+      console.error(error)
+      toast.error('Upload failed')
+      return
+    }
+
+    // Get public URL
+    const { data: publicUrlData } = supabase.storage
+      .from('internshipcompletionletters')
+      .getPublicUrl(filePath)
+
+    // setOfferLetter(publicUrlData.publicUrl)
+    // console.log('offer leter url state ',publicUrlData.publicUrl)
+    return publicUrlData.publicUrl
+    // toast.success('File uploaded successfully!')
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+        setloading(true)
     try {
+       if(!offerFile){
+      toast.error("Offer Letter is Not Selected");
+      setloading(false);
+      return;
+    }
+       if(!completionCertificateFile){
+      toast.error("Completion Certificate is Not Selected");
+      setloading(false);
+      return;
+    }
+
+    // Upload file and get URL directly
+    const uploadedOfferLetterUrl = await handleOfferLetterUpload();
+const uploadedCompletionCertificateUrl = await handleCompletionLetterUpload()
+      if (!uploadedOfferLetterUrl) {
+      toast.error("Offer Letter File Upload failed");
+      setloading(false);
+      return;
+    }
+      if (!uploadedCompletionCertificateUrl) {
+      toast.error("Completion Letter File Upload failed");
+      setloading(false);
+      return;
+    }
+
       const validSemesters = {
         1: [1, 2],
         2: [3, 4],
@@ -54,18 +166,20 @@ const page = () => {
         startDate,
         endDate,
         stipend: Number(stipend),
-        offerLetter,
-        completionCertificate,
+        offerLetter:uploadedOfferLetterUrl,
+        completionCertificate:uploadedCompletionCertificateUrl,
         workType,
         role,
         jobDescription,
         department
       }
       const resp = await axios.post(`/api/student/createinternship/${userIdFromToken?.id}`, payload)
-      console.log('Submitting:', payload)
+      // console.log('Submitting:', payload)
+       setloading(false);
       if (resp?.data?.success) {
-        console.log(resp?.data?.message)
-        console.log(resp?.data)
+        toast.success(resp?.data?.message)
+        // console.log(resp?.data?.message)
+        // console.log(resp?.data)
         setCompanyName('')
         setYearOfStudy('')
         setSemester('')
@@ -76,21 +190,24 @@ const page = () => {
         setStartDate('')
         setEndDate('')
         setStipend('')
-        // setOfferLetter('')
-        // setCompletionCertificate('')
+        setOfferLetter('')
+        setCompletionCertificate('')
         setWorkType('')
         setrole('')
         setjobDescription('')
 
       }
     } catch (error) {
+      toast.error("There is some issue but not your fault")
+       setloading(false);
       console.log(error)
     }
   }
   const currentYear = new Date().getFullYear()
   const year = Array.from({ length: 3 }, (_, i) => currentYear - 2 + i)
   return (
-    <div className="max-w-3xl mx-auto p-6 border shadow-xl rounded-md shadow-black my-3 ">
+     <div className="max-w-3xl mx-auto p-6 border shadow-xl rounded-md shadow-black my-3 relative z-10">
+     {loading &&   <div className='w-full absolute top-0 left-0 flex items-center justify-center bg-white/20 h-full'> <Spinner /></div>}
       <h1 className="text-2xl font-bold mb-6">Add Internship Details</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -188,7 +305,14 @@ const page = () => {
           <label>Stipend (in Rs.)</label>
           <Input className='border-black' type="number" value={stipend} onChange={(e) => setStipend(e.target.value)} />
         </div>
-
+<div className='w-fit'>
+          <label>Offer Letter (PDF)</label>
+          <Input  type='file' accept='application/pdf' onChange={handleOfferLetterChange} required />
+        </div>
+<div className='w-fit'>
+          <label>Completion Certificate (PDF)</label>
+          <Input  type='file' accept='application/pdf' onChange={handleCompletionCertificateChange} required />
+        </div>
         {/* <div>
           <label>Offer Letter (URL)</label>
           <Input value={offerLetter} onChange={(e) => setOfferLetter(e.target.value)} required />

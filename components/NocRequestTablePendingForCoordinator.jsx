@@ -38,7 +38,7 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
     const [limit, setlimit] = useState(10)
     const [page, setpage] = useState(1)
     const [totalPages, settotalPages] = useState(1)
-    const [teacherDecision, setteacherDecision] = useState('')
+    const [teacherDecision, setteacherDecision] = useState('Pending')
     const [comment, setcomment] = useState('')
     const [open, setopen] = useState(false)
     // console.log(coordinatorDepartment)
@@ -87,9 +87,29 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
     }
     const handleNocDecision = async (id) => {
         try {
+            if (teacherDecision === 'Pending') {
+                setopen(false)
+                toast("Nothing to update.", {
+                    icon: 'ℹ️',
+                    style: {
+                        border: '1px solid #2563eb',     // blue-600 border
+                        // padding: '14px 16px',
+                        color: '#ffffff',                 // blue-600 text
+                        background: '#04417a',            // white background
+                        fontWeight: 500,
+                        borderRadius: '8px',
+                    },
+                    iconTheme: {
+                        primary: '#2563eb',               // blue icon background
+                        secondary: '#ffffff',             // white icon
+                    },
+                });
+
+                return
+            }
             if ((teacherDecision === 'Reject' || teacherDecision === 'Allow Edit') && (!comment || comment.trim() === '')) {
                 toast.error("You have not added comment");
-                console.log('You have not added comment');
+                // console.log('You have not added comment');
                 return;
             }
 
@@ -99,12 +119,21 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
                 comment
             })
             if (resp?.data) {
-                console.log(resp?.data)
+                // console.log(resp?.data)
+                toast.success(resp?.data?.message)
+                fetchNocRequestArePending()
+                setopen(false)
+            }
+            if (!resp?.data) {
+                // console.log(resp?.data)
+                toast.error("Noc is not Updated")
                 fetchNocRequestArePending()
                 setopen(false)
             }
         } catch (error) {
             console.log(error?.message)
+            toast.error("Felt it is not worked but don't felt it is not you error")
+            setopen(false)
         }
     }
     // console.log(teacherDecision)
@@ -131,6 +160,8 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
                         <TableHead>Semester</TableHead>
                         <TableHead>Session Half</TableHead>
                         <TableHead>Session Year</TableHead>
+                        <TableHead>Created At</TableHead>
+                        <TableHead>Updated At</TableHead>
                         <TableHead>Offer Letter</TableHead>
                         <TableHead>More</TableHead>
 
@@ -164,6 +195,8 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
                                 <TableCell className='text-center'>{e?.semester}</TableCell>
                                 <TableCell>{e?.sessionHalf}</TableCell>
                                 <TableCell>{e?.sessionYear}</TableCell>
+                                <TableCell>{new Date(e?.createdAt).getDate()}/{new Date(e?.createdAt).getMonth() + 1}/{new Date(e?.createdAt).getFullYear()}</TableCell>
+                                <TableCell>{new Date(e?.updatedAt).getDate()}/{new Date(e?.updatedAt).getMonth() + 1}/{new Date(e?.updatedAt).getFullYear()}</TableCell>
                                 <TableCell>
                                     {e?.offerLetter ? (
                                         <a
@@ -192,7 +225,7 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
                                                         <h2>Your Response:</h2>
                                                         <Select value={teacherDecision ? teacherDecision : e?.teacherAction} onValueChange={setteacherDecision}>
                                                             <SelectTrigger >
-                                                                <SelectValue placeholder="Limit" />
+                                                                <SelectValue placeholder="Response" />
                                                             </SelectTrigger>
                                                             <SelectContent >
                                                                 <SelectItem value="Pending">None</SelectItem>

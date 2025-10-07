@@ -137,7 +137,8 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                         nocRequestsDataPending?.map((e, i) => (
                             <TableRow key={e?._id}>
                                 <TableCell>{i + 1}.</TableCell>
-                                <TableCell className="font-bold">{e?.teacherAction}</TableCell>
+                                <TableCell className="font-bold">{e?.teacherAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.teacherAction}</span>  : e?.teacherAction === 'Reject' ? <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.teacherAction}</span> : <span className='text-sky-600 rounded-full px-2 p-1 text-center border border-sky-700 bg-sky-500/20'>{e?.teacherAction}</span>   }</TableCell>
+                              
                                 <TableCell className="font-bold">{e?.enrollmentNumber}</TableCell>
                                 <TableCell className="font-bold">{e?.student?.name}</TableCell>
                                 <TableCell className="font-bold">{e?.companyName}</TableCell>

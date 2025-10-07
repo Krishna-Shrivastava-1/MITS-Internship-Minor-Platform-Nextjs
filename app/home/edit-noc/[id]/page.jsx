@@ -82,52 +82,75 @@ try {
 } catch (error) {
     console.log(error?.message)
 }
-// console.log(offerLetter)
+
   }
   useEffect(() => {
    if(id){
     getNocOldData()
    }
   }, [id])
+  // console.log(offerLetter)
   // console.log(comment)
     const handleChange = (e)=>{
     setFile(e?.target?.files[0])
   }
-    const handleUpload = async () => {
-    if (!file) {
-      toast.error('Please select a PDF first')
-      return
+  const handleUpload = async () => {
+  if (!file) {
+    toast.error('Please select a PDF first');
+    return;
+  }
+
+  setUploading(true);
+
+  try {
+    // Step 1: Delete old file if it exists
+    if (offerLetter) {
+      // Convert public URL to storage path
+      const url = new URL(offerLetter);
+      // Example: https://xyz.supabase.co/storage/v1/object/public/offerletters/pdfs/123.pdf
+      // We want: "pdfs/123.pdf"
+      // console.log('url - ',url)
+      const pathParts = url.pathname.split('/');
+      // console.log('pathParts', pathParts)
+      const filePath = pathParts.slice(6).join('/'); // skip: /storage/v1/object/public/offerletters/
+// console.log('filePath',filePath)
+const { data: list } = await supabase.storage.from('offerletters').list('pdfs')
+// console.log('lists',list) // make sure the file exists exactly at that path
+
+      if (filePath) {
+        const { error: delError } = await supabase.storage
+          .from('offerletters')
+          .remove([filePath]);
+
+        if (delError) console.error('Error deleting old file:', delError);
+      }
     }
 
-    setUploading(true)
+    // Step 2: Upload new file
+    const newFilePath = `pdfs/${Date.now()}_${file.name}`;
+    const { data, error: uploadError } = await supabase.storage
+      .from('offerletters')
+      .upload(newFilePath, file);
 
-    const filePath = `pdfs/${Date.now()}_${file.name}`
-
-    const { data, error } = await supabase.storage
-      .from('offerletters') //  bucket name
-      .upload(filePath, file)
-
-    setUploading(false)
-
-    if (error) {
-      console.error(error)
-      toast.error('Upload failed')
-      return
+    if (uploadError) {
+      // console.error(uploadError);
+      toast.error('Upload failed');
+      return;
     }
 
-    // Get public URL
+    // Step 3: Get public URL
     const { data: publicUrlData } = supabase.storage
       .from('offerletters')
-      .getPublicUrl(filePath)
+      .getPublicUrl(newFilePath);
 
-    // setOfferLetter(publicUrlData.publicUrl)
-    // console.log('offer leter url state ',publicUrlData.publicUrl)
-    return publicUrlData.publicUrl
-    // toast.success('File uploaded successfully!')
+    setOfferLetter(publicUrlData.publicUrl); // update state
+    toast.success('File uploaded successfully!');
+    return publicUrlData.publicUrl;
+  } finally {
+    setUploading(false);
   }
-  // console.log(teacherAction)
-  // console.log(enrollmentNumber)
-//   console.log(teacherAction)
+};
+
 useEffect(() => {
    if(teacherAction&&teacherAction !== 'Allow Edit'){
         router.back()
@@ -188,8 +211,8 @@ useEffect(() => {
     //   console.log('Submitting:', payload)
       if (resp?.data?.success) {
         setloading(false)
-        console.log(resp?.data?.message)
-        console.log(resp?.data)
+        // console.log(resp?.data?.message)
+        // console.log(resp?.data)
         setCompanyName('')
         setYearOfStudy('')
         setSemester('')

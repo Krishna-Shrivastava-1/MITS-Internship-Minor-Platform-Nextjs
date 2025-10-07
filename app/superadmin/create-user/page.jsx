@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Loader2 } from 'lucide-react'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 const page = () => {
   const { fetchUserByIdState } = DataProviderContextAPI()
   // console.log(fetchUserByIdState)
@@ -28,12 +29,13 @@ const [role, setrole] = useState("student")
       // console.log('register - ',resp)
 
       if (!resp?.data?.success) {
-        // toast.error(resp?.data?.message)
-        console.log(resp?.data?.message)
+        toast.error(resp?.data?.message)
+         setloading(false)
+        // console.log(resp?.data?.message)
 
       }
       if (resp?.data?.success) {
-        // toast.success(resp?.data?.message)
+        toast.success(resp?.data?.message)
         setloading(false)
         // console.log((resp?.data?.message))
       setname('')
@@ -44,6 +46,7 @@ const [role, setrole] = useState("student")
       setrole('student')
       }
     } catch (error) {
+       setloading(false)
       console.log(error.message)
     }
   }
