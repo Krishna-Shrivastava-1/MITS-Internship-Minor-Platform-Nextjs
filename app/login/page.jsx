@@ -3,7 +3,7 @@ import { DepartmentSelectorforStudentRegister } from '@/components/DepartmentSel
 import GoogleButton from '@/components/GoogleButton'
 import Navbar from '@/components/Navbar'
 import axios from 'axios'
-import { Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -16,6 +16,7 @@ const page = () => {
     const [password, setpassword] = useState('')
     const [department, setdepartment] = useState('')
     const [loading, setloading] = useState(false)
+      const [showPassword, setShowPassword] = useState(false);
     const router = useRouter()
 
 
@@ -133,11 +134,29 @@ const page = () => {
                                         <h2 className='text-left font-semibold'>Email</h2>
                                         <input required value={email} onChange={(e) => setemail(e.target.value)} placeholder='Email address' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="email" className='outline-none  w-full bg-zinc-900/70 text-white text-lg  focus-within:border border-red-500 rounded-md' />
                                     </div>
+   <div className="relative w-full">
+      <input
+        required
+        value={password}
+        onChange={(e) => setpassword(e.target.value)}
+        placeholder="Password"
+        type={showPassword ? "text" : "password"}
+        style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }}
+        className="outline-none focus-within:border border-red-500 rounded-md w-full bg-zinc-900/70 text-white text-lg"
+      />
 
-                                    <div className='w-full'>
+      {/* Eye button */}
+      <span
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400"
+      >
+        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+      </span>
+    </div>
+                                    {/* <div className='w-full'>
                                         <h2 className='text-left font-semibold'>Password</h2>
                                         <input required value={password} onChange={(e) => setpassword(e.target.value)} placeholder='Password' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="password" className='outline-none focus-within:border border-red-500 rounded-md w-full bg-zinc-900/70 text-white text-lg ' />
-                                    </div>
+                                    </div> */}
                                     {
                                         logger === 'SignUp' &&
                                         <div className='w-full flex items-center justify-start flex-wrap'>

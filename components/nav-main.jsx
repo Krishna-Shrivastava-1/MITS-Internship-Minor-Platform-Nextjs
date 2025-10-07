@@ -38,7 +38,7 @@ export function NavMain({
             <Link href={item?.url} className=''>
               <SidebarMenuButton tooltip={item.title}   className={`hover:cursor-pointer select-none 
       ${pathname === item?.url 
-        ? 'bg-[#c2e7ff] hover:bg-[#b5d7ed] text-[#474747]'  // Active state
+        ? 'bg-[#c2e7ff] hover:bg-[#b5d7ed] text-[#474747] border-l-4 border-sky-600'  // Active state
         : 'bg-transparent text-[#474747] hover:bg-[#dfe3e7]' // Inactive state
       }`}>
                   {item.icon && <item.icon />}
