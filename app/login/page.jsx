@@ -135,6 +135,7 @@ const page = () => {
                                         <input required value={email} onChange={(e) => setemail(e.target.value)} placeholder='Email address' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="email" className='outline-none  w-full bg-zinc-900/70 text-white text-lg  focus-within:border border-red-500 rounded-md' />
                                     </div>
    <div className="relative w-full">
+        <h2 className='text-left font-semibold'>Password</h2>
       <input
         required
         value={password}
@@ -148,7 +149,7 @@ const page = () => {
       {/* Eye button */}
       <span
         onClick={() => setShowPassword(!showPassword)}
-        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400"
+        className="absolute right-3 top-[70%] select-none -translate-y-1/2 cursor-pointer text-gray-400"
       >
         {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
       </span>
