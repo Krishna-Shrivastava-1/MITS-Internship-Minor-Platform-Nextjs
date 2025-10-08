@@ -8,6 +8,7 @@ import { DataProviderContextAPI } from '@/components/ContextApi'
 import toast from 'react-hot-toast'
 import { supabase } from '@/lib/supabase'
 import { Spinner } from '@/components/ui/spinner'
+import { mutate } from 'swr'
 const page = () => {
   const { userIdFromToken, fetchUserByIdState } = DataProviderContextAPI()
   // console.log(fetchUserByIdState)
@@ -178,6 +179,7 @@ const uploadedCompletionCertificateUrl = await handleCompletionLetterUpload()
        setloading(false);
       if (resp?.data?.success) {
         toast.success(resp?.data?.message)
+        mutate(`/api/student/getinternshipdetailsofstudentbyid/${userIdFromToken?.id}`)
         // console.log(resp?.data?.message)
         // console.log(resp?.data)
         setCompanyName('')

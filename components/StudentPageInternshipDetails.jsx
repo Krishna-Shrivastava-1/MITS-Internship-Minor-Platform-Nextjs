@@ -11,34 +11,52 @@ import {
 } from "@/components/ui/table"
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
+import useSWR from 'swr'
+const fetcher = (url) => axios.get(url).then((res) => res.data)
 const StudentPageInternshipDetails = ({ studentId }) => {
     const [internshipData, setinternshipData] = useState([])
     const [loading, setloading] = useState(true)
     // console.log(studentId)
-    const fetchStudentInternshipDetails = async () => {
-        try {
-            if (studentId) {
-                const resp = await axios.get(`/api/student/getinternshipdetailsofstudentbyid/${studentId}`)
-                if (resp?.data?.success) {
-                    setloading(false)
-                    setinternshipData(resp?.data?.internships)
 
-                }
-                if (!resp?.data?.success) {
-                    setinternshipData(resp?.data?.message)
-                    setloading(false)
-                }
-            }
-        } catch (error) {
-            console.log(error.message)
-            setloading(false)
-        }
+ const { data, error, isLoading, mutate } = useSWR(
+    studentId ? `/api/student/getinternshipdetailsofstudentbyid/${studentId}` : null,
+    fetcher,
+    {
+      revalidateOnFocus: true, // auto refresh when user switches tab or focuses page again
+      dedupingInterval: 120000, // cache data for 60 seconds to prevent redundant calls
     }
-    useEffect(() => {
-        if (studentId) {
-            fetchStudentInternshipDetails()
-        }
-    }, [studentId])
+  );
+
+  
+//   if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Something went wrong: {error.message}</p>;
+
+  const internships = data?.success ? data?.internships : [];
+// console.log(internships)
+    // const fetchStudentInternshipDetails = async () => {
+    //     try {
+    //         if (studentId) {
+    //             const resp = await axios.get(`/api/student/getinternshipdetailsofstudentbyid/${studentId}`)
+    //             if (resp?.data?.success) {
+    //                 setloading(false)
+    //                 setinternshipData(resp?.data?.internships)
+
+    //             }
+    //             if (!resp?.data?.success) {
+    //                 setinternshipData(resp?.data?.message)
+    //                 setloading(false)
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.log(error.message)
+    //         setloading(false)
+    //     }
+    // }
+    // useEffect(() => {
+    //     if (studentId) {
+    //         fetchStudentInternshipDetails()
+    //     }
+    // }, [studentId])
 
     // console.log(internshipData)
     return (
@@ -65,15 +83,15 @@ const StudentPageInternshipDetails = ({ studentId }) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {loading ? (
+                    {isLoading ? (
                         <TableRow>
                             <TableCell colSpan={12} className="text-center py-6">
                                 <Loader2 className="mx-auto h-6 w-6 animate-spin text-gray-700" />
                                 <span className="block text-sm text-gray-500 mt-2">Loading internships...</span>
                             </TableCell>
                         </TableRow>
-                    ) : internshipData?.length > 0 ? (
-                        internshipData.map((e, i) => (
+                    ) : internships?.length > 0 ? (
+                        internships.map((e, i) => (
                             <TableRow key={e?._id}>
                                 <TableCell>{i + 1}.</TableCell>
                                 <TableCell className="font-bold">{e?.companyName}</TableCell>

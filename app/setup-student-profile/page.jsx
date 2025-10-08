@@ -22,6 +22,7 @@ const page = () => {
     if (
       fetchUserByIdState?.enrollmentNumber?.trim() &&
       fetchUserByIdState?.department?.trim()
+      && fetchUserByIdState?.role === 'student'
     ) {
       router.replace("/home");
     }

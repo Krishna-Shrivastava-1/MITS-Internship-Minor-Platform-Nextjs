@@ -16,7 +16,7 @@ const page = () => {
     const [password, setpassword] = useState('')
     const [department, setdepartment] = useState('')
     const [loading, setloading] = useState(false)
-      const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter()
 
 
@@ -30,7 +30,7 @@ const page = () => {
 
             if (!resp?.data?.success) {
                 toast.error(resp?.data?.message)
-                 setloading(false)
+                setloading(false)
                 // console.log(resp?.data?.message)
 
             }
@@ -43,7 +43,7 @@ const page = () => {
             }
         } catch (error) {
             console.log(error.message)
-             setloading(false)
+            setloading(false)
         }
     }
 
@@ -68,7 +68,7 @@ const page = () => {
                 setloading(false)
                 toast.success(resp?.data?.message)
                 // console.log(resp?.data?.message)
-                 window.location.href = '/superadmin'
+                window.location.href = '/superadmin'
 
                 // setfetchedUserData(resp?.data)
             } else if (resp?.data?.success && resp?.data?.role === 'teacher') {
@@ -86,7 +86,7 @@ const page = () => {
 
         } catch (error) {
             console.log(error.message)
-             setloading(false)
+            setloading(false)
         }
     }
 
@@ -110,7 +110,7 @@ const page = () => {
                     <div className='w-full flex items-center justify-center ' style={{ margin: '4px' }}>
                         <div style={{ padding: '10px' }} className='md:w-[50%] w-[90%] bg-black/70  shadow-xl shadow-black rounded-sm backdrop-blur-lg relative'>
                             {
-                                loading && <div className='absolute left-0 top-0 h-full w-full bg-black/45 flex items-center justify-center rounded-sm'>
+                                loading && <div className='absolute left-0 top-0 h-full w-full bg-black/45 flex items-center justify-center rounded-sm z-30'>
                                     <Loader2 className='animate-spin' />
                                 </div>
                             }
@@ -134,26 +134,26 @@ const page = () => {
                                         <h2 className='text-left font-semibold'>Email</h2>
                                         <input required value={email} onChange={(e) => setemail(e.target.value)} placeholder='Email address' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="email" className='outline-none  w-full bg-zinc-900/70 text-white text-lg  focus-within:border border-red-500 rounded-md' />
                                     </div>
-   <div className="relative w-full">
-        <h2 className='text-left font-semibold'>Password</h2>
-      <input
-        required
-        value={password}
-        onChange={(e) => setpassword(e.target.value)}
-        placeholder="Password"
-        type={showPassword ? "text" : "password"}
-        style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }}
-        className="outline-none focus-within:border border-red-500 rounded-md w-full bg-zinc-900/70 text-white text-lg"
-      />
+                                    <div className="relative w-full">
+                                        <h2 className='text-left font-semibold'>Password</h2>
+                                        <input
+                                            required
+                                            value={password}
+                                            onChange={(e) => setpassword(e.target.value)}
+                                            placeholder="Password"
+                                            type={showPassword ? "text" : "password"}
+                                            style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }}
+                                            className="outline-none focus-within:border border-red-500 rounded-md w-full bg-zinc-900/70 text-white text-lg"
+                                        />
 
-      {/* Eye button */}
-      <span
-        onClick={() => setShowPassword(!showPassword)}
-        className="absolute right-3 top-[70%] select-none -translate-y-1/2 cursor-pointer text-gray-400"
-      >
-        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-      </span>
-    </div>
+                                        {/* Eye button */}
+                                        <span
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-3 top-[70%] select-none -translate-y-1/2 cursor-pointer text-gray-400"
+                                        >
+                                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                        </span>
+                                    </div>
                                     {/* <div className='w-full'>
                                         <h2 className='text-left font-semibold'>Password</h2>
                                         <input required value={password} onChange={(e) => setpassword(e.target.value)} placeholder='Password' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="password" className='outline-none focus-within:border border-red-500 rounded-md w-full bg-zinc-900/70 text-white text-lg ' />
@@ -183,9 +183,9 @@ const page = () => {
 
                             </form>
                             <div className='flex items-center justify-between w-full my-2'><div className='w-full h-[0.5px] bg-neutral-500'></div><span className='mx-2'>OR</span><div className='w-full h-[0.5px] bg-neutral-500'></div></div>
-                           <div className='w-full flex items-center justify-center m-2'>
-                             <GoogleButton />
-                           </div>
+                            <div className='w-full flex items-center justify-center m-2'>
+                                <GoogleButton />
+                            </div>
                         </div>
                     </div>
                 </div>
