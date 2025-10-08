@@ -10,10 +10,10 @@ const page = () => {
     const router = useRouter();
   const [enrollmentNumber, setEnrollmentNumber] = useState("");
   const [department, setDepartment] = useState("");
-  const {fetchUserByIdState} = DataProviderContextAPI()
+  const {fetchUserByIdState,userIdFromToken} = DataProviderContextAPI()
   useEffect(() => {
     // If no user data (no token), redirect to login
-    if (!fetchUserByIdState) {
+    if (!fetchUserByIdState || !userIdFromToken) {
       router.replace("/login"); // or your login page
       return;
     }
@@ -26,7 +26,7 @@ const page = () => {
     ) {
       router.replace("/home");
     }
-  }, [fetchUserByIdState, router]);
+  }, [fetchUserByIdState, router,userIdFromToken]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
