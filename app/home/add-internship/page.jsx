@@ -154,6 +154,7 @@ const uploadedCompletionCertificateUrl = await handleCompletionLetterUpload()
       };
 
       if (!validSemesters[yearOfStudy]?.includes(Number(semester))) {
+        setloading(false)
         return console.log("Enter Year and Semester Consistently");
       }
       const payload = {

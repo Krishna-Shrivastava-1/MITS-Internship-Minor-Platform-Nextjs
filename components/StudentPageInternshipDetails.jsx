@@ -61,6 +61,7 @@ const StudentPageInternshipDetails = ({ studentId }) => {
     // console.log(internshipData)
     return (
         <div>
+            <h1 className='m-3 font-semibold text-lg'>Internship Data</h1>
             <Table>
                 {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                 <TableHeader>

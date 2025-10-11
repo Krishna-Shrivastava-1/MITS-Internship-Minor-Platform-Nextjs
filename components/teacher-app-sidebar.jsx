@@ -38,9 +38,9 @@ import { usePathname } from "next/navigation"
 export function TeacherAppSidebar({
   ...props
 }) {
-const {fetchUserByIdState} = DataProviderContextAPI()
+  const { fetchUserByIdState } = DataProviderContextAPI()
   const pathname = usePathname();
-  const { setOpenMobile } = useSidebar(); 
+  const { setOpenMobile } = useSidebar();
 
   // Close sidebar on mobile when route changes
   React.useEffect(() => {
@@ -61,53 +61,62 @@ const {fetchUserByIdState} = DataProviderContextAPI()
   }, [pathname, setOpenMobile]);
   // console.log(fetchUserByIdState)
   const data = {
-  user: {
-    name: fetchUserByIdState?.name,
-    email: fetchUserByIdState?.email,
-     avatar: fetchUserByIdState?.profilePic ,
-  },
-  teams: [
-    {
-      name: "MITS Int",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    }
-  ],
-  navMain: [
-    {
-      title: "Home",
-      url: "/admin",
-      icon: House,
-    
-    
+    user: {
+      name: fetchUserByIdState?.name,
+      email: fetchUserByIdState?.email,
+      avatar: fetchUserByIdState?.profilePic,
     },
-    {
-      title: "NOC Requests",
-      url: "/admin/noc-requests",
-      icon: ClipboardCheck,
-    
-    },
-    {
-      title: "Approved NOC",
-      url: "/admin/approved-noc",
-      icon: BookOpen,
-    
-    },
-    {
-      title: "Rejected NOC",
-      url: "/admin/rejected-noc",
-      icon: Settings2,
-     
-    },
-    {
-      title: "Allowed Edit NOC",
-      url: "/admin/allow-edit-noc",
-      icon: Settings2,
-     
-    },
-  ]
+    teams: [
+      {
+        name: "MITS-DU INTERNSHIP/",
+        logo: GalleryVerticalEnd,
+        plan: "Placement Portal",
+      }
+    ],
+    navMain: [
+      {
+        title: "Home",
+        url: "/admin",
+        icon: House,
 
-}
+
+      },
+      {
+        title: "NOC Details",
+        url: "#",
+        icon: ClipboardCheck,
+        isActive: true,
+        items: [
+          {
+            title: "NOC Requests",
+            url: "/admin/noc-requests",
+            icon: ClipboardCheck,
+
+          },
+          {
+            title: "Approved NOC",
+            url: "/admin/approved-noc",
+            icon: BookOpen,
+
+          },
+          {
+            title: "Rejected NOC",
+            url: "/admin/rejected-noc",
+            icon: Settings2,
+
+          },
+          {
+            title: "Allowed Edit NOC",
+            url: "/admin/allow-edit-noc",
+            icon: Settings2,
+
+          },
+        ],
+      },
+
+    ]
+
+  }
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className='bg-[#f0f4f9] '>
@@ -115,7 +124,7 @@ const {fetchUserByIdState} = DataProviderContextAPI()
       </SidebarHeader>
       <SidebarContent className='bg-[#f0f4f9] '>
         <NavMain items={data.navMain} />
-      
+
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

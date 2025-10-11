@@ -67,38 +67,56 @@ const {fetchUserByIdState} = DataProviderContextAPI()
     avatar: fetchUserByIdState?.profilePic ,
   },
   teams: [
-    {
-      name: "MITS Int",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    }
-  ],
+       {
+         name: "MITS-DU INTERNSHIP/",
+         logo: GalleryVerticalEnd,
+         plan: "Placement Portal",
+       }
+     ],
   navMain: [
-    {
+     {
       title: "Home",
       url: "/home",
       icon: House,
     
     
     },
-    {
-      title: "Apply for NOC",
-      url: "/home/apply-noc",
-      icon: ClipboardCheck,
-    
-    },
-    {
+       {
       title: "Add Internship",
       url: "/home/add-internship",
       icon: BookOpen,
     
     },
-    {
-      title: "Applied NOC",
-      url: "/home/applied-noc",
-      icon: Settings2,
-     
+     {
+      title: "NOC Details",
+      url: "#",
+      icon: ClipboardCheck,
+      isActive: true,
+      items: [
+        {
+          title: "Apply for NOC",
+          url: "/home/apply-noc",
+        },
+        {
+          title: "Applied NOC",
+          url: "/home/applied-noc",
+        }
+      ],
     },
+   
+    // {
+    //   title: "Apply for NOC",
+    //   url: "/home/apply-noc",
+    //   icon: ClipboardCheck,
+    
+    // },
+ 
+    // {
+    //   title: "Applied NOC",
+    //   url: "/home/applied-noc",
+    //   icon: Settings2,
+     
+    // },
   ]
 
 }

@@ -15,6 +15,7 @@ export async function GET(req, res) {
         const sessionHalf = searchParams.get("sessionhalf") || "";
         const year = parseInt(searchParams.get("year") || '');
         const semester = parseInt(searchParams.get("semester") || '');
+        const exportType = searchParams.get("export")
         await database()
 
         if (!dept) {
@@ -23,6 +24,7 @@ export async function GET(req, res) {
                 { status: 400 }
             );
         }
+        
         // console.log(dept)
         const query = { department: dept }
         if (!isNaN(semester)) {
@@ -37,8 +39,32 @@ export async function GET(req, res) {
         if (!isNaN(sessionYear)) {
             query.sessionYear = sessionYear
         }
-        const totalInternshipData = await internshipModel.countDocuments(query)
-        const internshipDetails = await internshipModel.find(query).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit)
+        let internshipDetails;
+         if (exportType === "excel") {
+      // No pagination, fetch all
+      internshipDetails = await internshipModel
+        .find(query)
+        .sort({ createdAt: -1 })
+        .populate({
+          path: "student",
+          select:
+            "-password -email -department -internshipDetails -nocRequests -googleId -createdAt -updatedAt -role",
+        });
+    } else {
+      internshipDetails = await internshipModel
+        .find(query)
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .populate({
+          path: "student",
+          select:
+            "-password -email -department -internshipDetails -nocRequests -googleId -createdAt -updatedAt -role",
+        });
+    }
+    //  internshipDetails = await internshipModel.find(query).sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit).populate({path:'student',select:'-password -email -department -internshipDetails -nocRequests -googleId -createdAt -updatedAt -role'})
+    
+    const totalInternshipData = await internshipModel.countDocuments(query)
 
         return NextResponse.json({
             message: 'Internship Found',

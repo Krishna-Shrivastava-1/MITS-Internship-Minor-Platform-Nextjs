@@ -32,6 +32,11 @@ import { Label } from './ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { DataProviderContextAPI } from './ContextApi'
 import { Button } from './ui/button'
+import { Checkbox } from './ui/checkbox'
+import { supabase } from '@/lib/supabase'
+import toast from 'react-hot-toast'
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 const InternshipDataTableforTeacherpage = () => {
     const { fetchUserByIdState } = DataProviderContextAPI()
     const [internshipData, setinternshipData] = useState([])
@@ -44,7 +49,7 @@ const InternshipDataTableforTeacherpage = () => {
     const [totalPages, settotalPages] = useState(1)
     const [loading, setloading] = useState(true)
     const [selectedStudent, setSelectedStudent] = useState(null);
-
+    const [checked, setChecked] = useState(false);
     // console.log(fetchUserByIdState)
     const getInternshipDetailsAsPerTeacherDeptandFilter = async () => {
         try {
@@ -78,8 +83,16 @@ const InternshipDataTableforTeacherpage = () => {
     // console.log(sessionYear)
     // console.log(sessionHalf)
     // console.log(semester)
-    const currentYear = new Date().getFullYear()
-    const year = Array.from({ length: 3 }, (_, i) => currentYear - 2 + i)
+       const currentYear = new Date().getFullYear();
+const startYear = 2023;
+
+// Calculate dynamic start to ensure max length = 10
+const effectiveStartYear = Math.max(startYear, currentYear - 9);
+
+const year = Array.from(
+  { length: currentYear - effectiveStartYear + 1 },
+  (_, i) => effectiveStartYear + i
+);
     const handlePageIncrease = () => {
         if (page < totalPages) {
             setpage((pre) => pre + 1)
@@ -91,26 +104,117 @@ const InternshipDataTableforTeacherpage = () => {
             setpage((pre) => pre - 1)
         }
     }
-    const fetchStdudentDetails = async (id) => {
+
+    // console.log(page)
+//Record Deletion Route
+    const onDelete = async (id, offerLetterUrl, completionCertificateUrl,studentId) => {
         try {
-            const resp = await axios.get(`/api/student/getstudentbyid/${id}`)
-            if (resp?.data?.success) {
-                // console.log(resp?.data)
-                setSelectedStudent(resp?.data?.user)
+            if (offerLetterUrl) {
+                const url = new URL(offerLetterUrl);
+                const pathParts = url.pathname.split('/');
+                let filePath = pathParts.slice(6).join('/');
+
+                // Decode spaces and other URL-encoded characters
+                filePath = decodeURIComponent(filePath);
+                // console.log('Decoded file path:', filePath);
+
+                const { error: delError } = await supabase.storage
+                    .from('internshipofferletters')
+                    .remove([filePath]);
+
+                if (delError) console.error('Error deleting old file:', delError);
+                // else console.log('✅ Deleted successfully:', filePath);
             }
-            if (!resp?.data?.success) {
-                console.log("error in fetching")
-                setSelectedStudent(null);
+            if (completionCertificateUrl) {
+                const url = new URL(completionCertificateUrl);
+                const pathParts = url.pathname.split('/');
+                let filePath = pathParts.slice(6).join('/');
+                filePath = decodeURIComponent(filePath); // decode encoded path
+                // console.log('Deleting completion letter:', filePath);
+
+                const { error: delError } = await supabase.storage
+                    .from('internshipcompletionletters')
+                    .remove([filePath]);
+
+                if (delError) console.error('❌ Completion letter delete error:', delError);
+                // else console.log('✅ Completion letter deleted successfully:', filePath);
+            }
+
+
+
+            const resp = await axios.delete(`/api/internship/deleteinternshipbyid/${id}`,{
+                  data: { studentId }
+            })
+            if (resp?.data?.success) {
+                toast.success("Record Deleted Successfully")
+                getInternshipDetailsAsPerTeacherDeptandFilter()
             }
         } catch (error) {
             console.log(error.message)
-            setSelectedStudent(null);
         }
     }
-    // console.log(page)
+
+
+
+const handleExport = async () => {
+  try {
+    const resp = await axios.get(
+      `/api/teacher/getinternshipdetailsasperteacherdeptandfilter?dept=${
+        fetchUserByIdState?.department
+      }&sessionyear=${sessionYear.trim()}&sessionhalf=${sessionHalf.trim()}&year=${yearOfStudy.trim()}&semester=${semester.trim()}&export=excel`
+    );
+
+    if (resp.data.success) {
+        console.log(resp)
+      const data = resp.data.internshipData.map((item, index) => ({
+        "S.No": index + 1,
+        "Student Name": item.student?.name || "N/A",
+        "Enrollment No": item.student?.enrollmentNumber || "N/A",
+        "Branch":item?.department,
+        "Company Name": item.companyName,
+        "Duration": item.duration,
+        "Stipend": item.stipend,
+        "Location": item.location,
+        "Work Type": item.workType,
+        "Start Date": item.startDate,
+        "End Date": item.endDate,
+        "Session Year": item.sessionYear,
+        "Session Half": item.sessionHalf,
+        "Year of Study": item.yearOfStudy,
+        "Semester": item.semester,
+        "Offer Letter": item.offerLetter,
+        "Completion Letter": item.completionCertificate,
+
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Internships");
+
+      const excelBuffer = XLSX.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+
+      const blob = new Blob([excelBuffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      saveAs(blob, `InternshipData_${sessionYear}_${sessionHalf}.xlsx`);
+    }
+  } catch (error) {
+    console.error("Export failed:", error.message);
+  }
+};
+
     return (
         <div>
-            <div className="flex w-full justify-end gap-4 flex-wrap items-center">
+          <h1 className='text-xl font-bold m-3'>Internship Data</h1>
+
+            <div className="flex w-full justify-end gap-2 flex-wrap items-center">
+                  <Button className='cursor-pointer select-none' onClick={handleExport} disabled={loading}>
+  Export to Excel
+</Button>
                 <div>
                     <Label>Year of Study</Label>
                     <Select value={yearOfStudy} onValueChange={setyearOfStudy}>
@@ -166,8 +270,10 @@ const InternshipDataTableforTeacherpage = () => {
                 <Table>
                     {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                     <TableHeader>
-                        <TableRow>
+                        <TableRow className='text-center'>
                             <TableHead >Sn.</TableHead>
+                            <TableHead >Student Name</TableHead>
+                            <TableHead >Student Enrollment No.</TableHead>
                             <TableHead >Company Name</TableHead>
                             <TableHead>Role</TableHead>
                             <TableHead>Stipend (in Rs.)</TableHead>
@@ -179,12 +285,12 @@ const InternshipDataTableforTeacherpage = () => {
                             <TableHead>End Date</TableHead>
                             <TableHead>Year of Study</TableHead>
                             <TableHead>Semester</TableHead>
-                            <TableHead>Session Half</TableHead>
-                            <TableHead>Session Year</TableHead>
+                            <TableHead>Session</TableHead>
+                            {/* <TableHead>Session Year</TableHead> */}
                             <TableHead>Offer Letter</TableHead>
                             <TableHead>Completion Certificate</TableHead>
 
-                            <TableHead>Details</TableHead>
+                            <TableHead>Actions</TableHead>
 
                         </TableRow>
                     </TableHeader>
@@ -198,8 +304,10 @@ const InternshipDataTableforTeacherpage = () => {
                             </TableRow>
                         ) : internshipData?.length > 0 ? (
                             internshipData.map((e, i) => (
-                                <TableRow key={e?._id}>
+                                <TableRow className='text-center' key={e?._id}>
                                     <TableCell>{i + 1}.</TableCell>
+                                    <TableCell className="font-bold">{e?.student?.name}</TableCell>
+                                    <TableCell className="font-bold">{e?.student?.enrollmentNumber}</TableCell>
                                     <TableCell className="font-bold">{e?.companyName}</TableCell>
                                     <TableCell>{e?.role}</TableCell>
                                     <TableCell>{e?.stipend}</TableCell>
@@ -211,8 +319,8 @@ const InternshipDataTableforTeacherpage = () => {
                                     <TableCell>{e?.endDate}</TableCell>
                                     <TableCell>{e?.yearOfStudy}</TableCell>
                                     <TableCell>{e?.semester}</TableCell>
-                                    <TableCell>{e?.sessionHalf}</TableCell>
-                                    <TableCell>{e?.sessionYear}</TableCell>
+                                    <TableCell>{e?.sessionHalf} - {e?.sessionYear}</TableCell>
+                                    {/* <TableCell>{e?.sessionYear}</TableCell> */}
                                     <TableCell>
                                         {e?.offerLetter ? (
                                             <a
@@ -247,23 +355,67 @@ const InternshipDataTableforTeacherpage = () => {
                                     </TableCell>
                                     <TableCell>
                                         <Dialog>
-                                            <DialogTrigger asChild onClick={() => fetchStdudentDetails(e?.student)}>
-                                                <Button className='cursor-pointer'>View</Button>
+                                            <DialogTrigger asChild>
+                                                <Button className="cursor-pointer">Action</Button>
                                             </DialogTrigger>
-                                            <DialogContent>
+
+                                            <DialogContent className="max-w-lg">
                                                 <DialogHeader>
-                                                    <DialogTitle>Student Details</DialogTitle>
-                                                    {selectedStudent ? (
-                                                        <div className="mt-2 space-y-1">
-                                                            <p><strong>Name:</strong> {selectedStudent.name}</p>
-                                                            {/* <p><strong>Email:</strong> {selectedStudent.email}</p> */}
-                                                            <p><strong>Enrollment No:</strong> {selectedStudent.enrollmentNumber}</p>
-                                                            <p><strong>Department:</strong> {selectedStudent.department}</p>
-                                                        </div>
-                                                    ) : (
-                                                        <p>Loading...</p>
-                                                    )}
+                                                    <DialogTitle className="text-xl font-bold text-red-600">
+                                                        Delete Internship Record
+                                                    </DialogTitle>
+                                                    <DialogDescription className="text-md">
+                                                        Please review the details below before confirming deletion.
+                                                    </DialogDescription>
                                                 </DialogHeader>
+
+                                                <div className="space-y-2 mt-4 text-sm text-gray-700">
+                                                    <div><span className="font-semibold">Student Name:</span> {e?.student?.name}</div>
+                                                    <div><span className="font-semibold">Enrollment No.:</span> {e?.student?.enrollmentNumber}</div>
+                                                    <div><span className="font-semibold">Company:</span> {e?.companyName}</div>
+                                                    <div><span className="font-semibold">Role:</span> {e?.role}</div>
+                                                    <div><span className="font-semibold">Duration:</span> {e?.duration} days</div>
+                                                    <div><span className="font-semibold">Start Date:</span> {e?.startDate}</div>
+                                                    <div><span className="font-semibold">End Date:</span> {e?.endDate}</div>
+                                                    <div><span className="font-semibold">Offer Letter:</span>  <a
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        href={e?.offerLetter}
+                                                        className="text-blue-600 font-semibold text-md cursor-pointer select-none hover:underline hover:text-blue-500"
+                                                    >
+                                                        View
+                                                    </a></div>
+                                                    <div><span className="font-semibold">Completion Certificate:</span> <a
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        href={e?.completionCertificate}
+                                                        className="text-blue-600 font-semibold text-md cursor-pointer select-none hover:underline hover:text-blue-500"
+                                                    >
+                                                        View
+                                                    </a></div>
+                                                </div>
+
+                                                <div className="flex items-center space-x-2 mt-6">
+                                                    <Checkbox
+                                                        id="delete-consent"
+                                                        checked={checked}
+                                                        onCheckedChange={(v) => setChecked(v)}
+                                                    />
+                                                    <Label htmlFor="delete-consent" className="text-sm">
+                                                        I understand that once deleted, this record cannot be recovered.
+                                                    </Label>
+                                                </div>
+
+                                                <div className="flex justify-end gap-3 mt-6">
+
+                                                    <Button
+                                                        variant="destructive"
+                                                        disabled={!checked}
+                                                        onClick={() => onDelete(e?._id, e?.offerLetter, e?.completionCertificate,e?.student?._id)}
+                                                    >
+                                                        Delete Permanently
+                                                    </Button>
+                                                </div>
                                             </DialogContent>
                                         </Dialog>
                                     </TableCell>

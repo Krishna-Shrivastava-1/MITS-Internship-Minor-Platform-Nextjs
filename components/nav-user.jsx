@@ -5,6 +5,7 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
+  EllipsisVertical,
   LogOut,
   Sparkles,
 } from "lucide-react"
@@ -30,12 +31,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { DataProviderContextAPI } from "./ContextApi"
+import Link from "next/link"
 
 export function NavUser({
   user
 }) {
   const { isMobile } = useSidebar()
-const {logout} = DataProviderContextAPI()
+const {logout,fetchUserByIdState} = DataProviderContextAPI()
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -43,7 +45,7 @@ const {logout} = DataProviderContextAPI()
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">{user?.name?.[0]}</AvatarFallback>
@@ -52,7 +54,7 @@ const {logout} = DataProviderContextAPI()
                 <span className="truncate font-bold">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <EllipsisVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -73,26 +75,29 @@ const {logout} = DataProviderContextAPI()
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
+            {/* <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Sparkles />
                 Upgrade to Pro
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
+            </DropdownMenuGroup> */}
+            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuGroup >
+              <Link href={fetchUserByIdState?.role === 'student' ? '/home/profile' : fetchUserByIdState?.role === 'teacher' ? '/admin/profile' : '/superadmin/profile'}>
+                <DropdownMenuItem className='cursor-pointer'>
                 <BadgeCheck />
-                Account
+                Profile
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              </Link>
+            
+              {/* <DropdownMenuItem>
                 <CreditCard />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
                 Notifications
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout} className='cursor-pointer' variant="destructive">
