@@ -1,6 +1,11 @@
 import CarouselSliderLandingPage from "@/components/CarouselSliderLandingPage";
+import CompaniesSliderLandingPage from "@/components/CompaniesSliderLandingPage";
+import Footer from "@/components/Footer";
 import StripeCanvas from "@/components/GlslsCanvas";
+import LandingPageHeroSection from "@/components/LandingPageHeroSection";
+import LandingPageNavbar from "@/components/LandingPageNavbar";
 import Navbar from "@/components/Navbar";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import UpcommingNotificationSliders from "@/components/UpcommingNotificationSliders";
 import { ArrowRight, ChevronRight, MoveRight } from "lucide-react";
 import Image from "next/image";
@@ -10,8 +15,8 @@ export default function Home() {
   return (
     <div className="">
       {/* <Navbar /> */}
-      <StripeCanvas />
-      <div className="relative flex items-center justify-around w-full p-3 ">
+      {/* <StripeCanvas /> */}
+      {/* <div className="relative flex items-center justify-around w-full p-3 ">
         <div className="flex items-center text-white hover:text-neutral-100 cursor-pointer select-none gap-x-2.5">
           <Image src={'https://web.mitsgwalior.in/images/mits-logo.png'} alt="logo" width={55} height={0} />
          <div>
@@ -31,13 +36,13 @@ export default function Home() {
             />
           </Link>
         </div>
-      </div>
-     <div className="my-3">
+      </div> */}
+     <div className="mx-3 mb-1">
        <UpcommingNotificationSliders />
      </div>
-      <div className="relative flex w-full flex-col items-center px-5 ">
+      {/* <div className="relative flex w-full flex-col items-center px-5 ">
         <header >
-          {/* Text section */}
+       
           <div className="space-y-8 sm:px-4 flex items-center justify-around w-full flex-wrap">
 
             <div className=" w-full lg:w-1/2">
@@ -61,7 +66,12 @@ export default function Home() {
         </header>
 
 
-      </div>
+      </div> */}
+<LandingPageNavbar />
+  <LandingPageHeroSection />
+  {/* <CompaniesSliderLandingPage /> */}
+  <TestimonialsSection />
+  <Footer />
       {/* <div className="h-screen"></div> */}
       {/* Home page */}
 
