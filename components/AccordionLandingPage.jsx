@@ -27,7 +27,7 @@ const AccordionLandingPage = () => {
       <Accordion
       type="single"
       collapsible
-      className="w-[370px] "
+      className="w-[320px] md:w-lg"
       defaultValue="item-1"
     >
       <AccordionItem value="item-1">
