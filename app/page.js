@@ -1,3 +1,4 @@
+import AccordionLandingPage from "@/components/AccordionLandingPage";
 import CarouselSliderLandingPage from "@/components/CarouselSliderLandingPage";
 import CompaniesSliderLandingPage from "@/components/CompaniesSliderLandingPage";
 import Footer from "@/components/Footer";
@@ -70,6 +71,7 @@ export default function Home() {
 <LandingPageNavbar />
   <LandingPageHeroSection />
   {/* <CompaniesSliderLandingPage /> */}
+  <AccordionLandingPage />
   <TestimonialsSection />
   <Footer />
       {/* <div className="h-screen"></div> */}

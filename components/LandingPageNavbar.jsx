@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet"
 const LandingPageNavbar = () => {
     return (
-        <nav className="border-b-2 backdrop-blur-sm flex items-center justify-between p-2 md:px-16 lg:px-24 xl:px-32  w-full sticky top-0 z-40">
+        <nav className="border-b shadow-xs shadow-black backdrop-blur-sm flex items-center justify-between p-2 md:px-16 lg:px-24 xl:px-32  w-full sticky top-0 z-40">
             <Link href="/">
                 <div className="flex items-center  hover:text-neutral-800 cursor-pointer select-none gap-x-2.5">
                     <Image src={'https://web.mitsgwalior.in/images/mits-logo.png'} alt="logo" width={55} height={0} />
@@ -23,13 +23,13 @@ const LandingPageNavbar = () => {
                 </div>
             </Link>
             <div id="menu" className="max-md:absolute max-md:top-0 max-md:left-0 max-md:w-0 max-md:transition-all max-md:duration-300 max-md:overflow-hidden max-md:h-full max-md:bg-white/50 max-md:backdrop-blur max-md:flex-col max-md:justify-center flex items-center gap-8 font-medium">
-                <Link href={'/home'} className="hover:text-gray-600">
+                <Link href={'/home'} className=" hover:text-blue-700 hover:font-bold ">
                     Home
                 </Link>
-                <Link href={'/home/apply-noc'} className="hover:text-gray-600">
+                <Link href={'/home/apply-noc'} className="hover:text-blue-700 hover:font-bold ">
                     NOC Request
                 </Link>
-                <Link href={'/home/add-internship'} className="hover:text-gray-600">
+                <Link href={'/home/add-internship'} className="hover:text-blue-700 hover:font-bold ">
                     Add  Internship Data
                 </Link>
 
@@ -68,7 +68,7 @@ const LandingPageNavbar = () => {
                             <div className='w-full h-full flex items-center justify-center'>
                                 <div className='w-full h-[60vh] flex items-center justify-center flex-col'>
                                     <Link href={'/home'}>
-                                        <div className='my-2 flex items-center justify-center'>
+                                        <div className='my-2 flex items-center justify-center '>
                                             <h1 className='text-xl text-center font-extrabold '>Home</h1>
                                             <ArrowUpRight />
                                         </div>

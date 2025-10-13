@@ -4,7 +4,14 @@ import Link from 'next/link'
 import React from 'react'
 import { Badge } from './ui/badge'
 import CompaniesSliderLandingPage from './CompaniesSliderLandingPage'
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 const LandingPageHeroSection = () => {
   return (
@@ -49,10 +56,12 @@ const LandingPageHeroSection = () => {
     </span>
   </Link>
 </div>
-          <div className="group text-white">
-  <Link
-    href="/login"
-    className="flex items-center gap-1 font-semibold text-md p-2 w-[180px] transition-all duration-300 bg-blue-700 rounded-md hover:rounded-none text-nowrap"
+         
+<Dialog>
+  <DialogTrigger> <div className="group text-white">
+  <span
+    
+    className="flex items-center gap-1 font-semibold text-md p-2 w-[180px] transition-all duration-300 bg-blue-700 rounded-md hover:rounded-none text-nowrap cursor-pointer select-none"
   >
     <ArrowRight
       // 👇 FIX: Use opacity and translate for smooth transition instead of 'hidden'/'block'
@@ -63,8 +72,18 @@ const LandingPageHeroSection = () => {
 
     Announcements
     </span>
-  </Link>
-</div>
+  </span>
+</div></DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Announcements</DialogTitle>
+      <DialogDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
 
   {/* <div>
        <p className="py-6 text-slate-600 mt-14">Trused by -: MITS</p>
