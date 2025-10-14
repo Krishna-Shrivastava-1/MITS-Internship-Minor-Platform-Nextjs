@@ -135,7 +135,11 @@ const SuperAdminNOCRequestsTable = () => {
     // console.log(tandpdecision)
     return (
         <div className="w-full overflow-x-auto border p-2 px-5">
+            <div className='flex items-center flex-wrap'>
+<h1 className='text-blue-700 font-bold text-lg'>Select a Department for NOC Request Review</h1>
              <DepartmentSelectorforStudentRegister getDepartmentValue={setselectDepartment} settheme={"light"} />
+            </div>
+             
             <Table >
                 {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                 <TableHeader>

@@ -1,4 +1,5 @@
 import AccordionLandingPage from "@/components/AccordionLandingPage";
+import BellAnnouncement from "@/components/BellAnnouncement";
 import CarouselSliderLandingPage from "@/components/CarouselSliderLandingPage";
 import CompaniesSliderLandingPage from "@/components/CompaniesSliderLandingPage";
 import Footer from "@/components/Footer";
@@ -69,6 +70,7 @@ export default function Home() {
 
       </div> */}
 <LandingPageNavbar />
+<BellAnnouncement />
   <LandingPageHeroSection />
   {/* <CompaniesSliderLandingPage /> */}
   <AccordionLandingPage />

@@ -91,6 +91,12 @@ const {fetchUserByIdState} = DataProviderContextAPI()
       icon: UserRoundPlus,
     
     },
+    {
+      title: "Announcements",
+      url: "/superadmin/announcement",
+      icon: UserRoundPlus,
+    
+    },
     // {
     //   title: "Documentation",
     //   url: "#",
@@ -108,10 +114,10 @@ const {fetchUserByIdState} = DataProviderContextAPI()
 }
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="bg-[#f0f4f9]">
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-[#f0f4f9]">
         <NavMain items={data.navMain} />
       
       </SidebarContent>

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet"
 const LandingPageNavbar = () => {
     return (
-        <nav className="border-b shadow-xs shadow-black backdrop-blur-sm flex items-center justify-between p-2 md:px-16 lg:px-24 xl:px-32  w-full sticky top-0 z-40">
+        <nav className="border-b  backdrop-blur-sm flex items-center justify-between p-2 md:px-16 lg:px-24 xl:px-32  w-full sticky top-0 z-40">
             <Link href="/">
                 <div className="flex items-center  hover:text-neutral-800 cursor-pointer select-none gap-x-2.5">
                     <Image src={'https://web.mitsgwalior.in/images/mits-logo.png'} alt="logo" width={55} height={0} />
