@@ -85,6 +85,12 @@ const {fetchUserByIdState} = DataProviderContextAPI()
       icon: UserRoundPlus,
     
     },
+    {
+      title: "NOC Requests",
+      url: "/superadmin/noc-requests",
+      icon: UserRoundPlus,
+    
+    },
     // {
     //   title: "Documentation",
     //   url: "#",

@@ -31,29 +31,34 @@ import { Loader2 } from 'lucide-react'
 import axios from 'axios'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
-import { usePathname } from 'next/navigation'
-const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, nameOfApi }) => {
+import toast from 'react-hot-toast'
+import { DepartmentSelectorforStudentRegister } from './DepartmentSelectorforStudentRegister'
+const SuperAdminNOCRequestsTable = () => {
     const [loading, setloading] = useState(true)
     const [nocRequestsDataPending, setnocRequestsDataPending] = useState([])
     const [limit, setlimit] = useState(10)
     const [page, setpage] = useState(1)
     const [totalPages, settotalPages] = useState(1)
-    const pathname = usePathname()
-    const path = ["approved-noc"]
-    // console.log(pathname.includes(path))
-    // const [teacherDecision, setteacherDecision] = useState('')
-    // const [comment, setcomment] = useState('')
-    // const [open, setopen] = useState(false)
+    const [tandpdecision, settandpdecision] = useState('Pending')
+    const [open, setopen] = useState(false)
+    const [selectDepartment, setselectDepartment] = useState('all')
+    // console.log(selectDepartment)
     const fetchNocRequestArePending = async () => {
         try {
-            if (!coordinatorDepartment) return
+            if (!selectDepartment) return setloading(false)
             setloading(true)
-            const resp = await axios.get(`/api/nocrequests/getnocrequestforcoordinator${nameOfApi}?assignedDepartment=${coordinatorDepartment}&page=${page}&limit=${limit}`)
+            const resp = await axios.get(`/api/nocrequests/getnocrequestfortandp?assignedDepartment=${selectDepartment}&page=${page}&limit=${limit}`)
             if (resp?.data?.success) {
                 setloading(false)
                 // console.log(resp?.data)
                 settotalPages(Math.ceil((resp?.data?.countOfNocRequests) / limit))
                 setnocRequestsDataPending(resp?.data?.getNocRequestArePending)
+
+            }
+            if (!resp?.data?.success) {
+                setloading(false)
+                console.log(resp?.data)
+
 
             }
         } catch (error) {
@@ -62,19 +67,17 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
         }
     }
     useEffect(() => {
-        if (coordinatorDepartment) {
+        if (selectDepartment != 'all') {
 
             fetchNocRequestArePending()
         } else {
             setloading(false)
         }
 
-    }, [coordinatorDepartment, page, limit])
+    }, [selectDepartment, page, limit])
     const handlePageIncrease = () => {
         if (page < totalPages) {
             setpage((pre) => pre + 1)
-        } else {
-            setloading(false)
         }
     }
 
@@ -83,31 +86,63 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
             setpage((pre) => pre - 1)
         }
     }
-    // const handleNocDecision = async (id) => {
-    //     try {
-    //         const resp = await axios.put(`/api/nocrequests/updatenocdecision/${id}`, {
-    //             decisionOfNoc: teacherDecision,
-    //             comment
-    //         })
-    //         if (resp?.data) {
-    //             console.log(resp?.data)
-    //             fetchNocRequestArePending()
-    //             setopen(false)
-    //         }
-    //     } catch (error) {
-    //         console.log(error?.message)
-    //     }
-    // }
-    // console.log(teacherDecision)
+    const handleNocDecision = async (id) => {
+        try {
+            if (tandpdecision === 'Pending') {
+                setopen(false)
+                toast("Nothing to update.", {
+                    icon: 'ℹ️',
+                    style: {
+                        border: '1px solid #2563eb',     // blue-600 border
+                        // padding: '14px 16px',
+                        color: '#ffffff',                 // blue-600 text
+                        background: '#04417a',            // white background
+                        fontWeight: 500,
+                        borderRadius: '8px',
+                    },
+                    iconTheme: {
+                        primary: '#2563eb',               // blue icon background
+                        secondary: '#ffffff',             // white icon
+                    },
+                });
+
+                return
+            }
+         
+
+            const resp = await axios.put(`/api/nocrequests/updatenocdecisiontandp/${id}`, {
+                decisionOfNoc: tandpdecision,
+              
+            })
+            if (resp?.data) {
+                // console.log(resp?.data)
+                toast.success(resp?.data?.message)
+                fetchNocRequestArePending()
+                setopen(false)
+            }
+            if (!resp?.data) {
+                // console.log(resp?.data)
+                toast.error("Noc is not Updated")
+                fetchNocRequestArePending()
+                setopen(false)
+            }
+        } catch (error) {
+            console.log(error?.message)
+            toast.error("Felt it is not worked but don't felt it is not you error")
+            setopen(false)
+        }
+    }
+    // console.log(tandpdecision)
     return (
         <div className="w-full overflow-x-auto border p-2 px-5">
+             <DepartmentSelectorforStudentRegister getDepartmentValue={setselectDepartment} settheme={"light"} />
             <Table >
                 {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                 <TableHeader>
                     <TableRow>
                         <TableHead >Sn.</TableHead>
-                        <TableHead >Department Status</TableHead>
-                        {pathname.includes(path) && <TableHead>Training & Placement Status</TableHead>}
+                        <TableHead>Department Status</TableHead>
+                        <TableHead>Training & Placement Status</TableHead>
                         <TableHead>Enrollment Number</TableHead>
                         <TableHead>Student Name</TableHead>
                         <TableHead >Company Name</TableHead>
@@ -124,9 +159,10 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                         <TableHead>Semester</TableHead>
                         <TableHead>Session Half</TableHead>
                         <TableHead>Session Year</TableHead>
+                        <TableHead>Created At</TableHead>
+                        <TableHead>Updated At</TableHead>
                         <TableHead>Offer Letter</TableHead>
-                        <TableHead>Comment</TableHead>
-                        {/* <TableHead>More</TableHead> */}
+                        <TableHead>More</TableHead>
 
                     </TableRow>
                 </TableHeader>
@@ -135,7 +171,7 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                         <TableRow>
                             <TableCell colSpan={12} className="text-center py-6">
                                 <Loader2 className="mx-auto h-6 w-6 animate-spin text-gray-700" />
-                                <span className="block text-sm text-gray-500 mt-2">Loading internships...</span>
+                                <span className="block text-sm text-gray-500 mt-2">Loading NOC's...</span>
                             </TableCell>
                         </TableRow>
                     ) : nocRequestsDataPending?.length > 0 ? (
@@ -143,10 +179,7 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                             <TableRow key={e?._id}>
                                 <TableCell>{i + 1}.</TableCell>
                                 <TableCell className="font-bold">{e?.teacherAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.teacherAction}</span>  : e?.teacherAction === 'Reject' ? <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.teacherAction}</span> : <span className='text-sky-600 rounded-full px-2 p-1 text-center border border-sky-700 bg-sky-500/20'>{e?.teacherAction}</span>   }</TableCell>
-                                {pathname.includes(path) &&
-                                  <TableCell className="font-bold ">{e?.tAndPAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.tAndPAction}</span> : e?.tAndPAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.tAndPAction}</span>  :  <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.tAndPAction}</span>    }</TableCell>
-                                }
-                               
+                                <TableCell className="font-bold flex items-center justify-center">{e?.tAndPAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.tAndPAction}</span> : e?.tAndPAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.tAndPAction}</span>  :  <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.tAndPAction}</span>    }</TableCell>
                                 <TableCell className="font-bold">{e?.enrollmentNumber}</TableCell>
                                 <TableCell className="font-bold">{e?.student?.name}</TableCell>
                                 <TableCell className="font-bold">{e?.companyName}</TableCell>
@@ -163,6 +196,8 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                                 <TableCell className='text-center'>{e?.semester}</TableCell>
                                 <TableCell>{e?.sessionHalf}</TableCell>
                                 <TableCell>{e?.sessionYear}</TableCell>
+                                <TableCell>{new Date(e?.createdAt).getDate()}/{new Date(e?.createdAt).getMonth() + 1}/{new Date(e?.createdAt).getFullYear()}</TableCell>
+                                <TableCell>{new Date(e?.updatedAt).getDate()}/{new Date(e?.updatedAt).getMonth() + 1}/{new Date(e?.updatedAt).getFullYear()}</TableCell>
                                 <TableCell>
                                     {e?.offerLetter ? (
                                         <a
@@ -179,32 +214,29 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                                         </span>
                                     )}
                                 </TableCell>
-                                <TableCell className='text-center'><Textarea defaultValue={e?.comment || 'No Comments'}
-                                    readOnly
-                                    className='whitespace-pre-wrap resize-none h-10 w-52' /></TableCell>
-                                {/* <TableCell>
+
+                                <TableCell>
                                     <Dialog isOpen={open} onOpenChange={setopen}>
                                         <DialogTrigger>Actions</DialogTrigger>
                                         <DialogContent>
                                             <DialogHeader>
                                                 <DialogTitle>Respond to the NOC Requests</DialogTitle>
                                                 <div>
-                                               <div className='flex items-center'>
-                                                 <h2>Your Response:</h2>
-                                                    <Select value={teacherDecision ? teacherDecision : e?.teacherAction} onValueChange={setteacherDecision}>
-                                                        <SelectTrigger >
-                                                            <SelectValue placeholder="Limit" />
-                                                        </SelectTrigger>
-                                                        <SelectContent >
-                                                            <SelectItem value="Pending">None</SelectItem>
-                                                            <SelectItem value="Approve">Approve</SelectItem>
-                                                            <SelectItem value="Reject">Reject</SelectItem>
-                                                            <SelectItem value="Allow Edit">Allow Edit</SelectItem>
-                                                        </SelectContent>
-                                                    </Select>
-                                               </div>
-                                                    <h2>Write Comment</h2>
-                                                    <Textarea onChange={(e) => setcomment(e?.target?.value)} value={comment} placeholder='Enter Comment...' className='resize-none border-black whitespace-pre-wrap' />
+                                                    <div className='flex items-center'>
+                                                        <h2>Your Response:</h2>
+                                                        <Select value={tandpdecision ? tandpdecision : e?.tAndPAction} onValueChange={settandpdecision}>
+                                                            <SelectTrigger >
+                                                                <SelectValue placeholder="Response" />
+                                                            </SelectTrigger>
+                                                            <SelectContent >
+                                                                <SelectItem value="Pending">None</SelectItem>
+                                                                <SelectItem value="Approve">Approve</SelectItem>
+                                                                <SelectItem value="Reject">Reject</SelectItem>
+                                                                
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </div>
+                                                   
                                                     <div className='w-full flex items-center justify-center'>
 
                                                         <Button onClick={() => handleNocDecision(e?._id)} className='w-full cursor-pointer select-none mt-3'>Submit</Button>
@@ -213,13 +245,13 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                                             </DialogHeader>
                                         </DialogContent>
                                     </Dialog>
-                                </TableCell> */}
+                                </TableCell>
                             </TableRow>
                         ))
                     ) : (
                         <TableRow>
                             <TableCell colSpan={12} className="text-center py-6 text-gray-500">
-                                No NOC Records Found
+                                No NOC records found
                             </TableCell>
                         </TableRow>
                     )}
@@ -251,7 +283,7 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                                 <PaginationEllipsis />
                             </PaginationItem>
                             <PaginationItem>
-                                <PaginationLink >{totalPages}</PaginationLink>
+                                <PaginationLink >{totalPages || 1}</PaginationLink>
                             </PaginationItem>
                             <PaginationItem>
                                 <PaginationNext className='select-none cursor-pointer' onClick={handlePageIncrease} />
@@ -264,4 +296,4 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
     )
 }
 
-export default ShowStatusOfNocRequestToCoordinatorOfAllType
+export default SuperAdminNOCRequestsTable

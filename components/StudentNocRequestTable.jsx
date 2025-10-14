@@ -28,7 +28,7 @@ const StudentNocRequestTable = ({ studentId }) => {
     const [loading, setloading] = useState(true)
     const [limit, setlimit] = useState(10)
     const [page, setpage] = useState(1)
-       const [totalPages, settotalPages] = useState(1)
+    const [totalPages, settotalPages] = useState(1)
     // console.log(studentId)
     const fetchStudentNocDetails = async () => {
         try {
@@ -38,7 +38,7 @@ const StudentNocRequestTable = ({ studentId }) => {
                     setloading(false)
                     // console.log(resp.data)
                     setstudentNocRequestsApplied(resp?.data?.nocRequests)
-  settotalPages(Math.ceil((resp?.data?.totalRequests) / limit))
+                    settotalPages(Math.ceil((resp?.data?.totalRequests) / limit))
                 }
                 if (!resp?.data?.success) {
                     setstudentNocRequestsApplied(resp?.data?.message)
@@ -54,8 +54,8 @@ const StudentNocRequestTable = ({ studentId }) => {
         if (studentId) {
             fetchStudentNocDetails()
         }
-    }, [studentId,page,limit])
- const handlePageIncrease = () => {
+    }, [studentId, page, limit])
+    const handlePageIncrease = () => {
         if (page < totalPages) {
             setpage((pre) => pre + 1)
         }
@@ -74,7 +74,8 @@ const StudentNocRequestTable = ({ studentId }) => {
                 <TableHeader>
                     <TableRow>
                         <TableHead >Sn.</TableHead>
-                        <TableHead>Status</TableHead>
+                        <TableHead >Department Status</TableHead>
+                        <TableHead>Training & Placement Status</TableHead>
                         <TableHead >Company Name</TableHead>
                         <TableHead>Role</TableHead>
                         <TableHead>Reciever Name</TableHead>
@@ -108,7 +109,8 @@ const StudentNocRequestTable = ({ studentId }) => {
                             <TableRow key={e?._id}>
                                 <TableCell>{i + 1}.</TableCell>
                                 {/* <TableCell className="font-bold">{e?.teacherAction}</TableCell> */}
-                                     <TableCell className="font-bold">{e?.teacherAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.teacherAction}</span>  : e?.teacherAction === 'Reject' ? <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.teacherAction}</span> : <span className='text-sky-600 rounded-full px-2 p-1 text-center border border-sky-700 bg-sky-500/20'>{e?.teacherAction}</span>   }</TableCell>
+                                <TableCell className="font-bold">{e?.teacherAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Reject' ? <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.teacherAction}</span> : <span className='text-sky-600 rounded-full px-2 p-1 text-center border border-sky-700 bg-sky-500/20'>{e?.teacherAction}</span>}</TableCell>
+                                <TableCell className="font-bold ">{e?.tAndPAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.tAndPAction}</span> : e?.tAndPAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.tAndPAction}</span> : <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.tAndPAction}</span>}</TableCell>
                                 <TableCell className="font-bold">{e?.companyName}</TableCell>
                                 <TableCell>{e?.role}</TableCell>
                                 <TableCell>{e?.recieverName}</TableCell>
@@ -170,7 +172,7 @@ const StudentNocRequestTable = ({ studentId }) => {
 
 
             </Table>
-              <div className='flex items-center justify-end w-full pr-4 gap-x-4 '>
+            <div className='flex items-center justify-end w-full pr-4 gap-x-4 '>
                 <Select value={limit.toString()} onValueChange={setlimit}>
                     <SelectTrigger className="w-[70px]">
                         <SelectValue placeholder="Limit" />
