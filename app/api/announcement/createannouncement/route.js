@@ -6,15 +6,22 @@ import { announcementModel } from "@/models/announcement";
 
 export async function POST(req, res) {
     try {
-        const { content, description, embeddedLink, expiresAt, active } = await req.json();
+        const { content, description, embeddedLink, expiresAt, active ,opportunityType} = await req.json();
         await database();
-
+if(!content || !expiresAt || !opportunityType){
+    return NextResponse.json({
+        message:'Fill All Fields Properly',
+        success:false,
+        status:401
+    })
+}
         const createAnnouncement = await announcementModel.create({
             content,
             description,
             embeddedLink,
             expiresAt,
-            active
+            active,
+            opportunityType
         })
         if (!createAnnouncement) {
             return NextResponse.json({

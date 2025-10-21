@@ -39,7 +39,7 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
     const [page, setpage] = useState(1)
     const [totalPages, settotalPages] = useState(1)
     const pathname = usePathname()
-    const path = ["approved-noc"]
+    const path = ["approved-noc", "rejected-noc"]
     // console.log(pathname.includes(path))
     // const [teacherDecision, setteacherDecision] = useState('')
     // const [comment, setcomment] = useState('')
@@ -107,7 +107,7 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                     <TableRow>
                         <TableHead >Sn.</TableHead>
                         <TableHead >Department Status</TableHead>
-                        {pathname.includes(path) && <TableHead>Training & Placement Status</TableHead>}
+                        {(pathname.includes("approved-noc") || pathname.includes("rejected-noc")) && <TableHead>Training & Placement Status</TableHead>}
                         <TableHead>Enrollment Number</TableHead>
                         <TableHead>Student Name</TableHead>
                         <TableHead >Company Name</TableHead>
@@ -142,11 +142,18 @@ const ShowStatusOfNocRequestToCoordinatorOfAllType = ({ coordinatorDepartment, n
                         nocRequestsDataPending?.map((e, i) => (
                             <TableRow key={e?._id}>
                                 <TableCell>{i + 1}.</TableCell>
-                                <TableCell className="font-bold">{e?.teacherAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.teacherAction}</span>  : e?.teacherAction === 'Reject' ? <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.teacherAction}</span> : <span className='text-sky-600 rounded-full px-2 p-1 text-center border border-sky-700 bg-sky-500/20'>{e?.teacherAction}</span>   }</TableCell>
-                                {pathname.includes(path) &&
-                                  <TableCell className="font-bold ">{e?.tAndPAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.tAndPAction}</span> : e?.tAndPAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.tAndPAction}</span>  :  <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.tAndPAction}</span>    }</TableCell>
+                                <TableCell className="font-bold">{e?.teacherAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Reject' ? <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.teacherAction}</span> : <span className='text-sky-600 rounded-full px-2 p-1 text-center border border-sky-700 bg-sky-500/20'>{e?.teacherAction}</span>}</TableCell>
+                                {
+                                    (pathname.includes("approved-noc") || pathname.includes("rejected-noc")) &&
+                                    <TableCell className="font-bold ">
+                                        {e?.teacherAction === 'Reject' ?
+<span className='text-blue-600 rounded-full px-2 p-1 text-center border border-blue-800 bg-blue-500/20'>Restricted</span>
+                                        :
+                                        
+                                        e?.tAndPAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.tAndPAction}</span> : e?.tAndPAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.tAndPAction}</span> : <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.tAndPAction}</span>}
+                                    </TableCell>
                                 }
-                               
+
                                 <TableCell className="font-bold">{e?.enrollmentNumber}</TableCell>
                                 <TableCell className="font-bold">{e?.student?.name}</TableCell>
                                 <TableCell className="font-bold">{e?.companyName}</TableCell>

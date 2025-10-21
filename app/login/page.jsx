@@ -2,8 +2,9 @@
 import { DepartmentSelectorforStudentRegister } from '@/components/DepartmentSelectorforStudentRegister'
 import GoogleButton from '@/components/GoogleButton'
 import Navbar from '@/components/Navbar'
+import { ShineBorder } from '@/components/ui/shine-border'
 import axios from 'axios'
-import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { ChevronLeft, Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -101,14 +102,15 @@ const page = () => {
 
     return (
         <div>
-            <div className='absolute top-0 z-40 bg-black/30 backdrop-blur-sm w-full flex items-center'>
-                <Navbar />
+            <div className='absolute top-0 z-40  w-full flex items-center pl-4'>
+                <h2 onClick={()=>router.push('/')} className='font-semibold mt-8 ml-14 text-white cursor-pointer select-none p-2 hover:bg-white/30 rounded-lg flex items-center '><ChevronLeft /> Back</h2>
             </div>
-            <div className='backban w-full h-screen bg-black flex items-center justify-center text-white '>
+            <div className='backban w-full h-screen bg-black flex items-center justify-center  '>
 
                 <div className='z-30 md:w-[60%] w-[95%] text-center '>
                     <div className='w-full flex items-center justify-center ' style={{ margin: '4px' }}>
-                        <div style={{ padding: '10px' }} className='md:w-[50%] w-[90%] bg-black/70  shadow-xl shadow-black rounded-sm backdrop-blur-lg relative'>
+                        <div style={{ padding: '10px' }} className='md:w-[50%] w-[90%] bg-white  shadow-xl shadow-black rounded-lg backdrop-blur-lg relative'>
+                    <ShineBorder borderWidth={3} shineColor={["#FF0080", "#7928CA", "#0070F3", "#38bdf8"]}  />
                             {
                                 loading && <div className='absolute left-0 top-0 h-full w-full bg-black/45 flex items-center justify-center rounded-sm z-30'>
                                     <Loader2 className='animate-spin' />
@@ -121,18 +123,18 @@ const page = () => {
                                     <div className='w-full'>
                                         {logger === 'SignUp' && <h2 className='text-left font-semibold'>Full Name</h2>}
                                         {
-                                            logger === 'SignUp' && <input value={name} onChange={(e) => setname(e.target.value)} placeholder='Full name' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="text" className='outline-none  w-full bg-zinc-900/70 text-white text-lg focus-within:border border-red-500 rounded-md' />
+                                            logger === 'SignUp' && <input value={name} onChange={(e) => setname(e.target.value)} placeholder='Full name' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="text" className='outline-none  w-full  text-lg focus-within:border border-red-500 rounded-md' />
                                         }
                                     </div>
                                     <div className='w-full'>
                                         {logger === 'SignUp' && <h2 className='text-left font-semibold'>Enrollment Number</h2>}
                                         {
-                                            logger === 'SignUp' && <input value={enrollmentNumber} onChange={(e) => setenrollmentNumber(e.target.value)} placeholder='Enrollment Number' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="text" className='outline-none  w-full bg-zinc-900/70 text-white text-lg focus-within:border border-red-500 rounded-md' />
+                                            logger === 'SignUp' && <input value={enrollmentNumber} onChange={(e) => setenrollmentNumber(e.target.value)} placeholder='Enrollment Number' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="text" className='outline-none  w-full  text-lg focus-within:border border-red-500 rounded-md' />
                                         }
                                     </div>
                                     <div className='w-full'>
                                         <h2 className='text-left font-semibold'>Email</h2>
-                                        <input required value={email} onChange={(e) => setemail(e.target.value)} placeholder='Email address' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="email" className='outline-none  w-full bg-zinc-900/70 text-white text-lg  focus-within:border border-red-500 rounded-md' />
+                                        <input required value={email} onChange={(e) => setemail(e.target.value)} placeholder='Email address' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="email" className='outline-none  w-full  text-lg  focus-within:border border-red-500 rounded-md' />
                                     </div>
                                     <div className="relative w-full">
                                         <h2 className='text-left font-semibold'>Password</h2>
@@ -143,7 +145,7 @@ const page = () => {
                                             placeholder="Password"
                                             type={showPassword ? "text" : "password"}
                                             style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }}
-                                            className="outline-none focus-within:border border-red-500 rounded-md w-full bg-zinc-900/70 text-white text-lg"
+                                            className="outline-none focus-within:border border-red-500 rounded-md w-full  text-lg"
                                         />
 
                                         {/* Eye button */}
@@ -162,7 +164,7 @@ const page = () => {
                                         logger === 'SignUp' &&
                                         <div className='w-full flex items-center justify-start flex-wrap'>
                                             <h2 className='text-left font-semibold mr-2'>Select Department</h2>
-                                            <DepartmentSelectorforStudentRegister getDepartmentValue={setdepartment} />
+                                            <DepartmentSelectorforStudentRegister settheme={'light'} getDepartmentValue={setdepartment} />
                                         </div>
                                     }
 
@@ -176,9 +178,9 @@ const page = () => {
                                         <p style={{ marginTop: '10px' }} className='text-left '>Don't have an account? <span onClick={() => setlogger('SignUp')} className='hover:underline cursor-pointer select-none font-extrabold text-red-700'>SignUp</span></p>
                                 }
                                 {
-                                    logger === 'SignUp' ? <button style={{ marginTop: '12px', padding: '5px' }} type='submit' className='bg-red-700 w-full hover:bg-red-600 cursor-pointer'>SignUp</button>
+                                    logger === 'SignUp' ? <button style={{ marginTop: '12px', padding: '5px' }} type='submit' className='bg-blue-600 w-full font-semibold text-white hover:bg-blue-500 cursor-pointer'>SignUp</button>
                                         :
-                                        <button style={{ marginTop: '12px', padding: '5px' }} type='submit' className='bg-red-700 w-full hover:bg-red-600 cursor-pointer'>Login</button>
+                                        <button style={{ marginTop: '12px', padding: '5px' }} type='submit' className='bg-blue-600 w-full font-semibold text-white hover:bg-blue-500 cursor-pointer'>Login</button>
                                 }
 
                             </form>

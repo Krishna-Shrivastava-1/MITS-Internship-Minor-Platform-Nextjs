@@ -25,7 +25,7 @@ import {
 import { Button } from "./ui/button";
 import toast from "react-hot-toast";
 import { BellPlus, Pencil } from "lucide-react";
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 const CreateAnnouncement = () => {
     const [open, setOpen] = useState(false)
     const [content, setContent] = useState("");
@@ -42,13 +42,14 @@ const CreateAnnouncement = () => {
     const [editactive, seteditactive] = useState(false)
     const [dialogueOpen, setdialogueOpen] = useState(false)
     const [announcementData, setannouncementData] = useState([])
-  
-
+  const [opportunityType, setopportunityType] = useState('')
+  const [editOpportunityType, seteditOpportunityType] = useState('')
+const [selectedAnnouncement, setSelectedAnnouncement] = useState([])
     const fetchAnnouncement = async () => {
         try {
             const resp = await axios.get('/api/announcement/getannouncementforsuperadmin')
             if (resp?.data?.success) {
-                console.log(resp?.data?.getAnnouncement)
+                // console.log(resp?.data?.getAnnouncement)
                 setannouncementData(resp?.data?.getAnnouncement)
             }
         } catch (error) {
@@ -65,7 +66,8 @@ const handleSubmit = async (e) => {
     description,
     embeddedLink,
     expiresAt,
-    active
+    active,
+    opportunityType
   });
 
   if (resp?.data?.success) {
@@ -75,8 +77,10 @@ const handleSubmit = async (e) => {
             setEmbeddedLink('')
             setExpiryDate('')
             setactive(false)
+            setopportunityType('')
             setExpiryTime('')
             fetchAnnouncement()
+            
             setOpen(false)
   
   } else {
@@ -93,15 +97,19 @@ const handleSubmit = async (e) => {
     // console.log(expiryTime)
     // console.log(announcementData)
 const openDialog = (item) => {
-  const d = new Date(item?.expiresAt);
-  seteditExpiryDate(d.toLocaleDateString("en-CA")); // "YYYY-MM-DD"
-  seteditExpiryTime(d.toLocaleTimeString("en-GB", { hour12: false }).slice(0, 5)); // "HH:MM"
-  seteditContent(item?.content || "");
-  seteditDescription(item?.description || "");
-  seteditactive(item?.active || false);
-  seteditEmbeddedLink(item?.embeddedLink || "");
+  setSelectedAnnouncement(item); // 👈 track which one we are editing
+  const d = new Date(item.expiresAt);
+
+  seteditExpiryDate(d.toLocaleDateString("en-CA"));
+  seteditExpiryTime(d.toLocaleTimeString("en-GB", { hour12: false }).slice(0, 5));
+  seteditContent(item.content || "");
+  seteditDescription(item.description || "");
+  seteditactive(item.active || false);
+  seteditEmbeddedLink(item.embeddedLink || "");
+  seteditOpportunityType(item.opportunityType || "general");
   setdialogueOpen(true);
 };
+
 
 
 
@@ -115,10 +123,18 @@ const handleUpdate = async (id) => {
       embeddedLink: editembeddedLink,
       expiresAt,
       active: editactive,
+      opportunityType:editOpportunityType
     });
 
     if (resp?.data?.success) {
       toast.success("Announcement updated successfully");
+          setContent('')
+            seteditDescription('')
+            seteditEmbeddedLink('')
+            seteditExpiryDate('')
+            seteditactive(false)
+            seteditOpportunityType('')
+            seteditExpiryTime('')
       setdialogueOpen(false);
       fetchAnnouncement();
     } else {
@@ -129,7 +145,7 @@ const handleUpdate = async (id) => {
     toast.error("An error occurred while updating");
   }
 };
-
+// console.log(opportunityType)
     return (
         <div>
             <Dialog open={open} onOpenChange={setOpen}>
@@ -138,6 +154,19 @@ const handleUpdate = async (id) => {
                     <DialogHeader>
                         <DialogTitle>Add Announcement</DialogTitle>
                         <form onSubmit={handleSubmit} className=" w-full mx-auto space-y-3">
+
+                            <h3 className="font-semibold ">Annoucement type</h3>
+                               <Select onValueChange={setopportunityType}>
+                                                            <SelectTrigger >
+                                                                <SelectValue placeholder="Announcement Type" />
+                                                            </SelectTrigger>
+                                                            <SelectContent >
+                                                                <SelectItem value="general">General</SelectItem>
+                                                                <SelectItem value="placement">Placement</SelectItem>
+                                                                <SelectItem value="internship">Internship</SelectItem>
+                                                               
+                                                            </SelectContent>
+                                                        </Select>
                             <h3 className="font-semibold ">Main Annoucement Heading</h3>
                             <Input
                                 type="text"
@@ -207,6 +236,7 @@ const handleUpdate = async (id) => {
                         <TableRow>
                             <TableHead className="">Sr.</TableHead>
                             <TableHead className="">Status</TableHead>
+                            <TableHead className="">Announcement Type</TableHead>
                             <TableHead className="">Content</TableHead>
                             <TableHead className="">Description</TableHead>
                             <TableHead className="">Embedded Link</TableHead>
@@ -220,30 +250,34 @@ const handleUpdate = async (id) => {
                     </TableHeader>
                     <TableBody>
 
-                        {
-                            announcementData?.map((e, index) => (
-                                <TableRow key={e?._id}>
-                                    <TableCell>{index + 1}.</TableCell>
-                                    <TableCell>
-                                        {e?.active ? 'Active' : 'Not Active'}
-                                    </TableCell>
+                      {announcementData?.map((e, index) => (
+  <TableRow key={e._id}>
+    <TableCell>{index + 1}.</TableCell>
+    <TableCell>{e.active ? 'Active' : 'Not Active'}</TableCell>
+    <TableCell className="capitalize">{e.opportunityType}</TableCell>
+    <TableCell>{e.content}</TableCell>
+    <TableCell>{e.description}</TableCell>
+    <TableCell>{e.embeddedLink}</TableCell>
+    <TableCell>{new Date(e.expiresAt).toLocaleDateString()}</TableCell>
+    <TableCell>{new Date(e.expiresAt).toLocaleTimeString()}</TableCell>
+    <TableCell>{new Date(e.createdAt).toLocaleDateString()}</TableCell>
+    <TableCell>{new Date(e.createdAt).toLocaleTimeString()}</TableCell>
+    <TableCell>
+      <Pencil
+        onClick={() => openDialog(e)}
+        className="size-8 bg-neutral-950 rounded-md cursor-pointer select-none text-white hover:bg-neutral-900 p-2"
+      />
+    </TableCell>
+  </TableRow>
+))}
 
-                                    <TableCell>{e?.content}</TableCell>
-                                    <TableCell>{e?.description}</TableCell>
-                                    <TableCell>{e?.embeddedLink}</TableCell>
-                                    <TableCell>{new Date(e?.expiresAt).toLocaleDateString()}</TableCell>
-                                    <TableCell>{new Date(e?.expiresAt).toLocaleTimeString()}</TableCell>
-                                    <TableCell>{new Date(e?.createdAt).toLocaleDateString()}</TableCell>
-                                    <TableCell>{new Date(e?.createdAt).toLocaleTimeString()}</TableCell>
-                                    <TableCell>
-                                        <span
-                                            onClick={() => openDialog(e)}
-                                            
-                                        >
-                                            <Pencil className="size-8 bg-neutral-950 rounded-md cursor-pointer select-none text-white  hover:bg-neutral-900 p-2"/>
-                                        </span>
 
-                                       {dialogueOpen && (
+
+
+                    </TableBody>
+                </Table>
+                {/* ✳️ Single Dialog Outside Map */}
+{dialogueOpen && selectedAnnouncement && (
   <div
     onClick={() => setdialogueOpen(false)}
     className="fixed inset-0 z-50 flex items-center justify-center bg-black/30"
@@ -255,19 +289,33 @@ const handleUpdate = async (id) => {
       <h2 className="text-lg font-semibold mb-3">Edit Announcement</h2>
 
       <div className="w-full mx-auto space-y-3">
+        <h3 className="font-semibold">Announcement type</h3>
+        <Select
+          value={editOpportunityType}
+          onValueChange={seteditOpportunityType}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Announcement Type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="general">General</SelectItem>
+            <SelectItem value="placement">Placement</SelectItem>
+            <SelectItem value="internship">Internship</SelectItem>
+          </SelectContent>
+        </Select>
+
         <h3 className="font-semibold">Main Announcement Heading</h3>
         <Input
           type="text"
           placeholder="Content"
           value={editcontent}
           onChange={(e) => seteditContent(e.target.value)}
-          required
         />
 
         <h3 className="font-semibold">Description about Announcement</h3>
         <Textarea
-        className="border p-2 w-full max-h-[200px] whitespace-pre-wrap"
-          placeholder="Description (optional)"
+          className="border p-2 w-full max-h-[200px]"
+          placeholder="Description"
           value={editdescription}
           onChange={(e) => seteditDescription(e.target.value)}
         />
@@ -275,7 +323,6 @@ const handleUpdate = async (id) => {
         <h3 className="font-semibold">Link to Embed</h3>
         <Input
           type="text"
-          placeholder="Embedded Link (optional)"
           value={editembeddedLink}
           onChange={(e) => seteditEmbeddedLink(e.target.value)}
         />
@@ -287,28 +334,26 @@ const handleUpdate = async (id) => {
             value={editexpiryDate}
             onChange={(e) => seteditExpiryDate(e.target.value)}
             className="border p-2 w-1/2"
-            required
           />
           <input
             type="time"
             value={editexpiryTime}
             onChange={(e) => seteditExpiryTime(e.target.value)}
             className="border p-2 w-1/2"
-            required
           />
         </div>
 
-        <div className="flex items-center space-x-2 cursor-pointer select-none">
+        <div className="flex items-center space-x-2">
           <Switch
             checked={editactive}
-            onCheckedChange={(val) => seteditactive(val)}
+            onCheckedChange={seteditactive}
             id="active-toggle"
           />
           <Label htmlFor="active-toggle">Active to Public</Label>
         </div>
 
         <Button
-          onClick={() => handleUpdate(e?._id)}
+          onClick={() => handleUpdate(selectedAnnouncement._id)}
           className="bg-blue-700 hover:bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
         >
           Update Announcement
@@ -317,14 +362,6 @@ const handleUpdate = async (id) => {
     </div>
   </div>
 )}
-
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        }
-
-                    </TableBody>
-                </Table>
             </div>
         </div>
 

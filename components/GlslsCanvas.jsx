@@ -81,7 +81,7 @@ const StripeCanvas = () => {
     }, []);
 
     return <canvas ref={canvasRef} width={1200} height={640}   className="absolute left-0 right-0 top-0 h-[450px] lg:h-[640px] w-full overflow-hidden"
-      style={{ transform: "translateY(-33%) skewY(-12deg)" }} />;
+      />;
 };
 
 export default StripeCanvas;

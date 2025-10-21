@@ -8,14 +8,15 @@ import { announcementModel } from "@/models/announcement";
 export async function PUT(req, { params }) {
     try {
         const { id } = await params
-      const { content, description, embeddedLink, expiresAt, active } = await req.json();
+      const { content, description, embeddedLink, expiresAt, active,opportunityType } = await req.json();
         await database()
    const updateAnnouncement = await announcementModel.findByIdAndUpdate(id,{
     content,
     description,
     embeddedLink,
     expiresAt,
-    active
+    active,
+    opportunityType
    },{new:true})
    if(!updateAnnouncement){
     return NextResponse.json({

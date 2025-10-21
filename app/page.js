@@ -1,19 +1,37 @@
 import AccordionLandingPage from "@/components/AccordionLandingPage";
-import BellAnnouncement from "@/components/BellAnnouncement";
+
 import CarouselSliderLandingPage from "@/components/CarouselSliderLandingPage";
-import CompaniesSliderLandingPage from "@/components/CompaniesSliderLandingPage";
+
 import Footer from "@/components/Footer";
 import StripeCanvas from "@/components/GlslsCanvas";
 import LandingPageHeroSection from "@/components/LandingPageHeroSection";
 import LandingPageNavbar from "@/components/LandingPageNavbar";
+import LogoLoop from "@/components/LogoLoop";
 import Navbar from "@/components/Navbar";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import UpcommingNotificationSliders from "@/components/UpcommingNotificationSliders";
+import { UspToShow } from "@/components/UspToShow";
 import { ArrowRight, ChevronRight, MoveRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { SiWipro, SiInfosys, SiTcs, SiAccenture,SiCognizant,SiCisco ,SiAmazon} from 'react-icons/si';
+import { FcGoogle } from "react-icons/fc";
+import AnimatedBeamDemo from "@/components/WhytoChoose";
+
 export default function Home() {
+
+const techLogos = [
+  { node: <SiWipro />, title: "Wipro", href: "https://react.dev" },
+  { node: <SiInfosys />, title: "Infosys", href: "https://nextjs.org" },
+  { node: <SiTcs />, title: "TCS", href: "https://www.typescriptlang.org" },
+  { node: <SiAccenture />, title: "Accenture", href: "https://tailwindcss.com" },
+  { node: <FcGoogle />, title: "Google", href: "https://tailwindcss.com" },
+  { node: <SiCognizant />, title: "Cognizant", href: "https://tailwindcss.com" },
+  { node: <SiCisco />, title: "Cisco", href: "https://tailwindcss.com" },
+  { node: <SiAmazon />, title: "Amazon", href: "https://tailwindcss.com" },
+];
+
   return (
     <div className="">
       {/* <Navbar /> */}
@@ -70,11 +88,34 @@ export default function Home() {
 
       </div> */}
 <LandingPageNavbar />
-<BellAnnouncement />
+
   <LandingPageHeroSection />
-  {/* <CompaniesSliderLandingPage /> */}
+   <div className="flex items-center justify-center w-full">
+     <div className='flex items-center sm:flex-nowrap w-[90%] flex-wrap' style={{ height: '200px', position: 'relative', overflow: 'hidden'}}>
+      <h1 className="font-bold text-2xl">Our Placement Partners</h1>
+      <LogoLoop
+        logos={techLogos}
+        speed={100}
+        direction="left"
+        logoHeight={48}
+        gap={40}
+        pauseOnHover
+        scaleOnHover
+        fadeOut
+        fadeOutColor="#ffffff"
+        ariaLabel="Technology partners"
+      />
+    </div>
+   </div>
+
+  <UspToShow />
+  <div className="text-center flex items-center justify-center flex-col w-full p-2">
+
+  <AnimatedBeamDemo />
+  </div>
+
   <AccordionLandingPage />
-  <TestimonialsSection />
+  {/* <TestimonialsSection /> */}
   <Footer />
       {/* <div className="h-screen"></div> */}
       {/* Home page */}

@@ -10,7 +10,7 @@ export async function GET(req, res) {
         await database();
 
          await announcementModel.deleteMany({expiresAt:{$lte:now}})
-     const getAnnouncement = await announcementModel.find()
+     const getAnnouncement = await announcementModel.find().sort({created:-1})
         if (!getAnnouncement || getAnnouncement.length === 0) {
             return NextResponse.json({
                 message: 'No Announcement found',

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Badge } from './ui/badge'
-import CompaniesSliderLandingPage from './CompaniesSliderLandingPage'
+
 // import {
 //   Dialog,
 //   DialogContent,
@@ -15,6 +15,19 @@ import CompaniesSliderLandingPage from './CompaniesSliderLandingPage'
 // } from "@/components/ui/dialog"
 // import axios from 'axios'
 // import { Button } from './ui/button'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
+import { Button } from './ui/button'
+import { BlurFade } from './ui/blur-fade'
+import { Highlighter } from './ui/highlighter'
+import { AuroraText } from './ui/aurora-text'
 
 const LandingPageHeroSection = () => {
 //   const [announcementData, setannouncementData] = useState([])
@@ -61,7 +74,7 @@ const LandingPageHeroSection = () => {
   return (
     <div>
 
-      <section className="bg-[url(https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradientBackground.png)] w-full bg-no-repeat bg-cover bg-center text-sm pb-20 bg-gradient-to-l from-[#f0f4f9] to-transparent mt-20">
+      <section className=" w-full text-sm pb-2   mt-20">
 
 
 
@@ -77,17 +90,24 @@ const LandingPageHeroSection = () => {
          
         </button> */}
         {/* </div> */}
-        <h5 className="text-4xl md:text-7xl font-medium max-w-[850px] p-2 text-center mx-auto mt-8">
-          Welcome to the MITS-DU Internship & Placement Portal
+        <BlurFade delay={0.25} duration={0.7} inView>
+      
+   <h5 className="text-4xl md:text-7xl font-bold tracking-tighter max-w-[850px] p-2 text-center mx-auto mt-8">
+          Welcome to the <AuroraText colors={["#FF0080", "#7928CA", "#0070F3", "#38bdf8"]}>MITS-DU</AuroraText>  Internship & {" "}
+        <Highlighter animationDuration={4000} action="highlight" iterations={62} isView color="#87CEFA">
+          NOC Portal
+        </Highlighter>{" "}
         </h5>
 
         <p className="text-sm md:text-base mx-auto max-w-2xl text-center mt-6 max-md:px-2">Stay connected and organized with all your internship and placement activities in one place. Submit your internship records, track NOC requests, and explore placement opportunities effortlessly. This portal ensures a smooth experience for both students and faculty, keeping all academic and career-related data streamlined and accessible.</p>
+        </BlurFade>
+     
 
-        <div className="mx-auto w-full flex items-center justify-center  gap-3 mt-4">
+        <div className="mx-auto w-full flex items-center flex-col justify-center  gap-3 mt-4">
           <div className="group text-white">
             <Link
               href="/login"
-              className="flex items-center gap-1 font-semibold text-md p-2 w-[150px] transition-all duration-300 bg-black rounded-md hover:rounded-none text-nowrap"
+              className="flex items-center gap-1 font-semibold text-md p-2 w-[150px] transition-all duration-300 bg-[#1a73e8] rounded-md hover:rounded-none text-nowrap"
             >
               <ArrowRight
                 // 👇 FIX: Use opacity and translate for smooth transition instead of 'hidden'/'block'
@@ -100,7 +120,18 @@ const LandingPageHeroSection = () => {
               </span>
             </Link>
           </div>
-
+{/* <Sheet>
+  <SheetTrigger>Open</SheetTrigger>
+  <SheetContent side='left'>
+    <SheetHeader>
+      <SheetTitle>Are you absolutely sure?</SheetTitle>
+      <SheetDescription>
+        This action cannot be undone. This will permanently delete your account
+        and remove your data from our servers.
+      </SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet> */}
           {/* <Dialog  open={open} onOpenChange={setOpen}>
             <DialogTrigger>
                <div className="group text-white">
@@ -159,9 +190,14 @@ const LandingPageHeroSection = () => {
           {/* <div>
        <p className="py-6 text-slate-600 mt-14">Trused by -: MITS</p>
   </div> */}
+     <div className="py-6 m-3 text-slate-600 mt-4 flex items-center justify-center">Trused by -:<span className='flex items-center justify-center'> <Image src={'https://web.mitsgwalior.in/images/mits-logo.png'} alt='logo' width={40} height={40} /> <p>Madhav Institute of Technology & Science</p></span></div>
         </div>
-        <CompaniesSliderLandingPage />
+     
       </section>
+
+
+   
+  
     </div>
   )
 }

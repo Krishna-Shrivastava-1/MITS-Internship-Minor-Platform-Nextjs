@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 const announcementSchema = new mongoose.Schema({
+  opportunityType:{
+type:String,
+enum:['placement','internship','general'],
+default:'general'
+  },
   content:{
     type:String,
     trim:true,

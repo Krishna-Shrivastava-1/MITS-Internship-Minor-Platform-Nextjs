@@ -40,7 +40,7 @@ export function TeacherAppSidebar({
 }) {
   const { fetchUserByIdState } = DataProviderContextAPI()
   const pathname = usePathname();
-  const { setOpenMobile } = useSidebar();
+  const { setOpenMobile,toggleSidebar } = useSidebar();
 
   // Close sidebar on mobile when route changes
   React.useEffect(() => {
@@ -77,6 +77,13 @@ export function TeacherAppSidebar({
       {
         title: "Home",
         url: "/admin",
+        icon: House,
+
+
+      },
+      {
+        title: "Internship Details",
+        url: "/admin/internship",
         icon: House,
 
 

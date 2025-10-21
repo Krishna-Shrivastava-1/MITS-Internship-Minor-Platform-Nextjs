@@ -24,56 +24,67 @@ const AccordionLandingPage = () => {
                     <p className="text-sm text-slate-500 mt-2 pb-4">
                        Let you Doubts Resolve?
                     </p>
-      <Accordion
-      type="single"
-      collapsible
-      className="w-[320px] md:w-lg"
-      defaultValue="item-1"
-    >
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Product Information</AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            Our flagship product combines cutting-edge technology with sleek
-            design. Built with premium materials, it offers unparalleled
-            performance and reliability.
-          </p>
-          <p>
-            Key features include advanced processing capabilities, and an
-            intuitive user interface designed for both beginners and experts.
-          </p>
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger>Shipping Details</AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            We offer worldwide shipping through trusted courier partners.
-            Standard delivery takes 3-5 business days, while express shipping
-            ensures delivery within 1-2 business days.
-          </p>
-          <p>
-            All orders are carefully packaged and fully insured. Track your
-            shipment in real-time through our dedicated tracking portal.
-          </p>
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-3">
-        <AccordionTrigger>Return Policy</AccordionTrigger>
-        <AccordionContent className="flex flex-col gap-4 text-balance">
-          <p>
-            We stand behind our products with a comprehensive 30-day return
-            policy. If you&apos;re not completely satisfied, simply return the
-            item in its original condition.
-          </p>
-          <p>
-            Our hassle-free return process includes free return shipping and
-            full refunds processed within 48 hours of receiving the returned
-            item.
-          </p>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+     <Accordion
+  type="single"
+  collapsible
+  className="w-[320px] md:w-lg"
+  defaultValue="item-1"
+>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>What is MITS-DU NOC Portal?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-4 text-balance">
+      <p>
+        The MITS-DU NOC Portal is a centralized platform for students to apply for No Objection Certificates (NOCs) efficiently. It allows submission, tracking, and management of all NOC-related documents in one place.
+      </p>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="item-2">
+    <AccordionTrigger>How do I apply for a NOC?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-4 text-balance">
+      <p>
+        Students can apply for a NOC by filling out the application form and uploading the necessary documents such as offer letters or completion certificates. Once submitted, the request is routed to the concerned teacher for approval.
+      </p>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="item-3">
+    <AccordionTrigger>How will I know when my NOC is approved?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-4 text-balance">
+      <p>
+        Once your NOC is approved, the system automatically sends a notification email with the approved NOC PDF. You can also track the status directly in your dashboard.
+      </p>
+    </AccordionContent>
+  </AccordionItem>
+
+  {/* <AccordionItem value="item-4">
+    <AccordionTrigger>Can I access my documents anytime?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-4 text-balance">
+      <p>
+        Yes! All uploaded and approved documents, including offer letters, completion certificates, and NOCs, are securely stored and can be accessed anytime through your student dashboard.
+      </p>
+    </AccordionContent>
+  </AccordionItem> */}
+
+  <AccordionItem value="item-5">
+    <AccordionTrigger>Is my data secure?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-4 text-balance">
+      <p>
+        Absolutely. The portal uses secure authentication and cloud storage policies to ensure that all student documents and personal information remain private and protected.
+      </p>
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="item-6">
+    <AccordionTrigger>What if I face issues using the portal?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-4 text-balance">
+      <p>
+        For any technical or NOC-related issues, students can contact the support team via the portal. Our team ensures prompt assistance and resolution of your concerns.
+      </p>
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
     </div>
     </div>
     </div>

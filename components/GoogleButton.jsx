@@ -1,15 +1,29 @@
+import { RainbowButton } from "./ui/rainbow-button";
+
+
 export default function GoogleButton() {
   const handleGoogleLogin = () => {
     window.location.href = "/api/auth/google";
   };
 
   return (
-    <button
+    <>
+    
+    {/* <button
       onClick={handleGoogleLogin}
-      className="flex items-center justify-center gap-2 bg-neutral-800  px-4 py-2 rounded-md shadow-sm hover:bg-neutral-700 cursor-pointer select-none "
+      className="flex items-center  animated-google-button  justify-center gap-2 font-semibold 
+        px-4 py-2 rounded-md shadow-sm  cursor-pointer select-none "
     >
-      <img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google" width={20} />
+     
+      <img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google" width={25} />
       Continue with Google
-    </button>
+    </button> */}
+    <RainbowButton  onClick={handleGoogleLogin}
+      className="flex items-center  justify-center gap-2 font-semibold 
+        px-4 py-2 rounded-md shadow-sm  cursor-pointer select-none " size='lg' >
+             <img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google" width={25} />
+      Continue with Google
+        </RainbowButton>
+    </>
   );
 }
