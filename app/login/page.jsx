@@ -103,7 +103,7 @@ const page = () => {
     return (
         <div>
             <div className='absolute top-0 z-40  w-full flex items-center pl-4'>
-                <h2 onClick={()=>router.push('/')} className='font-semibold mt-8 ml-14 text-white cursor-pointer select-none p-2 hover:bg-white/30 rounded-lg flex items-center '><ChevronLeft /> Back</h2>
+                <h2 onClick={()=>router.push('/')} className='font-semibold mt-8 ml-3 text-white cursor-pointer select-none p-2 hover:bg-white/30 rounded-lg flex items-center '><ChevronLeft /> Back</h2>
             </div>
             <div className='backban w-full h-screen bg-black flex items-center justify-center  '>
 
