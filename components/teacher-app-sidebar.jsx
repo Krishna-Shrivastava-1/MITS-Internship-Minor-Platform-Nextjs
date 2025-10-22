@@ -60,70 +60,131 @@ export function TeacherAppSidebar({
     return () => window.removeEventListener("resize", resizeListener);
   }, [pathname, setOpenMobile]);
   // console.log(fetchUserByIdState)
-  const data = {
-    user: {
-      name: fetchUserByIdState?.name,
-      email: fetchUserByIdState?.email,
-      avatar: fetchUserByIdState?.profilePic,
+  const navMain = [
+  {
+    title: "Home",
+    url: "/admin",
+    icon: House,
+  },
+  {
+    title: "Internship Details",
+    url: "/admin/internship",
+    icon: House,
+  },
+  // Conditionally include NOC Details
+  ...(fetchUserByIdState?.assignedDepartmentForNocRequest
+    ? [
+        {
+          title: "NOC Details",
+          url: "#",
+          icon: ClipboardCheck,
+          isActive: true,
+          items: [
+            {
+              title: "NOC Requests",
+              url: "/admin/noc-requests",
+              icon: ClipboardCheck,
+            },
+            {
+              title: "Approved NOC",
+              url: "/admin/approved-noc",
+              icon: BookOpen,
+            },
+            {
+              title: "Rejected NOC",
+              url: "/admin/rejected-noc",
+              icon: Settings2,
+            },
+            {
+              title: "Allowed Edit NOC",
+              url: "/admin/allow-edit-noc",
+              icon: Settings2,
+            },
+          ],
+        },
+      ]
+    : []),
+];
+const data = {
+  user: {
+    name: fetchUserByIdState?.name,
+    email: fetchUserByIdState?.email,
+    avatar: fetchUserByIdState?.profilePic,
+  },
+  teams: [
+    {
+      name: "MITS-DU INTERNSHIP/",
+      logo: GalleryVerticalEnd,
+      plan: "Placement Portal",
     },
-    teams: [
-      {
-        name: "MITS-DU INTERNSHIP/",
-        logo: GalleryVerticalEnd,
-        plan: "Placement Portal",
-      }
-    ],
-    navMain: [
-      {
-        title: "Home",
-        url: "/admin",
-        icon: House,
+  ],
+  navMain,
+};
+
+  // const data = {
+  //   user: {
+  //     name: fetchUserByIdState?.name,
+  //     email: fetchUserByIdState?.email,
+  //     avatar: fetchUserByIdState?.profilePic,
+  //   },
+  //   teams: [
+  //     {
+  //       name: "MITS-DU INTERNSHIP/",
+  //       logo: GalleryVerticalEnd,
+  //       plan: "Placement Portal",
+  //     }
+  //   ],
+  //   navMain: [
+  //     {
+  //       title: "Home",
+  //       url: "/admin",
+  //       icon: House,
 
 
-      },
-      {
-        title: "Internship Details",
-        url: "/admin/internship",
-        icon: House,
+  //     },
+  //     {
+  //       title: "Internship Details",
+  //       url: "/admin/internship",
+  //       icon: House,
 
 
-      },
-      {
-        title: "NOC Details",
-        url: "#",
-        icon: ClipboardCheck,
-        isActive: true,
-        items: [
-          {
-            title: "NOC Requests",
-            url: "/admin/noc-requests",
-            icon: ClipboardCheck,
+  //     },
+  //     {
+  //       title: "NOC Details",
+  //       url: "#",
+  //       icon: ClipboardCheck,
+  //       isActive: true,
+  //       items: [
+  //         {
+  //           title: "NOC Requests",
+  //           url: "/admin/noc-requests",
+  //           icon: ClipboardCheck,
 
-          },
-          {
-            title: "Approved NOC",
-            url: "/admin/approved-noc",
-            icon: BookOpen,
+  //         },
+  //         {
+  //           title: "Approved NOC",
+  //           url: "/admin/approved-noc",
+  //           icon: BookOpen,
 
-          },
-          {
-            title: "Rejected NOC",
-            url: "/admin/rejected-noc",
-            icon: Settings2,
+  //         },
+  //         {
+  //           title: "Rejected NOC",
+  //           url: "/admin/rejected-noc",
+  //           icon: Settings2,
 
-          },
-          {
-            title: "Allowed Edit NOC",
-            url: "/admin/allow-edit-noc",
-            icon: Settings2,
+  //         },
+  //         {
+  //           title: "Allowed Edit NOC",
+  //           url: "/admin/allow-edit-noc",
+  //           icon: Settings2,
 
-          },
-        ],
-      },
+  //         },
+  //       ],
+  //     },
 
-    ]
+  //   ]
 
-  }
+  // }
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="bg-[#f0f4f9]">

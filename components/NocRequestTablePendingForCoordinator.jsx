@@ -172,7 +172,7 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
                         <TableRow>
                             <TableCell colSpan={12} className="text-center py-6">
                                 <Loader2 className="mx-auto h-6 w-6 animate-spin text-gray-700" />
-                                <span className="block text-sm text-gray-500 mt-2">Loading internships...</span>
+                                <span className="block text-sm text-gray-500 mt-2">Loading NOC Requests...</span>
                             </TableCell>
                         </TableRow>
                     ) : nocRequestsDataPending?.length > 0 ? (

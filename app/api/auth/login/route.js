@@ -7,11 +7,15 @@ import { cookies } from "next/headers";
 import { studentModel } from "@/models/student";
 import { teacherModel } from "@/models/teacher";
 import database from "@/Database/db";
+import { loginRateLimiter } from "@/rateLimit/rateLimiter";
 
 const secretKey = process.env.SecretKey;
 const secretAdminEmail = process.env.SecretAdminEmail;
 export async function POST(req) {
     try {
+      const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown";
+// console.log('ip - ',ip)
+        await loginRateLimiter.consume(ip);
         const { email, password, enrollmentNumber } = await req.json();
         await database();
         if (!email || !password) {
@@ -63,7 +67,7 @@ export async function POST(req) {
         }
         const oneday = 24 * 60 * 60 * 1000;
         const expirationDate = new Date(Date.now() + oneday);
-        const res =  NextResponse.json({
+        const res = NextResponse.json({
             // token: token,
             message: `Logged in Successfully`,
             // message: `Logged in Successfully User - ${user.name}`,
@@ -72,7 +76,7 @@ export async function POST(req) {
             _id: user?._id
 
         });
-      
+
         res.cookies.set("authtoken", token, {
             httpOnly: true,
             sameSite: "lax",
@@ -80,12 +84,13 @@ export async function POST(req) {
             secure: process.env.NODE_ENV === "production",
             maxAge: 24 * 60 * 60,
         });
-return res
+        return res
 
     } catch (error) {
-        console.log('error from login ', error.message);
+       
+        // console.log('error from login ', error);
         return NextResponse.json({
-            message: "Server error",
+            message: `${error?.remainingPoints > 0 ? 'Server Error' : `Too many requests, try again in ${Math.ceil(error.msBeforeNext/1000)}s`}`,
             success: false,
         });
     }

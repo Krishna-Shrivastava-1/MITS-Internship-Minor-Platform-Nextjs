@@ -53,7 +53,7 @@ try {
     const resp  =await axios.get(`/api/nocrequests/getnocrequestbyid/${id}`)
     if(resp?.data?.success){
          
-        // console.log(resp?.data)
+        console.log(resp?.data)
         // console.log(resp?.data?.nocRequestData?.offerLetter)
         setCompanyName(resp?.data?.nocRequestData?.companyName)
         setYearOfStudy(resp?.data?.nocRequestData?.yearOfStudy)
@@ -157,22 +157,32 @@ useEffect(() => {
       }
 }, [teacherAction])
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setloading(true)
     try {
-         if(!file){
+         if(!file && !offerLetter){
       toast.error("Offer Letter is Not Selected");
       setloading(false);
       return;
     }
-        const uploadedUrl = await handleUpload();
+   let uploadedUrl;
 
-    if (!uploadedUrl) {
-      toast.error("File Upload failed");
-      setloading(false);
-      return;
-    }
+// If there’s no existing offer letter, upload a new file
+if (!offerLetter) {
+  uploadedUrl = await handleUpload();
+
+  if (!uploadedUrl) {
+    toast.error("File Upload failed");
+    setloading(false);
+    return;
+  }
+} else {
+  // If offerLetter already exists, use it
+  uploadedUrl = offerLetter;
+}
       const validSemesters = {
         1: [1, 2],
         2: [3, 4],
@@ -238,6 +248,7 @@ useEffect(() => {
       setloading(false)
     }
   }
+// console.log('offer letter '+offerLetter)
   const currentYear = new Date().getFullYear()
   const year = Array.from({ length: 3 }, (_, i) => currentYear - 2 + i)
   return (
@@ -343,8 +354,20 @@ useEffect(() => {
         </div>
 
           <div className='w-fit'>
-                 <label>Offer Letter (PDF)</label>
-                 <Input  type='file' accept='application/pdf' onChange={handleChange} required />
+            <label>Offer Letter (PDF)</label>
+            {
+              offerLetter ?
+              <div className='border rounde-lg '><a className='text-blue-700 hover:underline' href={offerLetter} target="_blank" rel="noopener noreferrer">View</a>
+              <div className='flex items-center gap-x-4'>
+                <p className=''>Wanted to Remove this File?</p>
+                <Button onClick={()=>setOfferLetter('')} variant={'destructive'}>Delete</Button>
+              </div>
+              </div>
+              :
+              
+              <Input  type='file' accept='application/pdf' onChange={handleChange} required />
+            }
+                 
                </div>
 
         {/* <div>

@@ -15,6 +15,7 @@ const NocDetailCountCards = () => {
     // console.log(nocResponseCount)
   return (
     <div>
+      <h1 className='text-center font-bold text-3xl'>Hi, {fetchUserByIdState?.name}</h1>
       {fetchUserByIdState?.assignedDepartmentForNocRequest && (
          <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">

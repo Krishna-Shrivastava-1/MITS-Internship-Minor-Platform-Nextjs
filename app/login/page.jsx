@@ -123,18 +123,18 @@ const page = () => {
                                     <div className='w-full'>
                                         {logger === 'SignUp' && <h2 className='text-left font-semibold'>Full Name</h2>}
                                         {
-                                            logger === 'SignUp' && <input value={name} onChange={(e) => setname(e.target.value)} placeholder='Full name' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="text" className='outline-none  w-full  text-lg focus-within:border border-red-500 rounded-md' />
+                                            logger === 'SignUp' && <input value={name} onChange={(e) => setname(e.target.value)} placeholder='Full name' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="text" className='outline-none  w-full  text-lg bg-neutral-100 focus-within:border border-red-500 rounded-md' />
                                         }
                                     </div>
                                     <div className='w-full'>
                                         {logger === 'SignUp' && <h2 className='text-left font-semibold'>Enrollment Number</h2>}
                                         {
-                                            logger === 'SignUp' && <input value={enrollmentNumber} onChange={(e) => setenrollmentNumber(e.target.value)} placeholder='Enrollment Number' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="text" className='outline-none  w-full  text-lg focus-within:border border-red-500 rounded-md' />
+                                            logger === 'SignUp' && <input value={enrollmentNumber} onChange={(e) => setenrollmentNumber(e.target.value)} placeholder='Enrollment Number' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="text" className='outline-none  w-full bg-neutral-100 text-lg focus-within:border border-red-500 rounded-md' />
                                         }
                                     </div>
                                     <div className='w-full'>
                                         <h2 className='text-left font-semibold'>Email</h2>
-                                        <input required value={email} onChange={(e) => setemail(e.target.value)} placeholder='Email address' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="email" className='outline-none  w-full  text-lg  focus-within:border border-red-500 rounded-md' />
+                                        <input required value={email} onChange={(e) => setemail(e.target.value)} placeholder='Email address' style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }} type="email" className='outline-none bg-neutral-100 w-full  text-lg  focus-within:border border-red-500 rounded-md' />
                                     </div>
                                     <div className="relative w-full">
                                         <h2 className='text-left font-semibold'>Password</h2>
@@ -145,7 +145,7 @@ const page = () => {
                                             placeholder="Password"
                                             type={showPassword ? "text" : "password"}
                                             style={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px' }}
-                                            className="outline-none focus-within:border border-red-500 rounded-md w-full  text-lg"
+                                            className="outline-none bg-neutral-100 focus-within:border border-red-500 rounded-md w-full  text-lg"
                                         />
 
                                         {/* Eye button */}

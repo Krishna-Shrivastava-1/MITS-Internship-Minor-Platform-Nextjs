@@ -55,7 +55,7 @@ const InternshipDataTableforTeacherpage = () => {
         try {
             if (!fetchUserByIdState?.department) return
             setloading(true)
-            const resp = await axios.get(`/api/teacher/getinternshipdetailsasperteacherdeptandfilter?dept=${fetchUserByIdState?.department}&sessionyear=${sessionYear.trim()}&sessionhalf=${sessionHalf?.trim()}&year=${yearOfStudy?.trim()}&semester=${semester?.trim()}&page=${page}&limit=${limit}`)
+            const resp = await axios.get(`/api/teacher/getinternshipdetailsasperteacherdeptandfilter?dept=${fetchUserByIdState?.department}&sessionyear=${sessionYear.trim()}&sessionhalf=${sessionHalf?.trim()}&year=${yearOfStudy?.trim()}&semester=${semester?.trim()}&page=${page}&limit=${limit}&export`)
             if (resp?.data?.success) {
                 setloading(false)
                 // console.log(resp?.data)
@@ -165,7 +165,7 @@ const handleExport = async () => {
     );
 
     if (resp.data.success) {
-        console.log(resp)
+        // console.log(resp)
       const data = resp.data.internshipData.map((item, index) => ({
         "S.No": index + 1,
         "Student Name": item.student?.name || "N/A",
@@ -290,7 +290,10 @@ const handleExport = async () => {
                             <TableHead>Offer Letter</TableHead>
                             <TableHead>Completion Certificate</TableHead>
 
+{
+    fetchUserByIdState?.assignedDepartmentForNocRequest === fetchUserByIdState?.department &&
                             <TableHead>Actions</TableHead>
+}
 
                         </TableRow>
                     </TableHeader>
@@ -353,7 +356,9 @@ const handleExport = async () => {
                                             </span>
                                         )}
                                     </TableCell>
-                                    <TableCell>
+                                    {
+                                         fetchUserByIdState?.assignedDepartmentForNocRequest === fetchUserByIdState?.department &&
+                                               <TableCell>
                                         <Dialog>
                                             <DialogTrigger asChild>
                                                 <Button className="cursor-pointer">Action</Button>
@@ -419,6 +424,8 @@ const handleExport = async () => {
                                             </DialogContent>
                                         </Dialog>
                                     </TableCell>
+                                    }
+                              
 
                                 </TableRow>
                             ))
