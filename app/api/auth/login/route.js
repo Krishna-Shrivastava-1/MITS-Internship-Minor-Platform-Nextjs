@@ -13,8 +13,8 @@ const secretKey = process.env.SecretKey;
 const secretAdminEmail = process.env.SecretAdminEmail;
 export async function POST(req) {
     try {
-      const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown";
-// console.log('ip - ',ip)
+        const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || req.headers.get("cf-connecting-ip") || "unknown";
+        // console.log('ip - ', ip)
         await loginRateLimiter.consume(ip);
         const { email, password, enrollmentNumber } = await req.json();
         await database();
@@ -76,7 +76,11 @@ export async function POST(req) {
             _id: user?._id
 
         });
-
+        try {
+            await loginRateLimiter.delete(ip);
+        } catch (e) {
+            console.warn("Failed to reset limiter:", e.message);
+        }
         res.cookies.set("authtoken", token, {
             httpOnly: true,
             sameSite: "lax",
@@ -84,13 +88,14 @@ export async function POST(req) {
             secure: process.env.NODE_ENV === "production",
             maxAge: 24 * 60 * 60,
         });
+
         return res
 
     } catch (error) {
-       
+
         // console.log('error from login ', error);
         return NextResponse.json({
-            message: `${error?.remainingPoints > 0 ? 'Server Error' : `Too many requests, try again in ${Math.ceil(error.msBeforeNext/1000)}s`}`,
+            message: `${error?.remainingPoints > 0 ? 'Server Error' : `Too many requests, try again in ${Math.ceil(error.msBeforeNext / 1000)}s`}`,
             success: false,
         });
     }
