@@ -165,7 +165,7 @@ const page = () => {
   const currentYear = new Date().getFullYear()
   const year = Array.from({ length: 3 }, (_, i) => currentYear - 2 + i)
   return (
-    <div className="max-w-3xl mx-auto p-6 border shadow-xl rounded-md shadow-black my-3 relative z-10">
+    <div className="max-w-3xl mx-auto p-6 border shadow-xl rounded-md shadow-black my-3 relative z-10 mb-6">
      {loading &&   <div className='w-full absolute top-0 left-0 flex items-center justify-center bg-white/20 h-full'> <Spinner /></div>}
       <h1 className="text-2xl font-bold mb-6">NOC Application Details</h1>
       <form onSubmit={handleSubmit} className="space-y-4">

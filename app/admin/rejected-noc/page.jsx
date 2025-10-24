@@ -7,7 +7,8 @@ const page = () => {
   const {fetchUserByIdState} = DataProviderContextAPI()
   return (
     <div>
-      Rejected NOC Reuqests
+        <h1 className='m-3 font-semibold text-lg'> Rejected NOC Reuqests</h1>
+     
       <ShowStatusOfNocRequestToCoordinatorOfAllType nameOfApi={'reject'} coordinatorDepartment={fetchUserByIdState?.assignedDepartmentForNocRequest} />
     </div>
   )

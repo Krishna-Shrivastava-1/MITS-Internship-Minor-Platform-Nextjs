@@ -62,7 +62,8 @@ const StudentPageInternshipDetails = ({ studentId }) => {
     return (
         <div>
             <h1 className='m-3 font-semibold text-lg'>Internship Data</h1>
-            <Table>
+          <div className='m-3'>
+              <Table>
                 {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                 <TableHeader>
                     <TableRow>
@@ -152,6 +153,7 @@ const StudentPageInternshipDetails = ({ studentId }) => {
 
 
             </Table>
+          </div>
         </div>
     )
 }

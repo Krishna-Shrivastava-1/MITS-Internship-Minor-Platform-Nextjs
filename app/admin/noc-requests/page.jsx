@@ -11,8 +11,9 @@ const page = () => {
   
   return (
     <div>
-      All NOC Requests
+     
 <div className=' w-full'>
+     <h1 className='m-3 font-semibold text-lg'> All NOC Requests</h1>
   <NocRequestTablePendingForCoordinator coordinatorDepartment={fetchUserByIdState?.assignedDepartmentForNocRequest} />
 </div>
     </div>

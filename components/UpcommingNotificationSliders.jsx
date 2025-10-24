@@ -90,6 +90,9 @@ const internshipAnno = announcementData.filter((e)=>e?.opportunityType === 'inte
  <SheetContent side='top' > 
   <SheetHeader> <SheetTitle>Announcement</SheetTitle>
   <div className="flex items-stretch justify-between  gap-4 scrollo">
+    {
+      !generalAnno.length > 0 && !placementAnno.length >0 && !internshipAnno.length > 0 && <p>No Announcement to Show.</p>
+    }
   {/* General */}
   {generalAnno?.length > 0 && (() => {
     const { bg, text } = randomBgColor();
@@ -153,37 +156,6 @@ const internshipAnno = announcementData.filter((e)=>e?.opportunityType === 'inte
     );
   })()}
 
-
-
-     {/* {
-            announcementData?.map((e) => {
-                 const { bg, text } = randomBgColor();
-              
-                return (
-                  <div key={e?._id}>
-                   <div className='w-full backdrop-blur-sm '>
-                  <div className="flex flex-wrap items-center justify-center w-full py-2 font-medium text-sm text-center  rounded-lg"
-                   style={{ backgroundColor: bg, color: text }}
-                  >
-                    <h2 className='font-bold text-md mr-2'>{e?.content}</h2>
-
-                    {e?.embeddedLink && <a target='_blank' rel="noopener noreferrer" href={
-                      e.embeddedLink.startsWith("http://") || e.embeddedLink.startsWith("https://")
-                        ? e.embeddedLink
-                        : `https://${e.embeddedLink}`
-                    }><Button className='cursor-pointer select-none'>View Here     <svg width="14" height="14" viewBox="0 0 14 14" fill={bg} xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2.91797 7H11.0846" stroke={text} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M7 2.9165L11.0833 6.99984L7 11.0832" stroke={text} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                      </Button>
-                    </a>}
-                  </div>
-                </div>
-              </div>
-                )
-               
-})
-          } */}
 
   </div>
   </SheetHeader>

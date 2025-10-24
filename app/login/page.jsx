@@ -109,7 +109,7 @@ const page = () => {
 
                 <div className='z-30 md:w-[60%] w-[95%] text-center '>
                     <div className='w-full flex items-center justify-center ' style={{ margin: '4px' }}>
-                        <div style={{ padding: '10px' }} className='md:w-[50%] w-[90%] bg-white  shadow-xl shadow-black rounded-lg backdrop-blur-lg relative'>
+                        <div style={{ padding: '10px' }} className='md:w-lg w-[90%] bg-white  shadow-xl shadow-black rounded-lg backdrop-blur-lg relative'>
                     <ShineBorder borderWidth={3} shineColor={["#FF0080", "#7928CA", "#0070F3", "#38bdf8"]}  />
                             {
                                 loading && <div className='absolute left-0 top-0 h-full w-full bg-black/45 flex items-center justify-center rounded-sm z-30'>

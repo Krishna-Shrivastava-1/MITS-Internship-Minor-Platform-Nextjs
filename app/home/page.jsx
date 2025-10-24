@@ -11,7 +11,7 @@ const page = () => {
     // console.log(fetchUserByIdState)
   return (
     <div>
-      Home
+      
       <StudentPageInternshipDetails studentId={userIdFromToken?.id} />
 
     </div>

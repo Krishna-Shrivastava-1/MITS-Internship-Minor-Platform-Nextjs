@@ -116,7 +116,7 @@ const techLogos = [
 
   <AccordionLandingPage />
   {/* <TestimonialsSection /> */}
-  <Footer />
+  {/* <Footer /> */}
       {/* <div className="h-screen"></div> */}
       {/* Home page */}
 

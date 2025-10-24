@@ -7,6 +7,9 @@ import {
   Bot,
   ClipboardCheck,
   Command,
+  FilePlus2,
+  Files,
+  FileText,
   Frame,
   GalleryVerticalEnd,
   House,
@@ -40,7 +43,7 @@ export function StudentAppSidebar({
 }) {
 const {fetchUserByIdState} = DataProviderContextAPI()
   const pathname = usePathname();
-  const { setOpenMobile } = useSidebar(); 
+   const { setOpenMobile, setOpen, open } = useSidebar() 
 
   // Close sidebar on mobile when route changes
   React.useEffect(() => {
@@ -84,22 +87,24 @@ const {fetchUserByIdState} = DataProviderContextAPI()
        {
       title: "Add Internship",
       url: "/home/add-internship",
-      icon: BookOpen,
+      icon: FilePlus2,
     
     },
      {
       title: "NOC Details",
       url: "#",
-      icon: ClipboardCheck,
+      icon: Files,
       isActive: true,
       items: [
         {
           title: "Apply for NOC",
           url: "/home/apply-noc",
+          icon: FilePlus2,
         },
         {
           title: "Applied NOC",
           url: "/home/applied-noc",
+          icon: FileText,
         }
       ],
     },
@@ -121,7 +126,12 @@ const {fetchUserByIdState} = DataProviderContextAPI()
 
 }
   return (
-    <Sidebar  collapsible="icon" {...props}>
+      <div
+      onMouseEnter={() => setOpen(true)} // 👈 expands when hovered
+      onMouseLeave={() => setOpen(false)} // 👈 collapses when cursor leaves
+      className="transition-all duration-300 delay-200" // smooth animation
+    >
+         <Sidebar  collapsible="icon" {...props}>
       <SidebarHeader className="bg-[#f0f4f9]">
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
@@ -129,10 +139,12 @@ const {fetchUserByIdState} = DataProviderContextAPI()
         <NavMain items={data.navMain} />
       
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <NavUser user={data.user} />
-      </SidebarFooter>
+      </SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
+    </div>
+ 
   );
 }

@@ -7,7 +7,8 @@ const page = () => {
     const {fetchUserByIdState} = DataProviderContextAPI()
   return (
     <div>
-      NOC Request You Allowed For Edit
+      
+      <h1 className='m-3 font-semibold text-lg'>NOC Request You Allowed For Edit</h1>
        <ShowStatusOfNocRequestToCoordinatorOfAllType nameOfApi={'allowedit'} coordinatorDepartment={fetchUserByIdState?.assignedDepartmentForNocRequest} />
     </div>
   )

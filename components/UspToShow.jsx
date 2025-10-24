@@ -18,10 +18,10 @@ export function UspToShow() {
     <div className="overflow-x-hidden">
       <AnimatedContent
   distance={150}
-  direction="horizontal"
+  direction="vertical"
   reverse={false}
   duration={1.2}
-  ease="bounce.out"
+  ease="power3.out"
   initialOpacity={0.2}
   animateOpacity
   scale={1.1}

@@ -138,7 +138,7 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
     }
     // console.log(teacherDecision)
     return (
-        <div className="w-full overflow-x-auto border p-2 px-5">
+        <div className="w-full overflow-x-auto  p-2 px-5">
             <Table >
                 {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                 <TableHeader>

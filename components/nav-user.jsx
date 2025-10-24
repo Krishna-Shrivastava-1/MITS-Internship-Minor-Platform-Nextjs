@@ -38,6 +38,7 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
 const {logout,fetchUserByIdState} = DataProviderContextAPI()
+// console.log(fetchUserByIdState)
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -47,14 +48,14 @@ const {logout,fetchUserByIdState} = DataProviderContextAPI()
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer">
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">{user?.name?.[0]}</AvatarFallback>
+                {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
+                <AvatarFallback className="rounded-lg">{fetchUserByIdState?.name?.[0]}</AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-bold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
-              </div>
-              <EllipsisVertical className="ml-auto size-4" />
+              {/* <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-bold">{fetchUserByIdState.name}</span>
+                <span className="truncate text-xs">{fetchUserByIdState.email}</span>
+              </div> */}
+              {/* <EllipsisVertical className="ml-auto size-4" /> */}
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -65,12 +66,12 @@ const {logout,fetchUserByIdState} = DataProviderContextAPI()
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">{user?.name?.[0]}</AvatarFallback>
+                  {/* <AvatarImage src={fetchUserByIdState.avatar} alt={fetchUserByIdState.name} /> */}
+                  <AvatarFallback className="rounded-lg">{fetchUserByIdState?.name?.[0]}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-bold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-bold">{fetchUserByIdState?.name}</span>
+                  <span className="truncate text-xs">{fetchUserByIdState?.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

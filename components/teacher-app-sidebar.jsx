@@ -7,14 +7,13 @@ import {
   Bot,
   ClipboardCheck,
   Command,
-  Frame,
   GalleryVerticalEnd,
   House,
-  Map,
+  CircleX,
   PieChart,
-  Settings2,
-  SquareTerminal,
-  UserRoundPlus,
+  FilePenLine,
+  Inbox,
+  CircleCheckBig
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -40,7 +39,7 @@ export function TeacherAppSidebar({
 }) {
   const { fetchUserByIdState } = DataProviderContextAPI()
   const pathname = usePathname();
-  const { setOpenMobile,toggleSidebar } = useSidebar();
+  const { setOpenMobile,toggleSidebar,setOpen, open } = useSidebar();
 
   // Close sidebar on mobile when route changes
   React.useEffect(() => {
@@ -69,7 +68,7 @@ export function TeacherAppSidebar({
   {
     title: "Internship Details",
     url: "/admin/internship",
-    icon: House,
+    icon: Command,
   },
   // Conditionally include NOC Details
   ...(fetchUserByIdState?.assignedDepartmentForNocRequest
@@ -77,7 +76,7 @@ export function TeacherAppSidebar({
         {
           title: "NOC Details",
           url: "#",
-          icon: ClipboardCheck,
+          icon: Inbox,
           isActive: true,
           items: [
             {
@@ -88,17 +87,17 @@ export function TeacherAppSidebar({
             {
               title: "Approved NOC",
               url: "/admin/approved-noc",
-              icon: BookOpen,
+              icon: CircleCheckBig,
             },
             {
               title: "Rejected NOC",
               url: "/admin/rejected-noc",
-              icon: Settings2,
+              icon: CircleX,
             },
             {
               title: "Allowed Edit NOC",
               url: "/admin/allow-edit-noc",
-              icon: Settings2,
+              icon: FilePenLine,
             },
           ],
         },
@@ -186,7 +185,12 @@ const data = {
 
   // }
   return (
-    <Sidebar collapsible="icon" {...props}>
+     <div
+      onMouseEnter={() => setOpen(true)} // 👈 expands when hovered
+      onMouseLeave={() => setOpen(false)} // 👈 collapses when cursor leaves
+      className="transition-all duration-300 delay-200" // smooth animation
+    >
+        <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="bg-[#f0f4f9]">
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
@@ -194,10 +198,12 @@ const data = {
         <NavMain items={data.navMain} />
 
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <NavUser user={data.user} />
-      </SidebarFooter>
+      </SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
+    </div>
+  
   );
 }
