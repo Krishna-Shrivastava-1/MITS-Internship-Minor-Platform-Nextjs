@@ -1,4 +1,5 @@
 // 'use client'
+export const dynamic = "force-dynamic";
 // import { DataProviderContextAPI } from '@/components/ContextApi'
 import { getCurrentUser } from '@/app/lib/getCurrentUser'
 import PaginationControls from '@/components/PaginationControls'
