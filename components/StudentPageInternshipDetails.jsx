@@ -12,26 +12,34 @@ import {
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import useSWR from 'swr'
-const fetcher = (url) => axios.get(url).then((res) => res.data)
-const StudentPageInternshipDetails = ({ studentId }) => {
-    const [internshipData, setinternshipData] = useState([])
+// import { DataProviderContextAPI } from './ContextApi'
+// const fetcher = (url) => axios.get(url).then((res) => res.data)
+const StudentPageInternshipDetails = ({ internships }) => {
+    // const {fetchUserByIdState,userIdFromToken} = DataProviderContextAPI()
+    // const [internshipData, setinternshipData] = useState([])
     const [loading, setloading] = useState(true)
+    useEffect(() => {
+     if(internships){
+        setloading(false)
+     }
+    }, [internships])
+    
     // console.log(studentId)
 
- const { data, error, isLoading, mutate } = useSWR(
-    studentId ? `/api/student/getinternshipdetailsofstudentbyid/${studentId}` : null,
-    fetcher,
-    {
-      revalidateOnFocus: true, // auto refresh when user switches tab or focuses page again
-      dedupingInterval: 120000, // cache data for 60 seconds to prevent redundant calls
-    }
-  );
+//  const { data, error, isLoading, mutate } = useSWR(
+//     studentId ? `/api/student/getinternshipdetailsofstudentbyid/${studentId}` : null,
+//     fetcher,
+//     {
+//       revalidateOnFocus: true, // auto refresh when user switches tab or focuses page again
+//       dedupingInterval: 120000, // cache data for 60 seconds to prevent redundant calls
+//     }
+//   );
 
   
 //   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Something went wrong: {error.message}</p>;
+//   if (error) return <p>Something went wrong: {error.message}</p>;
 
-  const internships = data?.success ? data?.internships : [];
+//   const internships = data?.success ? data?.internships : [];
 // console.log(internships)
     // const fetchStudentInternshipDetails = async () => {
     //     try {
@@ -85,7 +93,7 @@ const StudentPageInternshipDetails = ({ studentId }) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {isLoading ? (
+                    {loading ? (
                         <TableRow>
                             <TableCell colSpan={12} className="text-center py-6">
                                 <Loader2 className="mx-auto h-6 w-6 animate-spin text-gray-700" />

@@ -37,7 +37,8 @@ export async function POST(req) {
 
         if (!teacher && !user) {
             return NextResponse.json({
-                message: "User Not Found",
+                message: "Invalid Credential",
+                // message: "User Not Found",
                 success: false,
             });
         }

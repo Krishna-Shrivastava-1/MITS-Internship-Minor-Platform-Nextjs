@@ -18,8 +18,9 @@ import Link from "next/link";
 import { SiWipro, SiInfosys, SiTcs, SiAccenture,SiCognizant,SiCisco ,SiAmazon} from 'react-icons/si';
 import { FcGoogle } from "react-icons/fc";
 import AnimatedBeamDemo from "@/components/WhytoChoose";
+import axios from "axios";
 
-export default function Home() {
+export default async function Home() {
 
 const techLogos = [
   { node: <SiWipro />, title: "Wipro", href: "https://react.dev" },
@@ -31,7 +32,12 @@ const techLogos = [
   { node: <SiCisco />, title: "Cisco", href: "https://tailwindcss.com" },
   { node: <SiAmazon />, title: "Amazon", href: "https://tailwindcss.com" },
 ];
+ const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/announcement/getannouncementforlandingpageandfiltered`, {
+    cache: "force-cache", // or 'force-cache' if you want caching
+  })
+  const data = await resp.json()
 
+  const announcementData = data?.getAnnouncement || []
   return (
     <div className="">
       {/* <Navbar /> */}
@@ -58,7 +64,7 @@ const techLogos = [
         </div>
       </div> */}
      <div className="mx-3 mb-1">
-       <UpcommingNotificationSliders />
+       <UpcommingNotificationSliders announcementData={announcementData} />
      </div>
       {/* <div className="relative flex w-full flex-col items-center px-5 ">
         <header >

@@ -20,21 +20,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { ShineBorder } from './ui/shine-border'
-const UpcommingNotificationSliders = () => {
-  const [announcementData, setannouncementData] = useState([])
-  const fetchAnnouncement = async () => {
-    try {
-      const resp = await axios.get('/api/announcement/getannouncementforlandingpageandfiltered')
-      if (resp?.data?.success) {
-        setannouncementData(resp?.data?.getAnnouncement)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-  useEffect(() => {
-    fetchAnnouncement()
-  }, [])
+const UpcommingNotificationSliders = ({announcementData}) => {
+
 let usedHues = new Set();
 
 const randomBgColor = () => {

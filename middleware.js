@@ -47,5 +47,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/superadmin/:path*", "/admin/:path*", "/home/:path*", "/login"]
+  matcher: ["/superadmin/:path*", "/admin/:path*", "/home/:path*", "/login","/setup-student-profile"]
 };

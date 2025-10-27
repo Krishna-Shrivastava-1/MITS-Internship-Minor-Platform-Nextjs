@@ -23,52 +23,96 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
-const StudentNocRequestTable = ({ studentId }) => {
+
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+const StudentNocRequestTable = ({ studentNocData }) => {
     const [studentNocRequestsApplied, setstudentNocRequestsApplied] = useState([])
     const [loading, setloading] = useState(true)
-    const [limit, setlimit] = useState(10)
-    const [page, setpage] = useState(1)
-    const [totalPages, settotalPages] = useState(1)
-    // console.log(studentId)
-    const fetchStudentNocDetails = async () => {
-        try {
-            if (studentId) {
-                const resp = await axios.get(`/api/student/getnocrequestbystudentid/${studentId}?limit=${limit}&page=${page}`)
-                if (resp?.data?.success) {
-                    setloading(false)
-                    // console.log(resp.data)
-                    setstudentNocRequestsApplied(resp?.data?.nocRequests)
-                    settotalPages(Math.ceil((resp?.data?.totalRequests) / limit))
-                }
-                if (!resp?.data?.success) {
-                    setstudentNocRequestsApplied(resp?.data?.message)
-                    setloading(false)
-                }
-            }
-        } catch (error) {
-            console.log(error.message)
+    // const [limit, setlimit] = useState(10)
+    const [status, setStatus] = useState('')
+    // const [totalPages, settotalPages] = useState(1)
+    useEffect(() => {
+        if (studentNocData) {
             setloading(false)
         }
-    }
-    useEffect(() => {
-        if (studentId) {
-            fetchStudentNocDetails()
-        }
-    }, [studentId, page, limit])
-    const handlePageIncrease = () => {
-        if (page < totalPages) {
-            setpage((pre) => pre + 1)
-        }
+    }, [studentNocData])
+    const router = useRouter();
+  const searchParams = useSearchParams()
+
+  // ✅ Read current status directly from URL
+  const currentStatus = searchParams.get('status') || 'all'
+
+  const updateStatus = (selectedStatus) => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (selectedStatus === 'all') {
+      params.delete('status') // remove it from URL if “All” selected
+    } else {
+      params.set('status', selectedStatus)
     }
 
-    const handlePageDecrease = () => {
-        if (page > 1) {
-            setpage((pre) => pre - 1)
-        }
-    }
-    // console.log(studentNocRequestsApplied)
+    router.push(`?${params.toString()}`)
+
+
+  }
+    // console.log(studentId)
+    // const fetchStudentNocDetails = async () => {
+    //     try {
+    //         if (studentId) {
+    //             const resp = await axios.get(`/api/student/getnocrequestbystudentid/${studentId}?limit=${limit}&page=${page}`)
+    //             if (resp?.data?.success) {
+    //                 setloading(false)
+    //                 // console.log(resp.data)
+    //                 setstudentNocRequestsApplied(resp?.data?.nocRequests)
+    //                 settotalPages(Math.ceil((resp?.data?.totalRequests) / limit))
+    //             }
+    //             if (!resp?.data?.success) {
+    //                 setstudentNocRequestsApplied(resp?.data?.message)
+    //                 setloading(false)
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.log(error.message)
+    //         setloading(false)
+    //     }
+    // }
+    // useEffect(() => {
+    //     if (studentId) {
+    //         fetchStudentNocDetails()
+    //     }
+    // }, [studentId, page, limit])
+    // const handlePageIncrease = () => {
+    //     if (page < totalPages) {
+    //         setpage((pre) => pre + 1)
+    //     }
+    // }
+
+    // const handlePageDecrease = () => {
+    //     if (page > 1) {
+    //         setpage((pre) => pre - 1)
+    //     }
+    // }
+    // console.log(studentNocData)
+    // console.log(status)
     return (
         <div className='p-2 px-4'>
+            <div className='flex items-center justify-end w-full pr-4 gap-x-4 '>
+                     <Select value={currentStatus} onValueChange={updateStatus}>
+                <SelectTrigger>
+                    <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="Approve">Approve</SelectItem>
+                    <SelectItem value="Reject">Reject</SelectItem>
+                    <SelectItem value="Allow Edit">Allow Edit</SelectItem>
+                    {/* <SelectItem value="Pending">Pending</SelectItem> */}
+                </SelectContent>
+            </Select> 
+            </div>
+      
+
             <Table >
                 {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                 <TableHeader>
@@ -104,20 +148,21 @@ const StudentNocRequestTable = ({ studentId }) => {
                                 <span className="block text-sm text-gray-500 mt-2">Loading NOC Requests...</span>
                             </TableCell>
                         </TableRow>
-                    ) : studentNocRequestsApplied?.length > 0 ? (
-                        studentNocRequestsApplied.map((e, i) => (
+                    ) : studentNocData?.length > 0 ? (
+                        studentNocData.map((e, i) => (
                             <TableRow key={e?._id}>
+
                                 <TableCell>{i + 1}.</TableCell>
                                 {/* <TableCell className="font-bold">{e?.teacherAction}</TableCell> */}
                                 <TableCell className="font-bold">{e?.teacherAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.teacherAction}</span> : e?.teacherAction === 'Reject' ? <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.teacherAction}</span> : <span className='text-sky-600 rounded-full px-2 p-1 text-center border border-sky-700 bg-sky-500/20'>{e?.teacherAction}</span>}</TableCell>
-                                 <TableCell className="font-bold ">
-                                                                        {e?.teacherAction === 'Reject' ?
-                                <span className='text-blue-600 rounded-full px-2 p-1 text-center border border-blue-800 bg-blue-500/20'>Restricted</span>
-                                                                        :
-                                                                        
-                                                                        e?.tAndPAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.tAndPAction}</span> : e?.tAndPAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.tAndPAction}</span> : <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.tAndPAction}</span>
-                                                                        }
-                                                                    </TableCell>
+                                <TableCell className="font-bold ">
+                                    {e?.teacherAction === 'Reject' ?
+                                        <span className='text-blue-600 rounded-full px-2 p-1 text-center border border-blue-800 bg-blue-500/20'>Restricted</span>
+                                        :
+
+                                        e?.tAndPAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.tAndPAction}</span> : e?.tAndPAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.tAndPAction}</span> : <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.tAndPAction}</span>
+                                    }
+                                </TableCell>
                                 {/* <TableCell className="font-bold ">{e?.tAndPAction === 'Pending' ? <span className='text-yellow-600 rounded-full px-2 p-1 text-center border border-yellow-800 bg-orange-500/20'>{e?.tAndPAction}</span> : e?.tAndPAction === 'Approve' ? <span className='text-green-600 rounded-full px-2 p-1 text-center border border-green-800 bg-green-500/20'>{e?.tAndPAction}</span> : <span className='text-red-600 rounded-full px-2 p-1 text-center border border-red-800 bg-red-500/20'>{e?.tAndPAction}</span>}</TableCell> */}
                                 <TableCell className="font-bold">{e?.companyName}</TableCell>
                                 <TableCell>{e?.role}</TableCell>
@@ -180,7 +225,7 @@ const StudentNocRequestTable = ({ studentId }) => {
 
 
             </Table>
-            <div className='flex items-center justify-end w-full pr-4 gap-x-4 '>
+            {/* <div className='flex items-center justify-end w-full pr-4 gap-x-4 '>
                 <Select value={limit.toString()} onValueChange={setlimit}>
                     <SelectTrigger className="w-[70px]">
                         <SelectValue placeholder="Limit" />
@@ -212,7 +257,7 @@ const StudentNocRequestTable = ({ studentId }) => {
                         </PaginationContent>
                     </Pagination>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
