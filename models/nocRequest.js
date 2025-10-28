@@ -42,7 +42,7 @@ const nocSchema = new mongoose.Schema({
     },
     tAndPAction: {
         type: String,
-        enum: ['Approve', 'Reject','Pending'],
+        enum: ['Approve', 'Reject','Pending','Restricted'],
         default: 'Pending'
     },
     comment: {

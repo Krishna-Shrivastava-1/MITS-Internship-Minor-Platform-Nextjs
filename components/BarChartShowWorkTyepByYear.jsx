@@ -1,7 +1,7 @@
 "use client"
 
 import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from "recharts"
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
 import {
   Card,
@@ -88,23 +88,63 @@ const chartConfig = {
 
         </ChartContainer>
       </CardContent> */}
-        <CardContent>
-        <ChartContainer config={chartConfig} className="h-[250px] w-full">
-       <LineChart
-  accessibilityLayer
-  data={chartData}
-  margin={{ left: 12, right: 12 }}
->
-  <CartesianGrid vertical={false} />
-  <XAxis dataKey="year" tickLine={false} axisLine={false} tickMargin={8} />
-  <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-  <Line dataKey="Remote" type="monotone" stroke={chartConfig.remote.color} strokeWidth={2} dot />
-  <Line dataKey="Onsite" type="monotone" stroke={chartConfig.onsite.color} strokeWidth={2} dot />
-  <Line dataKey="Hybrid" type="monotone" stroke={chartConfig.hybrid.color} strokeWidth={2} dot />
-</LineChart>
+    <CardContent>
+  <ChartContainer config={chartConfig} className="h-[250px] w-full">
+    <AreaChart
+      accessibilityLayer
+      data={chartData}
+      margin={{ left: 12, right: 12 }}
+    >
+      <CartesianGrid vertical={false} />
+      <XAxis dataKey="year" tickLine={false} axisLine={false} tickMargin={8} />
+      <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 
-        </ChartContainer>
-      </CardContent>
+      {/* 🌈 Modern gradient fills */}
+      <defs>
+        <linearGradient id="fillRemote" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.8} />
+          <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.1} />
+        </linearGradient>
+        <linearGradient id="fillOnsite" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8} />
+          <stop offset="95%" stopColor="#22C55E" stopOpacity={0.1} />
+        </linearGradient>
+        <linearGradient id="fillHybrid" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#A855F7" stopOpacity={0.8} />
+          <stop offset="95%" stopColor="#A855F7" stopOpacity={0.1} />
+        </linearGradient>
+      </defs>
+
+      {/* 🌟 Smooth gradient areas */}
+      <Area
+        type="monotone"
+        dataKey="Remote"
+        stroke="#3B82F6"
+        fill="url(#fillRemote)"
+        strokeWidth={2.5}
+        dot
+      />
+      <Area
+        type="monotone"
+        dataKey="Onsite"
+        stroke="#22C55E"
+        fill="url(#fillOnsite)"
+        strokeWidth={2.5}
+        dot
+      />
+      <Area
+        type="monotone"
+        dataKey="Hybrid"
+        stroke="#A855F7"
+        fill="url(#fillHybrid)"
+        strokeWidth={2.5}
+        dot
+      />
+    </AreaChart>
+  </ChartContainer>
+</CardContent>
+
+
   
     </Card>
   )

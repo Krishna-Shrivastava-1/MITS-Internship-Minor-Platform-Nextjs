@@ -26,8 +26,9 @@ import {
 
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import moment from 'moment'
 const StudentNocRequestTable = ({ studentNocData }) => {
-    const [studentNocRequestsApplied, setstudentNocRequestsApplied] = useState([])
+    // const [studentNocRequestsApplied, setstudentNocRequestsApplied] = useState([])
     const [loading, setloading] = useState(true)
     // const [limit, setlimit] = useState(10)
     const [status, setStatus] = useState('')
@@ -39,7 +40,7 @@ const StudentNocRequestTable = ({ studentNocData }) => {
     }, [studentNocData])
     const router = useRouter();
   const searchParams = useSearchParams()
-
+// console.log(studentNocData)
   // ✅ Read current status directly from URL
   const currentStatus = searchParams.get('status') || 'all'
 
@@ -107,7 +108,7 @@ const StudentNocRequestTable = ({ studentNocData }) => {
                     <SelectItem value="Approve">Approve</SelectItem>
                     <SelectItem value="Reject">Reject</SelectItem>
                     <SelectItem value="Allow Edit">Allow Edit</SelectItem>
-                    {/* <SelectItem value="Pending">Pending</SelectItem> */}
+                    <SelectItem value="Pending">Pending</SelectItem>
                 </SelectContent>
             </Select> 
             </div>
@@ -129,6 +130,7 @@ const StudentNocRequestTable = ({ studentNocData }) => {
                         <TableHead>Work Type</TableHead>
                         <TableHead>Start Date</TableHead>
                         <TableHead>End Date</TableHead>
+                        <TableHead>Request CreatedAt</TableHead>
                         <TableHead>Year of Study</TableHead>
                         <TableHead>Semester</TableHead>
                         <TableHead>Session Half</TableHead>
@@ -171,8 +173,19 @@ const StudentNocRequestTable = ({ studentNocData }) => {
                                 <TableCell>{e?.stipend}</TableCell>
                                 <TableCell>{e?.duration}</TableCell>
                                 <TableCell>{e?.workType}</TableCell>
-                                <TableCell>{e?.startDate}</TableCell>
-                                <TableCell>{e?.endDate}</TableCell>
+                                <TableCell> {moment(e?.startDate).format("DD-MMM-YYYY")}</TableCell>
+                                <TableCell>  {moment(e?.endDate).format("DD-MMM-YYYY")}</TableCell>
+                              <TableCell className='text-center'>
+  {moment(e?.createdAt).format("DD-MMM-YYYY")}
+<span className='ml-2'>
+      {
+    // Calculate the difference in days
+    moment().diff(moment(e?.createdAt), 'days') < 1
+      ? moment(e?.createdAt).fromNow() // Show "from now" if less than 5 days
+      : '' // Hide "from now" if 5 days or more
+  }
+</span>
+</TableCell>
                                 <TableCell className='text-center'>{e?.yearOfStudy}</TableCell>
                                 <TableCell className='text-center'>{e?.semester}</TableCell>
                                 <TableCell>{e?.sessionHalf}</TableCell>

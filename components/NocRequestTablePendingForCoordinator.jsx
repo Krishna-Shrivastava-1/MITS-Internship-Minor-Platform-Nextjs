@@ -32,7 +32,9 @@ import axios from 'axios'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
 import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
+    const router = useRouter()
     const [loading, setloading] = useState(true)
     const [nocRequestsDataPending, setnocRequestsDataPending] = useState([])
     const [limit, setlimit] = useState(10)
@@ -41,39 +43,44 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
     const [teacherDecision, setteacherDecision] = useState('Pending')
     const [comment, setcomment] = useState('')
     const [open, setopen] = useState(false)
+      useEffect(() => {
+            if (coordinatorDepartment) {
+                setloading(false)
+            }
+        }, [coordinatorDepartment])
     // console.log(coordinatorDepartment)
-    const fetchNocRequestArePending = async () => {
-        try {
-            if (!coordinatorDepartment) return setloading(false)
-            setloading(true)
-            const resp = await axios.get(`/api/nocrequests/getnocrequestforcoordinatorpending?assignedDepartment=${coordinatorDepartment}&page=${page}&limit=${limit}`)
-            if (resp?.data?.success) {
-                setloading(false)
-                // console.log(resp?.data)
-                settotalPages(Math.ceil((resp?.data?.countOfNocRequests) / limit))
-                setnocRequestsDataPending(resp?.data?.getNocRequestArePending)
+    // const fetchNocRequestArePending = async () => {
+    //     try {
+    //         if (!coordinatorDepartment) return setloading(false)
+    //         setloading(true)
+    //         const resp = await axios.get(`/api/nocrequests/getnocrequestforcoordinatorpending?assignedDepartment=${coordinatorDepartment}&page=${page}&limit=${limit}`)
+    //         if (resp?.data?.success) {
+    //             setloading(false)
+    //             // console.log(resp?.data)
+    //             settotalPages(Math.ceil((resp?.data?.countOfNocRequests) / limit))
+    //             setnocRequestsDataPending(resp?.data?.getNocRequestArePending)
 
-            }
-            if (!resp?.data?.success) {
-                setloading(false)
-                console.log(resp?.data)
+    //         }
+    //         if (!resp?.data?.success) {
+    //             setloading(false)
+    //             console.log(resp?.data)
 
 
-            }
-        } catch (error) {
-            console.log(error.message)
-            setloading(false)
-        }
-    }
-    useEffect(() => {
-        if (coordinatorDepartment) {
+    //         }
+    //     } catch (error) {
+    //         console.log(error.message)
+    //         setloading(false)
+    //     }
+    // }
+    // useEffect(() => {
+    //     if (coordinatorDepartment) {
 
-            fetchNocRequestArePending()
-        } else {
-            setloading(false)
-        }
+    //         fetchNocRequestArePending()
+    //     } else {
+    //         setloading(false)
+    //     }
 
-    }, [coordinatorDepartment, page, limit])
+    // }, [coordinatorDepartment, page, limit])
     const handlePageIncrease = () => {
         if (page < totalPages) {
             setpage((pre) => pre + 1)
@@ -121,13 +128,13 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
             if (resp?.data) {
                 // console.log(resp?.data)
                 toast.success(resp?.data?.message)
-                fetchNocRequestArePending()
+          router.refresh()
                 setopen(false)
             }
             if (!resp?.data) {
                 // console.log(resp?.data)
                 toast.error("Noc is not Updated")
-                fetchNocRequestArePending()
+               
                 setopen(false)
             }
         } catch (error) {
@@ -175,8 +182,8 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
                                 <span className="block text-sm text-gray-500 mt-2">Loading NOC Requests...</span>
                             </TableCell>
                         </TableRow>
-                    ) : nocRequestsDataPending?.length > 0 ? (
-                        nocRequestsDataPending?.map((e, i) => (
+                    ) : coordinatorDepartment?.length > 0 ? (
+                        coordinatorDepartment?.map((e, i) => (
                             <TableRow key={e?._id}>
                                 <TableCell>{i + 1}.</TableCell>
                                 <TableCell className="font-bold">{e?.enrollmentNumber}</TableCell>
@@ -259,7 +266,7 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
 
 
             </Table>
-            <div className='flex items-center justify-end w-full pr-4 gap-x-4 '>
+            {/* <div className='flex items-center justify-end w-full pr-4 gap-x-4 '>
                 <Select value={limit.toString()} onValueChange={setlimit}>
                     <SelectTrigger className="w-[70px]">
                         <SelectValue placeholder="Limit" />
@@ -291,7 +298,7 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
                         </PaginationContent>
                     </Pagination>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

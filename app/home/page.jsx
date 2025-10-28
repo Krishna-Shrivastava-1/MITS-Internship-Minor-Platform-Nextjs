@@ -18,7 +18,7 @@ const page = async() => {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/student/getinternshipdetailsofstudentbyid/${userData?.id}`,
     {
       cache: "force-cache", // or "no-store" if dynamic
-      next: { revalidate: 90 }, // optional incremental static regeneration
+      next: { revalidate: 60 }, // optional incremental static regeneration
     }
   )
 

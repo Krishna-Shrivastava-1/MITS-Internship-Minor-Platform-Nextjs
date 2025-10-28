@@ -29,9 +29,11 @@ export default async function page({ searchParams }) {
   const resp = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/student/getnocrequestbystudentid/${userData?.id}?limit=${limit}&page=${page}&status=${sp?.status}`,
    {
-    next: { revalidate: 90 }, // per-user cache key (safe)
+    next: { revalidate: 60 }, // per-user cache key (safe)
   }
+  
   );
+ 
   const data = await resp.json();
   // console.log(data)
   return (

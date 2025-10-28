@@ -11,6 +11,7 @@ import PdfUploader from '@/components/PdfUploader'
 import toast from 'react-hot-toast'
 import { supabase } from '@/lib/supabase'
 import { Spinner } from '@/components/ui/spinner'
+
 const page = () => {
   const { userIdFromToken, fetchUserByIdState } = DataProviderContextAPI()
   // console.log(fetchUserByIdState)
@@ -132,6 +133,7 @@ const page = () => {
       const resp = await axios.post(`/api/student/createnocrequest/${userIdFromToken?.id}`, payload)
       // console.log('Submitting:', payload)
       if (resp?.data?.success) {
+        
         setloading(false)
         toast.success(resp?.data?.message)
         // console.log(resp?.data?.message)

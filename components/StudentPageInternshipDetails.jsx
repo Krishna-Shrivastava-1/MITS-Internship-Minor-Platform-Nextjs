@@ -12,6 +12,7 @@ import {
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import useSWR from 'swr'
+import moment from 'moment'
 // import { DataProviderContextAPI } from './ContextApi'
 // const fetcher = (url) => axios.get(url).then((res) => res.data)
 const StudentPageInternshipDetails = ({ internships }) => {
@@ -89,6 +90,7 @@ const StudentPageInternshipDetails = ({ internships }) => {
                         <TableHead>Session Year</TableHead>
                         <TableHead>Offer Letter</TableHead>
                         <TableHead>Completion Certificate</TableHead>
+                        <TableHead>Created At</TableHead>
 
                     </TableRow>
                 </TableHeader>
@@ -147,7 +149,17 @@ const StudentPageInternshipDetails = ({ internships }) => {
                                         </span>
                                     )}
                                 </TableCell>
-
+ <TableCell className='text-center'>
+  {moment(e?.createdAt).format("DD-MMM-YYYY")}
+<span className='ml-2'>
+      {
+    // Calculate the difference in days
+    moment().diff(moment(e?.createdAt), 'days') < 1
+      ? moment(e?.createdAt).fromNow() // Show "from now" if less than 5 days
+      : '' // Hide "from now" if 5 days or more
+  }
+</span>
+</TableCell>
                             </TableRow>
                         ))
                     ) : (

@@ -37,68 +37,52 @@ export function CountOfInternshipAsPerYear({countOfIntersnhipData}) {
 });
 
   return (
-    <Card className='w-[90%] m-2'>
-      <CardHeader>
-        <CardTitle>Total Internship as per Year</CardTitle>
-       <CardDescription>
-  {chartData.length > 0
-    ? `${chartData[0].year} - ${chartData[chartData.length - 1].year}`
-    : "No data available"}
-</CardDescription>
+  <Card className="w-[90%] m-2 h-[370px] flex flex-col">
+  <CardHeader className="pb-2">
+    <CardTitle>Total Internship as per Year</CardTitle>
+    <CardDescription>
+      {chartData.length > 0
+        ? `${chartData[0].year} - ${chartData[chartData.length - 1].year}`
+        : "No data available"}
+    </CardDescription>
+  </CardHeader>
 
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="year"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            //   tickFormatter={(value) => value.slice(0, 3)}
+  <CardContent className="flex-1 relative overflow-hidden">
+    <ChartContainer config={chartConfig} className="h-full w-full">
+      <LineChart
+        data={chartData}
+        margin={{ top: 20, right: 20, left: 12, bottom: 10 }}
+      >
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="year"
+          tickLine={false}
+          axisLine={false}
+          tickMargin={8}
+        />
+        <ChartTooltip
+          cursor={false}
+          content={
+            <ChartTooltipContent
+              formatter={(value, name, props) =>
+                `Year: ${props.payload.year}, Internship Count: ${value}`
+              }
             />
-             <ChartTooltip cursor={false} content={<ChartTooltipContent  formatter={(value, name, props) =>
-        `Year: ${props.payload.year}, Internship Count: ${value}`
-      }/>} />
-      {/* <ChartTooltip
-  content={
-    <ChartTooltipContent
-      hideLabel={false} // show label
-      formatter={(value, name, props) =>
-        `Year: ${props.payload.year}, Internship Count: ${value}`
-      }
-    />
-  }
-/> */}
+          }
+        />
+        <Line
+          dataKey="count"
+          type="monotone"
+          stroke="#3B82F6"  // Use a beautiful consistent color
+          strokeWidth={2.5}
+          dot={{ r: 3 }}
+          activeDot={{ r: 5 }}
+        />
+      </LineChart>
+    </ChartContainer>
+  </CardContent>
+</Card>
 
-
-            <Line
-              dataKey="count"
-              type="linear"
-              stroke="var(--color-desktop)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ChartContainer>
-      </CardContent>
-      {/* <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter> */}
-    </Card>
   )
 }
 

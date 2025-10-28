@@ -33,7 +33,7 @@ const techLogos = [
   { node: <SiAmazon />, title: "Amazon", href: "https://tailwindcss.com" },
 ];
  const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/announcement/getannouncementforlandingpageandfiltered`, {
-    cache: "force-cache", // or 'force-cache' if you want caching
+   
   })
   const data = await resp.json()
 

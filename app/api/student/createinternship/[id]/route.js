@@ -3,6 +3,7 @@ import { studentModel } from "@/models/student";
 import { teacherModel } from "@/models/teacher";
 import database from "@/Database/db";
 import { internshipModel } from "@/models/internship";
+import { revalidatePath } from "next/cache";
 
 
 export async function POST(req, { params }) {
@@ -24,7 +25,7 @@ export async function POST(req, { params }) {
              await studentModel.findByIdAndUpdate(id,{
                 $addToSet:{internshipDetails:createInternshipDetail?._id}
             },{new :true})
-           
+             revalidatePath('/home');
         }
 
         return NextResponse.json({

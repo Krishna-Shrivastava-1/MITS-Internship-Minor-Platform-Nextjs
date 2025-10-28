@@ -1,5 +1,6 @@
 import database from "@/Database/db"
 import { nocModel } from "@/models/nocRequest"
+
 import { NextResponse } from "next/server"
 
 export async function GET(req,res) {
@@ -24,6 +25,7 @@ export async function GET(req,res) {
                 success:false
             })
         }
+     
         return  NextResponse.json({
                 message:'NOC Request are found',
                 success:true,

@@ -5,6 +5,7 @@ import database from "@/Database/db";
 import { internshipModel } from "@/models/internship";
 import { nocModel } from "@/models/nocRequest";
 import nodemailer from 'nodemailer'
+import { revalidatePath } from "next/cache";
 const transporter = nodemailer.createTransport({
     host: 'smtp-relay.brevo.com',
     port: 587,
@@ -33,7 +34,7 @@ export async function POST(req, { params }) {
             await studentModel.findByIdAndUpdate(id, {
                 $addToSet: { nocRequests: createNocRequest?._id }
             }, { new: true })
-
+  revalidatePath('/home/applied-noc');
         }
         const findAssignedNocDepartmentTeacher = await teacherModel.findOne({ assignedDepartmentForNocRequest: department })
         if (!findAssignedNocDepartmentTeacher) {

@@ -1,5 +1,6 @@
 import database from "@/Database/db"
 import { nocModel } from "@/models/nocRequest"
+import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 
 export async function PUT(req, { params }) {
@@ -7,10 +8,20 @@ export async function PUT(req, { params }) {
         await database()
         const { id } = await params
         const { decisionOfNoc, comment } = await req.json()
-        const findNocRequestandUpdate = await nocModel.findByIdAndUpdate(id, {
-            comment,
-            teacherAction: decisionOfNoc
-        }, { new: true })
+        let findNocRequestandUpdate
+        if (decisionOfNoc === 'Reject') {
+            findNocRequestandUpdate = await nocModel.findByIdAndUpdate(id, {
+                comment,
+                teacherAction: decisionOfNoc,
+                tAndPAction: 'Restricted'
+            }, { new: true })
+        } else {
+
+            findNocRequestandUpdate = await nocModel.findByIdAndUpdate(id, {
+                comment,
+                teacherAction: decisionOfNoc,
+            }, { new: true })
+        }
         if (!findNocRequestandUpdate) {
             return NextResponse.json({
                 message: 'No NOC Request Exist to Update',
@@ -18,6 +29,7 @@ export async function PUT(req, { params }) {
 
             })
         }
+        revalidatePath('/home/applied-noc');
         return NextResponse.json({
             message: 'NOC Request Updated',
             success: true,
