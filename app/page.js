@@ -63,7 +63,7 @@ const techLogos = [
           </Link>
         </div>
       </div> */}
-     <div className="mx-3 mb-1">
+     <div className=" mb-1">
        <UpcommingNotificationSliders announcementData={announcementData} />
      </div>
       {/* <div className="relative flex w-full flex-col items-center px-5 ">
@@ -108,7 +108,7 @@ const techLogos = [
         pauseOnHover
         scaleOnHover
         fadeOut
-        fadeOutColor="#ffffff"
+        fadeOutColor="var(--fade-out-color)"
         ariaLabel="Technology partners"
       />
     </div>

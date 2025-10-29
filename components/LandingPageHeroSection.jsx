@@ -28,6 +28,7 @@ import { Button } from './ui/button'
 import { BlurFade } from './ui/blur-fade'
 import { Highlighter } from './ui/highlighter'
 import { AuroraText } from './ui/aurora-text'
+import { useTheme } from 'next-themes'
 
 const LandingPageHeroSection = () => {
 //   const [announcementData, setannouncementData] = useState([])
@@ -71,129 +72,106 @@ const LandingPageHeroSection = () => {
 //     text: `hsl(${hue}, 100%, 20%)`,
 //   };
 // };
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    // Avoid rendering mismatched HTML before theme is ready
+    return null
+  }
+
+
+// console.log(theme)
   return (
     <div>
+<div className="min-h-screen w-full bg-background relative overflow-hidden">
+  {/* Grid Background (theme-aware, non-interfering) */}
+  <div
+    className="absolute inset-0 z-0 transition-colors duration-500 pointer-events-none"
+    style={{
+      opacity: 0.95, // reduce visibility
+      backgroundImage: `
+        linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px),
+         radial-gradient(circle at 50% 50%, rgba(37, 99, 235, ${theme==='dark' ? 0.35 : 0.25}) 0%, rgba(37, 99, 235, ${theme==='dark' ? 0.15 : 0.1}) 40%, transparent 80%)
+      `,
+      backgroundSize: "32px 32px, 32px 32px, 100% 100%",
+      maskImage: "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))", // 👈 bottom fade
+      WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))",
+    }}
+  />
 
-      <section className=" w-full text-sm pb-2   mt-20">
-
-
-
-        {/* <div className="flex items-center gap-2 border  rounded-full w-max mx-auto px-4 py-2 mt-40 md:mt-32"> */}
-        {/* <Link href="/">
-  
-    <Dot className='w-20 h-20 text-sky-500' />
-    <span>Read more</span>
-    </Link> */}
-        {/* <span>New announcement on your inbox</span>
-        <button className="flex items-center gap-1 font-medium">
-            <span>Read more</span>
-         
-        </button> */}
-        {/* </div> */}
-        <BlurFade delay={0.25} duration={0.7} inView>
-      
-   <h5 className="text-4xl md:text-7xl font-bold tracking-tighter max-w-[850px] p-2 text-center mx-auto mt-8">
-          Welcome to the <AuroraText colors={["#FF0080", "#7928CA", "#0070F3", "#38bdf8"]}>MITS-DU</AuroraText>  Internship & {" "}
-        <Highlighter animationDuration={4000} action="highlight" iterations={62} isView color="#87CEFA">
+  {/* Actual content */}
+  <section className="w-full text-sm pb-2 mt-24 relative z-10">
+    <BlurFade delay={0.25} duration={0.7} inView>
+      <h5 className="text-4xl md:text-7xl font-bold tracking-tighter max-w-[850px] p-2 text-center mx-auto">
+        Welcome to the{" "}
+        <AuroraText speed='2'
+          colors={["#FF0080", "#7928CA", "#0070F3", "#38bdf8"]}
+        >
+          MITS-DU
+        </AuroraText>{" "}
+        Internship &{" "}
+        <Highlighter
+          animationDuration={4000}
+          action="highlight"
+          iterations={62}
+          isView
+      color={theme === "dark" ? "#2563EB" : "#87CEFA"}
+        >
           NOC Portal
         </Highlighter>{" "}
-        </h5>
+      </h5>
 
-        <p className="text-sm md:text-base mx-auto max-w-2xl text-center mt-6 max-md:px-2">Stay connected and organized with all your internship and placement activities in one place. Submit your internship records, track NOC requests, and explore placement opportunities effortlessly. This portal ensures a smooth experience for both students and faculty, keeping all academic and career-related data streamlined and accessible.</p>
-        </BlurFade>
-     
+      <p className="text-sm md:text-base mx-auto max-w-2xl text-center mt-6 max-md:px-2">
+        Stay connected and organized with all your internship and placement
+        activities in one place. Submit your internship records, track NOC
+        requests, and explore placement opportunities effortlessly. This portal
+        ensures a smooth experience for both students and faculty, keeping all
+        academic and career-related data streamlined and accessible.
+      </p>
+    </BlurFade>
 
-        <div className="mx-auto w-full flex items-center flex-col justify-center  gap-3 mt-4">
-          <div className="group text-white">
-            <Link
-              href="/login"
-              className="flex items-center gap-1 font-semibold text-md p-2 w-[150px] transition-all duration-300 bg-[#1a73e8] rounded-md hover:rounded-none text-nowrap"
-            >
-              <ArrowRight
-                // 👇 FIX: Use opacity and translate for smooth transition instead of 'hidden'/'block'
-                className="transition-all duration-300 group-hover:translate-x-1 mr-1 opacity-0 group-hover:opacity-100 -translate-x-full group-hover:block"
-                size={20}
-              />
-              <span className="transition-all duration-300 group-hover:translate-x-2  ">
+    {/* Get Started Button */}
+    <div className="mx-auto flex flex-col items-center justify-center gap-3 mt-6">
+      <div className="group text-white ">
+        <Link
+          href="/login"
+          className="flex items-center gap-1 font-semibold text-md p-2 w-[250px]  transition-all duration-300 bg-[#1a73e8] rounded-md hover:rounded-none text-nowrap   shadow-[0_0_15px_rgba(37,99,235,0.5)]
+             hover:shadow-[0_0_25px_rgba(37,99,235,0.8)]
+             dark:shadow-[0_0_15px_rgba(59,130,246,0.3)]
+             dark:hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]"
+        >
+          <ArrowRight
+            className="transition-all duration-300 group-hover:translate-x-1 mr-1 opacity-0 group-hover:opacity-100 -translate-x-full"
+            size={20}
+          />
+          <span className="transition-all duration-300 group-hover:translate-x-2">
+        Send Your NOC Request Now
+          </span>
+        </Link>
+      </div>
 
-                Get Started
-              </span>
-            </Link>
-          </div>
-{/* <Sheet>
-  <SheetTrigger>Open</SheetTrigger>
-  <SheetContent side='left'>
-    <SheetHeader>
-      <SheetTitle>Are you absolutely sure?</SheetTitle>
-      <SheetDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
-      </SheetDescription>
-    </SheetHeader>
-  </SheetContent>
-</Sheet> */}
-          {/* <Dialog  open={open} onOpenChange={setOpen}>
-            <DialogTrigger>
-               <div className="group text-white">
-              <span
+      <div className="py-6 m-3 text-slate-600 mt-4 flex items-center justify-center">
+        Trusted by - :
+        <span className="flex items-center justify-center ml-2">
+          <Image
+            src={"https://web.mitsgwalior.in/images/mits-logo.png"}
+            alt="logo"
+            width={40}
+            height={40}
+          />
+          <p>Madhav Institute of Technology & Science</p>
+        </span>
+      </div>
+    </div>
+  </section>
+</div>
 
-                className="flex items-center gap-1 font-semibold text-md p-2 w-[180px] transition-all duration-300 bg-blue-700 rounded-md hover:rounded-none text-nowrap cursor-pointer select-none "
-              >
-              
-                <ArrowRight
-                  // 👇 FIX: Use opacity and translate for smooth transition instead of 'hidden'/'block'
-                  className="transition-all duration-300 group-hover:translate-x-1 mr-1 opacity-0 group-hover:opacity-100 -translate-x-full group-hover:block"
-                  size={20}
-                />
-                <span className="transition-all duration-300 group-hover:translate-x-2  ">
-
-                  Announcements
-                </span>
-              </span>
-            </div>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Announcements</DialogTitle>
-                <div>
-                  {announcementData?.map((e,index) => {
-                      const { bg, text } = randomBgColor();
-                    return(
-                        <div key={e?._id}>
-                   <div className='flex items-center justify-between flex-wrap m-2 p-2 rounded-xl'   style={{ backgroundColor: bg, color: text }}>
-                    <div >
-                      <div className='flex items-center '>
-
-                         <h2>{index+1}.</h2>
-                      <h2>{e?.content}</h2>
-                      </div>
-
-                      {e?.description && <p className='ml-3 whitespace-pre-wrap'>{e?.description}</p>}
-                    </div>
-                      <div>
-                        {e?.embeddedLink && <a className='cursor-pointer select-none' target='_blank' rel="noopener noreferrer" href={
-                          e.embeddedLink.startsWith("http://") || e.embeddedLink.startsWith("https://")
-                            ? e.embeddedLink
-                            : `https://${e.embeddedLink}`
-                        }><Button className='cursor-pointer select-none' >View Here</Button></a>}
-                      </div>
-                   </div>
-                    </div>
-                    )
-                  
-})}
-                </div>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog> */}
-
-          {/* <div>
-       <p className="py-6 text-slate-600 mt-14">Trused by -: MITS</p>
-  </div> */}
-     <div className="py-6 m-3 text-slate-600 mt-4 flex items-center justify-center">Trused by -:<span className='flex items-center justify-center'> <Image src={'https://web.mitsgwalior.in/images/mits-logo.png'} alt='logo' width={40} height={40} /> <p>Madhav Institute of Technology & Science</p></span></div>
-        </div>
-     
-      </section>
 
 
    

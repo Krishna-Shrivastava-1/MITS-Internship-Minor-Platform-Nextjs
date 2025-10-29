@@ -210,19 +210,30 @@ const StudentNocRequestTable = ({ studentNocData }) => {
                                 <TableCell className='text-center'><Textarea defaultValue={e?.comment || 'No Comments'}
                                     readOnly
                                     className='whitespace-pre-wrap resize-none h-10 w-52' /></TableCell>
-                                <TableCell className='text-center'>
-                                    {e?.teacherAction === 'Allow Edit' ? (
-                                        <Link href={`/home/edit-noc/${e?._id}`}>
-                                            <FilePenLine
-                                                className="size-7 cursor-pointer select-none hover:bg-neutral-300 rounded-full p-1"
-                                            />
-                                        </Link>
-                                    ) : (
-                                        <FilePenLine
-                                            className="size-7 cursor-not-allowed select-none text-gray-400 rounded-full p-1"
-                                        />
-                                    )}
-                                </TableCell>
+                              <TableCell className="text-center">
+  {e?.teacherAction === "Allow Edit" ? (
+    <Link href={`/home/edit-noc/${e?._id}`}>
+      <FilePenLine
+        className="
+          size-7 cursor-pointer select-none rounded-full p-1
+          text-[var(--sidebar-text)]
+          hover:bg-[var(--sidebar-hover-bg)]
+          hover:text-[var(--sidebar-hover-text)]
+          transition-colors duration-200
+        "
+      />
+    </Link>
+  ) : (
+    <FilePenLine
+      className="
+        size-7 cursor-not-allowed select-none rounded-full p-1
+        text-[var(--muted-foreground)]
+        opacity-60
+      "
+    />
+  )}
+</TableCell>
+
 
 
                             </TableRow>

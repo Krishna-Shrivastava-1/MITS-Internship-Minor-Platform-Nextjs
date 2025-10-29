@@ -50,41 +50,54 @@ React.useEffect(() => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="secondary"
-          role="combobox"
-          aria-expanded={open}
-          className={`w-[250px] text-wrap overflow-hidden  justify-between ${settheme ? 'light':'dark'}`}
-        >
+     <Button
+  variant="outline"
+  role="combobox"
+  aria-expanded={open}
+  className={cn(
+    "w-[250px] justify-between overflow-hidden text-foreground bg-card border-border hover:bg-accent hover:text-accent-foreground"
+  )}
+>
+
+          {/* ${settheme ? 'light':'dark'} */}
           {value
             ? department.find((framework) => framework.value === value)?.label
             : "Select Department..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={`w-[250px] text-wrap p-0 ${settheme ? 'light':'dark'}`}>
+   <PopoverContent
+  className="w-[250px] p-0 bg-popover text-popover-foreground border border-border shadow-md"
+>
+
         <Command>
-          <CommandInput placeholder="Search Department..." className="h-9" />
+        <CommandInput
+  placeholder="Search Department..."
+  className="h-9 bg-input text-foreground border-border pl-3 placeholder:text-muted-foreground"
+/>
+
           <CommandList>
             <CommandEmpty>No Department Found.</CommandEmpty>
             <CommandGroup>
               {department.map((framework) => (
-                <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
-                  }}
-                >
-                  {framework.label}
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
+              <CommandItem
+  key={framework.value}
+  value={framework.value}
+  onSelect={(currentValue) => {
+    setValue(currentValue === value ? "" : currentValue)
+    setOpen(false)
+  }}
+  className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+>
+  {framework.label}
+  <Check
+    className={cn(
+      "ml-auto transition-opacity",
+      value === framework.value ? "opacity-100 text-primary" : "opacity-0"
+    )}
+  />
+</CommandItem>
+
               ))}
             </CommandGroup>
           </CommandList>

@@ -70,7 +70,7 @@ const internshipAnno = announcementData.filter((e)=>e?.opportunityType === 'inte
 <div className='w-full flex items-center justify-center'> 
   <Sheet>
    <SheetTrigger className='w-full cursor-pointer select-none'>
-    <div className="w-full  bg-gradient-to-r rounded-full from-[#003366] via-[#007FFF] to-[#6495ED]">
+    <div className="w-full  bg-gradient-to-r   from-[#003366] via-[#007FFF] to-[#6495ED]">
 <h1 className='text-white font-bold p-1 text-lg'>🎉 Announcments</h1>
 </div>
 </SheetTrigger>

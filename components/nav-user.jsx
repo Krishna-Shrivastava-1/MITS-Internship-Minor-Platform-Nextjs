@@ -32,6 +32,8 @@ import {
 } from "@/components/ui/sidebar"
 import { DataProviderContextAPI } from "./ContextApi"
 import Link from "next/link"
+import { ModeToggle } from "./ModeToggle"
+import { AnimatedThemeToggler } from "./ui/animated-theme-toggler"
 
 export function NavUser({
   user
@@ -83,6 +85,8 @@ const {logout,fetchUserByIdState} = DataProviderContextAPI()
               </DropdownMenuItem>
             </DropdownMenuGroup> */}
             {/* <DropdownMenuSeparator /> */}
+            {/* <ModeToggle /> */}
+            <AnimatedThemeToggler />
             <DropdownMenuGroup >
               <Link href={fetchUserByIdState?.role === 'student' ? '/home/profile' : fetchUserByIdState?.role === 'teacher' ? '/admin/profile' : '/superadmin/profile'}>
                 <DropdownMenuItem className='cursor-pointer'>

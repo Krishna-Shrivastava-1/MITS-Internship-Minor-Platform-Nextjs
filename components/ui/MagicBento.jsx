@@ -9,50 +9,61 @@ const MOBILE_BREAKPOINT = 768;
 
 const cardData = [
   {
-  color: '#ffffff',
-  title: "Instant Email Notifications",
-  description: "Stay updated instantly! Receive email alerts when your NOC application is approved or when your certificate becomes available for download — never miss an update.",
-  label: "Smart Alerts",
-  videoSrc: "https://cdnl.iconscout.com/lottie/premium/preview-watermark/email-notification-animation-gif-download-4286056.mp4?h=240"
-},
- 
+    color: "var(--card)", // ← uses theme color
+    title: "Instant Email Notifications",
+    description:
+      "Stay updated instantly! Receive email alerts when your NOC application is approved or when your certificate becomes available for download — never miss an update.",
+    label: "Smart Alerts",
+    videoSrc:
+      "https://cdnl.iconscout.com/lottie/premium/preview-watermark/email-notification-animation-gif-download-4286056.mp4?h=240",
+  },
   {
-    color: '#ffffff',
+    color: "var(--card)",
     title: "Digital Verification",
-    description: "Your application is automatically verified and validated through secure digital workflows — reducing manual approval time and errors.",
+    description:
+      "Your application is automatically verified and validated through secure digital workflows — reducing manual approval time and errors.",
     label: "Smart Validation",
-    videoSrc: "https://cdnl.iconscout.com/lottie/premium/preview-watermark/identity-verification-mobile-apps-animation-gif-download-6623904.mp4"
+    videoSrc:
+      "https://cdnl.iconscout.com/lottie/premium/preview-watermark/identity-verification-mobile-apps-animation-gif-download-6623904.mp4",
   },
-
- {
-    color: '#ffffff',
+  {
+    color: "var(--card)",
     title: "Online Application",
-    description: "Apply for your internship NOC anytime, anywhere — no paperwork, no queues. Our guided digital form ensures accuracy and compliance with university requirements.",
+    description:
+      "Apply for your internship NOC anytime, anywhere — no paperwork, no queues. Our guided digital form ensures accuracy and compliance with university requirements.",
     label: "Apply Instantly",
-    videoSrc: "https://cdnl.iconscout.com/lottie/premium/preview-watermark/female-filling-online-registration-form-animation-gif-download-9822926.mp4?h=240"
+    videoSrc:
+      "https://cdnl.iconscout.com/lottie/premium/preview-watermark/female-filling-online-registration-form-animation-gif-download-9822926.mp4?h=240",
   },
   {
-    color: '#ffffff',
+    color: "var(--card)",
     title: "Quick Processing",
-    description: "Experience fast, automated approval workflows that eliminate unnecessary delays. Get your NOC processed within hours instead of days.",
+    description:
+      "Experience fast, automated approval workflows that eliminate unnecessary delays. Get your NOC processed within hours instead of days.",
     label: "Speed",
-    videoSrc: "https://cdnl.iconscout.com/lottie/premium/preview-watermark/workflow-animated-icon-gif-download-8510812.mp4?h=240"
+    videoSrc:
+      "https://cdnl.iconscout.com/lottie/premium/preview-watermark/workflow-animated-icon-gif-download-8510812.mp4?h=240",
   },
   {
-    color: '#ffffff',
+    color: "var(--card)",
     title: "Instant Certificate Download",
-    description: "Once approved, instantly download your digitally signed NOC certificate in secure PDF format — verified and ready for use.",
+    description:
+      "Once approved, instantly download your digitally signed NOC certificate in secure PDF format — verified and ready for use.",
     label: "One-Click Access",
-    videoSrc: "https://cdnl.iconscout.com/lottie/premium/preview-watermark/document-download-animation-gif-download-6623903.mp4"
+    videoSrc:
+      "https://cdnl.iconscout.com/lottie/premium/preview-watermark/document-download-animation-gif-download-6623903.mp4",
   },
   {
-    color: '#ffffff',
+    color: "var(--card)",
     title: "Secure Data Protection",
-    description: "Your personal and academic data is encrypted and protected with industry-standard security. Only authorized users can access sensitive records.",
+    description:
+      "Your personal and academic data is encrypted and protected with industry-standard security. Only authorized users can access sensitive records.",
     label: "Trust & Compliance",
-    videoSrc: "https://cdnl.iconscout.com/lottie/premium/preview-watermark/data-protection-animation-gif-download-4489430.mp4?h=240"
-  }
+    videoSrc:
+      "https://cdnl.iconscout.com/lottie/premium/preview-watermark/data-protection-animation-gif-download-4489430.mp4?h=240",
+  },
 ];
+
 
 const createParticleElement = (x, y, color = DEFAULT_GLOW_COLOR) => {
   const el = document.createElement('div');

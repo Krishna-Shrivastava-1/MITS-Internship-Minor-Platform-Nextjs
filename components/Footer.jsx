@@ -6,12 +6,12 @@ import { FaLinkedinIn } from "react-icons/fa";
 
 const Footer = () => {
   return (
-  <footer className="px-6 md:px-16 lg:px-24 xl:px-32 w-full bg-[#e8eaed]">
-    <div className="flex flex-col md:flex-row items-start justify-center gap-10 py-10 border-b border-gray-500/30">
+  <footer className="px-6 md:px-16 lg:px-24 xl:px-32 w-full bg-background border-t border-border">
+    <div className="flex flex-col md:flex-row items-start justify-center gap-10 py-10 border-b  ">
         
         <div className="max-w-96">
             <Link href="/">
-            <div className="flex items-center  hover:text-neutral-800 cursor-pointer select-none gap-x-2.5">
+            <div className="flex items-center  hover:text-foreground cursor-pointer select-none gap-x-2.5">
           <Image src={'https://web.mitsgwalior.in/images/mits-logo.png'} alt="logo" width={55} height={0} />
          <div>
            <h1 className=" text-md font-bold ">MITS-DU INTERNSHIP/</h1>
@@ -19,12 +19,12 @@ const Footer = () => {
          </div>
         </div>
         </Link>
-            <p className="mt-6 text-sm text-gray-500">
+            <p className="mt-6 text-sm text-foreground">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.
             </p>
-            <div className="flex items-center gap-2 mt-3">
-                <a target="_blank" rel="noopener noreferrer" href="https://x.com/Krishna__Stark">
-                   <Image width={24} height={24} alt="svgImg" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciICB2aWV3Qm94PSIwIDAgNTAgNTAiIHdpZHRoPSI1MHB4IiBoZWlnaHQ9IjUwcHgiPjxwYXRoIGQ9Ik0gMTEgNCBDIDcuMTM0IDQgNCA3LjEzNCA0IDExIEwgNCAzOSBDIDQgNDIuODY2IDcuMTM0IDQ2IDExIDQ2IEwgMzkgNDYgQyA0Mi44NjYgNDYgNDYgNDIuODY2IDQ2IDM5IEwgNDYgMTEgQyA0NiA3LjEzNCA0Mi44NjYgNCAzOSA0IEwgMTEgNCB6IE0gMTMuMDg1OTM4IDEzIEwgMjEuMDIzNDM4IDEzIEwgMjYuNjYwMTU2IDIxLjAwOTc2NiBMIDMzLjUgMTMgTCAzNiAxMyBMIDI3Ljc4OTA2MiAyMi42MTMyODEgTCAzNy45MTQwNjIgMzcgTCAyOS45Nzg1MTYgMzcgTCAyMy40Mzc1IDI3LjcwNzAzMSBMIDE1LjUgMzcgTCAxMyAzNyBMIDIyLjMwODU5NCAyNi4xMDM1MTYgTCAxMy4wODU5MzggMTMgeiBNIDE2LjkxNDA2MiAxNSBMIDMxLjAyMTQ4NCAzNSBMIDM0LjA4NTkzOCAzNSBMIDE5Ljk3ODUxNiAxNSBMIDE2LjkxNDA2MiAxNSB6Ii8+PC9zdmc+"/>
+            <div className="flex items-center gap-2 mt-3  ">
+                <a target="_blank" rel="noopener noreferrer"  href="https://x.com/Krishna__Stark">
+                   <Image width={24} height={24} alt="svgImg" className='bg-white' src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciICB2aWV3Qm94PSIwIDAgNTAgNTAiIHdpZHRoPSI1MHB4IiBoZWlnaHQ9IjUwcHgiPjxwYXRoIGQ9Ik0gMTEgNCBDIDcuMTM0IDQgNCA3LjEzNCA0IDExIEwgNCAzOSBDIDQgNDIuODY2IDcuMTM0IDQ2IDExIDQ2IEwgMzkgNDYgQyA0Mi44NjYgNDYgNDYgNDIuODY2IDQ2IDM5IEwgNDYgMTEgQyA0NiA3LjEzNCA0Mi44NjYgNCAzOSA0IEwgMTEgNCB6IE0gMTMuMDg1OTM4IDEzIEwgMjEuMDIzNDM4IDEzIEwgMjYuNjYwMTU2IDIxLjAwOTc2NiBMIDMzLjUgMTMgTCAzNiAxMyBMIDI3Ljc4OTA2MiAyMi42MTMyODEgTCAzNy45MTQwNjIgMzcgTCAyOS45Nzg1MTYgMzcgTCAyMy40Mzc1IDI3LjcwNzAzMSBMIDE1LjUgMzcgTCAxMyAzNyBMIDIyLjMwODU5NCAyNi4xMDM1MTYgTCAxMy4wODU5MzggMTMgeiBNIDE2LjkxNDA2MiAxNSBMIDMxLjAyMTQ4NCAzNSBMIDM0LjA4NTkzOCAzNSBMIDE5Ljk3ODUxNiAxNSBMIDE2LjkxNDA2MiAxNSB6Ii8+PC9zdmc+"/>
                  
                 </a>
               
@@ -41,8 +41,8 @@ const Footer = () => {
 
         <div className="w-1/2 flex md:flex-nowrap gap-x-3 justify-between">
             <div className='m-2'>
-                <h2 className="font-semibold text-gray-900 mb-5">RESOURCES</h2>
-                <ul className="text-sm text-gray-500 space-y-2 list-none">
+                <h2 className="font-semibold text-foreground mb-5">RESOURCES</h2>
+                <ul className="text-sm text-muted-foreground space-y-2 list-none">
                     <li><a href="#">Documentation</a></li>
                     <li><a href="#">Tutorials</a></li>
                     <li><a href="#">Blog</a></li>
@@ -50,8 +50,8 @@ const Footer = () => {
                 </ul>
             </div>
             <div className='m-2'>
-                <h2 className="font-semibold text-gray-900 mb-5">COMPANY</h2>
-                <div className="text-sm text-gray-500 space-y-2 list-none">
+                <h2 className="font-semibold text-foreground mb-5">COMPANY</h2>
+                <div className="text-sm text-muted-foreground space-y-2 list-none">
                     <li><a href="#">About</a></li>
                     <li><a href="#">Careers</a></li>
                     <li><a href="#">Privacy</a></li>
@@ -61,7 +61,7 @@ const Footer = () => {
         </div>
 
     </div>
-    <p className="py-4 text-center text-xs md:text-sm text-gray-500">
+    <p className="py-4 text-center text-xs md:text-sm text-muted-foreground">
         Copyright 2025 © <a href="/">MITS-DU Internship & Placement Portal</a>. All Right Reserved.
     </p>
 </footer>

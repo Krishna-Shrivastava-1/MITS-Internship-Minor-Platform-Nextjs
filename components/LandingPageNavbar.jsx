@@ -27,6 +27,8 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
+import { ModeToggle } from './ModeToggle'
+import { AnimatedThemeToggler } from './ui/animated-theme-toggler'
 
 const LandingPageNavbar = () => {
     const [scrollY, setscrollY] = useState(0)
@@ -40,17 +42,21 @@ const LandingPageNavbar = () => {
     // console.log(scrollY)
     return (
         <div className='sticky top-0 z-40 overflow-x-hidden'>
-            <nav className="border-b  bg-white flex items-center px-2 justify-between md:px-16 lg:px-24 xl:px-32  w-full">
+            <nav className="border-b  bg-background flex items-center px-2 justify-between md:px-16 lg:px-24 xl:px-32  w-full">
 
                 <Link href="/">
-                    <div className="flex items-center  hover:text-neutral-800 cursor-pointer select-none gap-x-2.5">
+                    <div className="flex items-center  hover:text-accent-foreground cursor-pointer select-none gap-x-2.5">
                         <Image src={'https://web.mitsgwalior.in/images/mits-logo.png'} alt="logo" width={55} height={0} />
                         <div>
                             <h1 className=" text-md font-bold text-nowrap">MITS-DU INTERNSHIP/</h1>
-                            <h1 className=" text-md font-bold text-nowrap ">PLACEMENT PORTAL</h1>
+                            <h1 className=" text-md font-bold text-nowrap ">NOC PORTAL</h1>
                         </div>
                     </div>
                 </Link>
+                <div>
+
+                <AnimatedThemeToggler />
+                </div>
         <div
   className={`transition-all duration-300  ease-out group text-white transform ${
     scrollY > 480 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10 pointer-events-none"
@@ -58,7 +64,10 @@ const LandingPageNavbar = () => {
 >
   <Link
               href="/login"
-              className="flex items-center gap-1 font-semibold text-md p-2 md:w-[150px] w-[90px] transition-all duration-300 bg-[#1a73e8] rounded-md hover:rounded-none text-nowrap "
+              className="flex items-center gap-1 font-semibold text-md p-2 md:w-[150px] w-[90px] transition-all duration-300 bg-[#1a73e8] rounded-md hover:rounded-none text-nowrap  shadow-[0_0_15px_rgba(37,99,235,0.5)]
+             hover:shadow-[0_0_25px_rgba(37,99,235,0.8)]
+             dark:shadow-[0_0_15px_rgba(59,130,246,0.3)]
+             dark:hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] "
             >
               <ArrowRight
                 // 👇 FIX: Use opacity and translate for smooth transition instead of 'hidden'/'block'

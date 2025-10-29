@@ -209,14 +209,33 @@ const uploadedCompletionCertificateUrl = await handleCompletionLetterUpload()
   const currentYear = new Date().getFullYear()
   const year = Array.from({ length: 3 }, (_, i) => currentYear - 2 + i)
   return (
-     <div className="max-w-3xl mx-auto p-6 border shadow-xl rounded-md shadow-black my-3 relative z-10">
-     {loading &&   <div className='w-full absolute top-0 left-0 flex items-center justify-center bg-white/20 h-full'> <Spinner /></div>}
-      <h1 className="text-2xl font-bold mb-6">Add Internship Details</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label>Company Name</label>
-          <Input value={companyName} className='border-black' onChange={(e) => setCompanyName(e.target.value)} required />
-        </div>
+    <div
+     className="
+       max-w-3xl mx-auto p-6 my-6 rounded-md relative z-10
+       border border-[var(--border)]
+        shadow-[var(--shadow-color)]
+       bg-[var(--card)]
+       text-[var(--card-foreground)]
+     "
+   >
+     {loading && (
+       <div className="w-full absolute top-0 left-0 flex items-center justify-center bg-[var(--background)]/50 h-full backdrop-blur-sm">
+         <Spinner />
+       </div>
+     )}
+   
+     <h1 className="text-2xl font-bold mb-6">NOC Application Details</h1>
+   
+     <form onSubmit={handleSubmit} className="space-y-4">
+       <div>
+         <label className="block mb-1 text-[var(--foreground)]">Company Name</label>
+         <Input
+           value={companyName}
+           onChange={(e) => setCompanyName(e.target.value)}
+           required
+           className='border-black'
+         />
+       </div>
 
         <div className="flex gap-4 flex-wrap">
           <div>

@@ -131,19 +131,29 @@ const {fetchUserByIdState} = DataProviderContextAPI()
       onMouseLeave={() => setOpen(false)} // 👈 collapses when cursor leaves
       className="transition-all duration-300 delay-200" // smooth animation
     >
-         <Sidebar  collapsible="icon" {...props}>
-      <SidebarHeader className="bg-[#f0f4f9]">
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
-      <SidebarContent className="bg-[#f0f4f9]">
-        <NavMain items={data.navMain} />
-      
-      </SidebarContent>
-      {/* <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter> */}
-      <SidebarRail />
-    </Sidebar>
+        <Sidebar
+       collapsible="icon"
+       className="border-r border-border bg-sidebar text-sidebar-foreground  "
+       {...props}
+     >
+       {/* Sidebar Header */}
+       <SidebarHeader className="bg-sidebar text-sidebar-foreground border-b border-border">
+         <TeamSwitcher teams={data.teams} />
+       </SidebarHeader>
+     
+       {/* Sidebar Main Content */}
+       <SidebarContent className="bg-sidebar text-sidebar-foreground flex-1 overflow-y-auto">
+         <NavMain items={data.navMain} />
+       </SidebarContent>
+     
+       {/* Optional Footer (e.g. user info, logout button, etc.) */}
+       {/* <SidebarFooter className="bg-sidebar text-sidebar-foreground border-t border-border">
+         <NavUser user={data.user} />
+       </SidebarFooter> */}
+     
+       {/* Sidebar Collapsed Rail */}
+       <SidebarRail className="bg-sidebar text-sidebar-foreground border-r border-border" />
+     </Sidebar>
     </div>
  
   );

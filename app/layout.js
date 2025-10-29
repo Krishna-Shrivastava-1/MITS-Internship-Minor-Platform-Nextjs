@@ -3,6 +3,7 @@ import "./globals.css";
 import { ContextProvider } from "@/components/ContextApi";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -25,7 +26,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" >
+    <html lang="en" suppressHydrationWarning >
      <head>
         <link rel="manifest" href="./manifest.json" />
         <link rel="icon" href="./smallico.png" />
@@ -35,10 +36,17 @@ export default function RootLayout({ children }) {
       >
         <ContextProvider>
            <Toaster />
-        {children}
+            <ThemeProvider
+         attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
          <div >
                 <Footer />
             </div>
+          </ThemeProvider>
         </ContextProvider>
       </body>
     </html>
