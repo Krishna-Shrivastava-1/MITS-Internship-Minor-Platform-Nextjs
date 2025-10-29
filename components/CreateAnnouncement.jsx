@@ -69,7 +69,7 @@ const handleSubmit = async (e) => {
     active,
     opportunityType
   });
-
+console.log(resp)
   if (resp?.data?.success) {
     toast.success("Announcement created successfully");
                 setContent('')

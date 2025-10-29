@@ -88,7 +88,7 @@ const LandingPageHeroSection = () => {
 // console.log(theme)
   return (
     <div>
-<div className="min-h-screen w-full bg-background relative overflow-hidden">
+<div className=" w-full bg-background relative overflow-hidden">
   {/* Grid Background (theme-aware, non-interfering) */}
   <div
     className="absolute inset-0 z-0 transition-colors duration-500 pointer-events-none"

@@ -1,33 +1,24 @@
+// /Database/db.js
 import mongoose from "mongoose";
 
-const mongoDBURI= process.env.MONGOURI
+const MONGODB_URI = process.env.MONGOURI;
+if (!MONGODB_URI) throw new Error("❌ MONGODB_URI missing");
 
-
-if (!mongoDBURI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
-
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+let cached = global.mongoose || { conn: null, promise: null };
 
 async function database() {
-  if (cached.conn) {
-    return cached.conn;
-  }
+  if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(mongoDBURI, opts).then((mongoose) => {
-      return mongoose;
-    });
+    cached.promise = mongoose
+      .connect(MONGODB_URI, {
+        dbName: "test", // or whatever name you use
+      })
+      .then((m) => m);
   }
+
   cached.conn = await cached.promise;
+  global.mongoose = cached;
   return cached.conn;
 }
 
