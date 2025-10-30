@@ -6,29 +6,29 @@ import { BarChartShowWorkTyepByYear } from './BarChartShowWorkTyepByYear'
 import { CountOfInternshipAsPerYear } from './CountOfInternshipAsPerYear'
 
 
-const InternshipAnalysisChartforTeacherbyDepartment = () => {
-    const {fetchUserByIdState} = DataProviderContextAPI()
-    const [countofInternshipAsPerYear, setcountofInternshipAsPerYear] = useState([])
-    const [countOfWorkTypeByYear, setcountOfWorkTypeByYear] = useState([])
-    // console.log(fetchUserByIdState?.department)
-    const fetchAnalysisData = async () => {
-        try {
-const resp= await axios.get(`/api/internship/chartanalysisofinternshipdata?dept=${fetchUserByIdState?.department}`)      
-if(resp?.data?.success){
-    // console.log(resp?.data)
-    setcountofInternshipAsPerYear(resp?.data?.countOfStudentByYear)
-    setcountOfWorkTypeByYear(resp?.data?.worktypeCountByyear)
-}
+const InternshipAnalysisChartforTeacherbyDepartment = ({countofInternshipAsPerYear,countOfWorkTypeByYear}) => {
+//     const {fetchUserByIdState} = DataProviderContextAPI()
+//     const [countofInternshipAsPerYear, setcountofInternshipAsPerYear] = useState([])
+//     const [countOfWorkTypeByYear, setcountOfWorkTypeByYear] = useState([])
+//     // console.log(fetchUserByIdState?.department)
+//     const fetchAnalysisData = async () => {
+//         try {
+// const resp= await axios.get(`/api/internship/chartanalysisofinternshipdata?dept=${fetchUserByIdState?.department}`)      
+// if(resp?.data?.success){
+//     // console.log(resp?.data)
+//     setcountofInternshipAsPerYear(resp?.data?.countOfStudentByYear)
+//     setcountOfWorkTypeByYear(resp?.data?.worktypeCountByyear)
+// }
 
-        } catch (error) {
-            console.log(error?.message)
-        }
-    }
-useEffect(() => {
-    if(fetchUserByIdState?.department){
-        fetchAnalysisData()
-    }
-}, [fetchUserByIdState?.department])
+//         } catch (error) {
+//             console.log(error?.message)
+//         }
+//     }
+// useEffect(() => {
+//     if(fetchUserByIdState?.department){
+//         fetchAnalysisData()
+//     }
+// }, [fetchUserByIdState?.department])
 
     // console.log(countofInternshipAsPerYear)
   return (

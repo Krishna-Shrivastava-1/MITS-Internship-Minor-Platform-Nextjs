@@ -38,7 +38,7 @@ const techLogos = [
   const data = await resp.json()
 
   const announcementData = data?.getAnnouncement || []
-  console.log(announcementData)
+  // console.log(announcementData)
   return (
     <div className="">
       {/* <Navbar /> */}

@@ -19,11 +19,20 @@ export async function GET(req, res) {
                 { status: 400 }
             );
         }
-        console.log(dept)
+        // console.log(dept)
 
-        const totalNocDetailCountPending = await nocModel.countDocuments({ department: dept, teacherAction: 'Pending' })
-        const totalNocDetailCountApprove = await nocModel.countDocuments({ department: dept, teacherAction: 'Approve' })
-        const totalNocDetailCountReject = await nocModel.countDocuments({ department: dept, teacherAction: 'Reject' })
+        const totalNocDetailCountPending = await nocModel.countDocuments({
+            department: dept,
+           teacherAction: 'Pending'
+        });
+        const totalNocDetailCountApprove = await nocModel.countDocuments({ department: dept, teacherAction: 'Approve', tAndPAction: 'Approve' })
+        const totalNocDetailCountReject = await nocModel.countDocuments({
+            department: dept,
+            $or: [
+                { teacherAction: 'Reject' },
+                { tAndPAction: 'Reject' }
+            ]
+        });
         const totalNocDetailCountAllowEdit = await nocModel.countDocuments({ department: dept, teacherAction: 'Allow Edit' })
 
 

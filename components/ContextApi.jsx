@@ -61,23 +61,23 @@ export const ContextProvider = ({ children }) => {
 };
 // console.log(fetchUserByIdState?.assignedDepartmentForNocRequest)
 //Fetch Noc Detail Responses Count
-const fetchnocResponseCount = async () => {
-  try {
-    if(!fetchUserByIdState?.assignedDepartmentForNocRequest) return
-    const resp = await axios.get(`/api/teacher/getcountofnocdetailsforcoordinator?dept=${fetchUserByIdState?.assignedDepartmentForNocRequest}`)
-    if(resp?.data?.success){
-      // console.log(resp?.data)
-      setnocResponseCount(resp?.data)
-    }
-  } catch (error) {
-    console.log(error?.message)
-  }
-}
-useEffect(() => {
-  if(userIdFromToken && fetchUserByIdState?.assignedDepartmentForNocRequest){
-    fetchnocResponseCount()
-  }
-}, [userIdFromToken,fetchUserByIdState?.assignedDepartmentForNocRequest,pathname])
+// const fetchnocResponseCount = async () => {
+//   try {
+//     if(!fetchUserByIdState?.assignedDepartmentForNocRequest) return
+//     const resp = await axios.get(`/api/teacher/getcountofnocdetailsforcoordinator?dept=${fetchUserByIdState?.assignedDepartmentForNocRequest}`)
+//     if(resp?.data?.success){
+//       // console.log(resp?.data)
+//       setnocResponseCount(resp?.data)
+//     }
+//   } catch (error) {
+//     console.log(error?.message)
+//   }
+// }
+// useEffect(() => {
+//   if(userIdFromToken && fetchUserByIdState?.assignedDepartmentForNocRequest){
+//     fetchnocResponseCount()
+//   }
+// }, [userIdFromToken,fetchUserByIdState?.assignedDepartmentForNocRequest,pathname])
 
 
 

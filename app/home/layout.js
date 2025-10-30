@@ -1,6 +1,7 @@
 
 import { NavUser } from "@/components/nav-user"
 import { StudentAppSidebar } from "@/components/student-app-sidebar"
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -41,10 +42,13 @@ export default function SuperAdminPage({children}) {
       </div>
 
       {/* Right Section - User Avatar */}
-      <div>
-
-      <NavUser />
-      </div>
+         <div className="flex items-center space-x-4">
+      <AnimatedThemeToggler className='cursor-pointer select-none size-5' />
+   <div>
+   
+         <NavUser />
+   </div>
+         </div>
     </header>
         <div className="">
             {children}

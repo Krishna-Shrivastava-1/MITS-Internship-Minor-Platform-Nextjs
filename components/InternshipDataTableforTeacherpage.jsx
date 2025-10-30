@@ -37,8 +37,8 @@ import { supabase } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-const InternshipDataTableforTeacherpage = () => {
-    const { fetchUserByIdState } = DataProviderContextAPI()
+const InternshipDataTableforTeacherpage = ({userDat}) => {
+
     const [internshipData, setinternshipData] = useState([])
     const [limit, setlimit] = useState(10)
     const [page, setpage] = useState(1)
@@ -50,12 +50,12 @@ const InternshipDataTableforTeacherpage = () => {
     const [loading, setloading] = useState(true)
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [checked, setChecked] = useState(false);
-    // console.log(fetchUserByIdState)
+    
     const getInternshipDetailsAsPerTeacherDeptandFilter = async () => {
         try {
-            if (!fetchUserByIdState?.department) return
+            if (!userDat?.user?.department) return
             setloading(true)
-            const resp = await axios.get(`/api/teacher/getinternshipdetailsasperteacherdeptandfilter?dept=${fetchUserByIdState?.department}&sessionyear=${sessionYear.trim()}&sessionhalf=${sessionHalf?.trim()}&year=${yearOfStudy?.trim()}&semester=${semester?.trim()}&page=${page}&limit=${limit}&export`)
+            const resp = await axios.get(`/api/teacher/getinternshipdetailsasperteacherdeptandfilter?dept=${userDat?.user?.department}&sessionyear=${sessionYear.trim()}&sessionhalf=${sessionHalf?.trim()}&year=${yearOfStudy?.trim()}&semester=${semester?.trim()}&page=${page}&limit=${limit}&export`)
             if (resp?.data?.success) {
                 setloading(false)
                 // console.log(resp?.data)
@@ -73,10 +73,10 @@ const InternshipDataTableforTeacherpage = () => {
         }
     }
     useEffect(() => {
-        if (fetchUserByIdState) {
+        if (userDat?.user) {
             getInternshipDetailsAsPerTeacherDeptandFilter()
         }
-    }, [fetchUserByIdState, semester, sessionHalf, sessionYear, yearOfStudy, page, limit])
+    }, [userDat?.user, semester, sessionHalf, sessionYear, yearOfStudy, page, limit])
 
     // console.log(internshipData)
     // console.log(yearOfStudy)
@@ -160,7 +160,7 @@ const handleExport = async () => {
   try {
     const resp = await axios.get(
       `/api/teacher/getinternshipdetailsasperteacherdeptandfilter?dept=${
-        fetchUserByIdState?.department
+        userDat?.user?.department
       }&sessionyear=${sessionYear.trim()}&sessionhalf=${sessionHalf.trim()}&year=${yearOfStudy.trim()}&semester=${semester.trim()}&export=excel`
     );
 
@@ -291,7 +291,7 @@ const handleExport = async () => {
                             <TableHead>Completion Certificate</TableHead>
 
 {
-    fetchUserByIdState?.assignedDepartmentForNocRequest === fetchUserByIdState?.department &&
+    userDat?.user?.assignedDepartmentForNocRequest === userDat?.user?.department &&
                             <TableHead>Actions</TableHead>
 }
 
@@ -357,7 +357,7 @@ const handleExport = async () => {
                                         )}
                                     </TableCell>
                                     {
-                                         fetchUserByIdState?.assignedDepartmentForNocRequest === fetchUserByIdState?.department &&
+                                         userDat?.user?.assignedDepartmentForNocRequest === userDat?.user?.department &&
                                                <TableCell>
                                         <Dialog>
                                             <DialogTrigger asChild>
@@ -369,12 +369,12 @@ const handleExport = async () => {
                                                     <DialogTitle className="text-xl font-bold text-red-600">
                                                         Delete Internship Record
                                                     </DialogTitle>
-                                                    <DialogDescription className="text-md">
+                                                    <DialogDescription className="text-md text-primary-foreground">
                                                         Please review the details below before confirming deletion.
                                                     </DialogDescription>
                                                 </DialogHeader>
 
-                                                <div className="space-y-2 mt-4 text-sm text-gray-700">
+                                                <div className="space-y-2 mt-4 text-sm text-popover-foreground">
                                                     <div><span className="font-semibold">Student Name:</span> {e?.student?.name}</div>
                                                     <div><span className="font-semibold">Enrollment No.:</span> {e?.student?.enrollmentNumber}</div>
                                                     <div><span className="font-semibold">Company:</span> {e?.companyName}</div>
@@ -414,6 +414,7 @@ const handleExport = async () => {
                                                 <div className="flex justify-end gap-3 mt-6">
 
                                                     <Button
+                                                   className='shadow-red-600 shadow-2xl'
                                                         variant="destructive"
                                                         disabled={!checked}
                                                         onClick={() => onDelete(e?._id, e?.offerLetter, e?.completionCertificate,e?.student?._id)}

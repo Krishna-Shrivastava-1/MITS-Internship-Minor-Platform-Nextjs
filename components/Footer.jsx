@@ -3,10 +3,14 @@ import Link from 'next/link'
 import React from 'react'
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedinIn } from "react-icons/fa";
+import ShinyText from './ShinyText';
+import { AuroraText } from './ui/aurora-text';
+
+
 
 const Footer = () => {
   return (
-  <footer className="px-6 md:px-16 lg:px-24 xl:px-32 w-full bg-background border-t border-border">
+  <footer className="px-6 md:px-16 lg:px-24 xl:px-32 w-full bg-background border-t border-border mt-10">
     <div className="flex flex-col md:flex-row items-start justify-center gap-10 py-10 border-b  ">
         
         <div className="max-w-96">
@@ -64,6 +68,9 @@ const Footer = () => {
     <p className="py-4 text-center text-xs md:text-sm text-muted-foreground">
         Copyright 2025 © <a href="/">MITS-DU Internship & Placement Portal</a>. All Right Reserved.
     </p>
+<h1 className='text-center text-muted-foreground'>Developed by <AuroraText className='font-bold text-center'>
+    Krishna
+</AuroraText></h1>
 </footer>
   )
 }

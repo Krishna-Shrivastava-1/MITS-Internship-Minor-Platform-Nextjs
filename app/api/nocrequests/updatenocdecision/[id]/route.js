@@ -13,7 +13,7 @@ export async function PUT(req, { params }) {
             findNocRequestandUpdate = await nocModel.findByIdAndUpdate(id, {
                 comment,
                 teacherAction: decisionOfNoc,
-                tAndPAction: 'Restricted'
+                tAndPAction: 'Reject'
             }, { new: true })
         } else {
 

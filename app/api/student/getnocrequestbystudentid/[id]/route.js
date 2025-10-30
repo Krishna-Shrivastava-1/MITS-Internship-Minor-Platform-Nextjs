@@ -21,31 +21,27 @@ if (status && status !== 'all') {
     query.tAndPAction = 'Approve';
   } 
   else if (status === 'Reject') {
-    // Either one rejected
-    query.$or = [
-      { teacherAction: 'Reject' },
-      { tAndPAction: 'Reject' },
-    ];
+    query.teacherAction = 'Reject';
+    query.tAndPAction = 'Reject';
   } 
   else if (status === 'Allow Edit') {
     // Teacher allows edit
     query.teacherAction = 'Allow Edit';
   } 
-  else if (status === 'Pending') {
-    // ❗ We use $or, not mixed with other keys
-    // So student must also match separately
-    query.$and = [
-      { student: id },
-      {
-        $or: [
-          { teacherAction: 'Pending' },
-          { tAndPAction: 'Pending' },
-        ],
-      },
-    ];
-    // Important: remove 'student' from root level when using $and
-    delete query.student;
-  }
+else if (status === 'Pending') {
+  query.$and = [
+    { student: id },
+    {
+      teacherAction: { $in: ['Pending', 'Allow Edit','Approve'] },
+    },
+    {
+      tAndPAction: 'Pending',
+    },
+  ];
+  delete query.student;
+}
+
+
 }
 
 const totalNocRequestsCount = await nocModel.countDocuments(query)
@@ -53,6 +49,7 @@ const totalNocRequestsCount = await nocModel.countDocuments(query)
   if(!nocRequests){
     return NextResponse.json({message:'You Have No NOC Applied Yet.',success:false})
   }
+  // console.log(nocRequests)
   return NextResponse.json({ success: true, nocRequests ,totalRequests:totalNocRequestsCount});
 } catch (error) {
     console.log(error.message)

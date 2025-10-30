@@ -8,6 +8,7 @@ import { DataProviderContextAPI } from '@/components/ContextApi'
 import toast from 'react-hot-toast'
 import { supabase } from '@/lib/supabase'
 import { Spinner } from '@/components/ui/spinner'
+import { Textarea } from '@/components/ui/textarea'
 import { mutate } from 'swr'
 const page = () => {
   const { userIdFromToken, fetchUserByIdState } = DataProviderContextAPI()
@@ -224,7 +225,7 @@ const uploadedCompletionCertificateUrl = await handleCompletionLetterUpload()
        </div>
      )}
    
-     <h1 className="text-2xl font-bold mb-6">NOC Application Details</h1>
+     <h1 className="text-2xl font-bold mb-6">Add Internship Details</h1>
    
      <form onSubmit={handleSubmit} className="space-y-4">
        <div>
@@ -234,6 +235,7 @@ const uploadedCompletionCertificateUrl = await handleCompletionLetterUpload()
            onChange={(e) => setCompanyName(e.target.value)}
            required
            className='border-black'
+           placeholder='Company Name'
          />
        </div>
 
@@ -352,7 +354,7 @@ const uploadedCompletionCertificateUrl = await handleCompletionLetterUpload()
         </div>
         <div>
           <label>Job Description</label>
-          <Input value={jobDescription} className='border-black' onChange={(e) => setjobDescription(e.target.value)} required />
+          <Textarea value={jobDescription} className='border-black' onChange={(e) => setjobDescription(e.target.value)} required />
         </div>
         <div className='w-full flex items-center justify-center'>
           <Button className='w-full cursor-pointer select-none font-semibold' type="submit">Submit</Button>

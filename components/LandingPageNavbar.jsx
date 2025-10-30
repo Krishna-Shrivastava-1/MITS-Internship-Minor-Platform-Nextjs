@@ -55,7 +55,7 @@ const LandingPageNavbar = () => {
                 </Link>
                 <div>
 
-                <AnimatedThemeToggler />
+                <AnimatedThemeToggler className='size-3' />
                 </div>
         <div
   className={`transition-all duration-300  ease-out group text-white transform ${

@@ -192,6 +192,7 @@ const page = () => {
         onChange={(e) => setCompanyName(e.target.value)}
         required
        className='border-black'
+               placeholder='Company Name'
       />
     </div>
 
@@ -312,7 +313,7 @@ const page = () => {
         </div>
         <div>
           <label>Reciever Designation <p>Note: That Person's Designation who is want to check NOC certificate from your Company</p></label>
-          <Input value={recieverDesignation} className='border-black' onChange={(e) => setrecieverDesignation(e.target.value)} required />
+          <Textarea value={recieverDesignation} className='border-black' onChange={(e) => setrecieverDesignation(e.target.value)} required />
         </div>
         <div></div>
         <div className='w-full flex items-center justify-center'>

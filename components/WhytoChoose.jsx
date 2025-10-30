@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { LucideIcon, BookOpen, Bell, UserCheck, Star, UserRound } from "lucide-react"; // Example icons
 import { AnimatedBeam } from "./ui/animated-beam";
 import { AnimatedGridPattern } from "./ui/animated-grid-pattern";
+import ShinyText from "./ui/ShinyText";
 
 const Circle = forwardRef(({ className, children }, ref) => {
   return (
@@ -40,64 +41,84 @@ export default function AnimatedBeamDemo() {
   const advantages = [
     { title: "Easy Start", icon: BookOpen },
     { title: "Stay Updated", icon: Bell },
+
+  ];
+
+  const advantage2 = [
     { title: "Verified Application", icon: UserCheck },
     { title: "Fast Processing", icon: Star },
+
   ];
 
   return (
-   <>
-   <h1 className="text-2xl font-bold">Why Choose This Platform</h1>
-    <div
-      ref={containerRef}
-      className="relative  flex h-[420px] w-full items-start justify-center overflow-hidden p-10"
-    >
-       <AnimatedGridPattern
-        numSquares={31}
-        maxOpacity={0.1}
-        duration={3}
-       
-        // className={cn(
-        //   "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-        //   "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
-        // )}
-      />
-      {/* Student Node */}
+<>
+  <h1 className="text-2xl font-bold">Why Choose This Platform</h1>
+
+  <div
+    ref={containerRef}
+    className="relative flex h-[420px] w-full items-start justify-center overflow-hidden p-10"
+  >
+    <AnimatedGridPattern
+      numSquares={31}
+      maxOpacity={0.2}
+      duration={2}
+      // className={...}
+    />
+
+    {/* Top Advantage2 Nodes */}
+    <div className="absolute top-[50px] w-full items-center justify-around flex-wrap left-1/2 -translate-x-1/2 flex gap-16">
+      {advantage2.map((adv, idx) => {
+        const Icon = adv.icon;
+        return (
+          <div className="flex items-center justify-center flex-col" key={adv.title}>
+            <Circle ref={advRefs[idx]} className="bg-purple-500 text-white">
+              <Icon size={20} />
+            </Circle>
+            <p>{adv.title}</p>
+          </div>
+        );
+      })}
+    </div>
+
+    {/* Student Node CENTERED */}
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
       <Circle ref={studentRef} className="bg-blue-500 text-white">
         <UserRound />
       </Circle>
+    </div>
 
-      {/* Advantage Nodes */}
-      <div className="absolute top-[200px] w-full  items-center justify-around flex-wrap left-1/2 -translate-x-1/2 flex gap-16">
-        {advantages.map((adv, idx) => {
-          const Icon = adv.icon;
-          return (
-         <div className="flex items-center justify-center flex-col" key={adv.title}>
-               <Circle  ref={advRefs[idx]} className="bg-purple-500 text-white">
+    {/* Bottom Advantage Nodes */}
+    <div className="absolute top-[300px] w-full items-center justify-around flex-wrap left-1/2 -translate-x-1/2 flex gap-16">
+      {advantages.map((adv, idx) => {
+        const Icon = adv.icon;
+        return (
+          <div className="flex items-center justify-center flex-col" key={adv.title}>
+            <Circle ref={advRefs[idx + advantage2.length]} className="bg-purple-500 text-white">
               <Icon size={20} />
             </Circle>
-              <p>{adv.title}</p>
-         </div>
-          );
-        })}
-      </div>
-
-      {/* Beams from student to advantage nodes */}
-      {advantages.map((adv, idx) => (
-        <AnimatedBeam
-          key={adv.title}
-          containerRef={containerRef}
-          fromRef={studentRef}
-          toRef={advRefs[idx]}
-          pathColor="gray"
-          pathWidth={2}
-          pathOpacity={0.4}
-          gradientStartColor="#ffaa40"
-          gradientStopColor="#9c40ff"
-          duration={5 + idx}
-          
-        />
-      ))}
+            <p>{adv.title}</p>
+          </div>
+        );
+      })}
     </div>
-   </>
+
+    {/* Beams from Student Node to All Advantage Nodes (top & bottom) */}
+    {[...advantage2, ...advantages].map((adv, idx) => (
+      <AnimatedBeam
+        key={adv.title}
+        containerRef={containerRef}
+        fromRef={studentRef}
+        toRef={advRefs[idx]}
+        pathColor="gray"
+        pathWidth={3}
+        pathOpacity={0.4}
+        gradientStartColor="#ffaa40"
+        gradientStopColor="#9c40ff"
+        duration={5 + idx}
+      />
+    ))}
+  </div>
+</>
+
   );
 }
