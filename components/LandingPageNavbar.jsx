@@ -41,8 +41,8 @@ const LandingPageNavbar = () => {
     }, [])
     // console.log(scrollY)
     return (
-        <div className='sticky top-0 z-40 overflow-x-hidden'>
-            <nav className="border-b  bg-background flex items-center px-2 justify-between md:px-16 lg:px-24 xl:px-32  w-full">
+        <div className='sticky  top-0 z-40 overflow-x-hidden'>
+            <nav className="border-b  bg-background/50 backdrop-blur-md flex items-center px-2 justify-between md:px-16 lg:px-24 xl:px-32  w-full">
 
                 <Link href="/">
                     <div className="flex items-center  hover:text-accent-foreground cursor-pointer select-none gap-x-2.5">

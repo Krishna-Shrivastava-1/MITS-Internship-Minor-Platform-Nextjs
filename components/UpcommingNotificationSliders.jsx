@@ -31,11 +31,11 @@ const randomBgColor = () => {
   } while (usedHues.has(hue) && usedHues.size < 360);
 
   usedHues.add(hue);
-  if (usedHues.size >= 360) usedHues.clear(); // reset when full
+  if (usedHues.size >= 360) usedHues.clear()
 
   return {
     bg: `hsla(${hue}, 100%, 50%, 0.2)`,
-    text: `hsl(${hue}, 100%, 40%)`,
+    text: `hsl(${hue}, 100%, 15%)`,
   };
 };
 
@@ -76,7 +76,7 @@ const internshipAnno = announcementData.filter((e)=>e?.opportunityType === 'inte
 </SheetTrigger>
  <SheetContent side='top' > 
   <SheetHeader> <SheetTitle>Announcement</SheetTitle>
-  <div className="flex items-stretch justify-between  gap-4 scrollo">
+  <div className="flex items-stretch justify-around  gap-4 scrollo">
     {
       !generalAnno.length > 0 && !placementAnno.length >0 && !internshipAnno.length > 0 && <p>No Announcement to Show.</p>
     }
@@ -86,13 +86,13 @@ const internshipAnno = announcementData.filter((e)=>e?.opportunityType === 'inte
     return (
       <div
         key="general"
-        style={{ backgroundColor: bg, color: text }}
-        className="flex-1 p-2 min-w-[300px] rounded-md shadow-md relative"
+      style={{ backgroundColor: text, color: 'white',boxShadow: `0 8px 20px 4px ${text}` }}
+        className="flex-1 p-2 min-w-[300px] max-w-[500px] rounded-md shadow-md relative"
       >
            <ShineBorder borderWidth={3} shineColor={text}  />
         <h1 className="text-xl font-bold mb-2 text-center">General</h1>
         {generalAnno.map((e, idx) => (
-          <div key={e?._id} className="flex items-start m-1 p-2 rounded-md">
+          <div key={e?._id} className="flex items-start m-1 p-2  text-lg  rounded-md">
             <h2 className="font-bold mr-2">{idx + 1}.</h2>
             <h2 className="font-medium text-md">{e?.content}</h2>
           </div>
@@ -107,13 +107,13 @@ const internshipAnno = announcementData.filter((e)=>e?.opportunityType === 'inte
     return (
       <div
         key="placement"
-          style={{ backgroundColor: bg, color: text }}
-        className="flex-1 p-2 min-w-[300px] rounded-md shadow-md relative"
+          style={{ backgroundColor: text, color: 'white' ,boxShadow: `0 8px 20px 4px ${text}` }}
+        className="flex-1 p-2 min-w-[300px] max-w-[500px] rounded-md shadow-md relative"
       >
-          <ShineBorder borderWidth={3} shineColor={text}  />
+          <ShineBorder borderWidth={3} shineColor={bg}  />
         <h1 className="text-xl font-bold mb-2 text-center">Placement</h1>
         {placementAnno.map((e, idx) => (
-          <div key={e?._id} className="flex items-start m-1 p-2 rounded-md">
+          <div key={e?._id} className="flex items-start m-1 p-2  text-lg  rounded-md">
             <h2 className="font-bold mr-2">{idx + 1}.</h2>
             <h2 className="font-medium text-md">{e?.content}</h2>
           </div>
@@ -128,13 +128,13 @@ const internshipAnno = announcementData.filter((e)=>e?.opportunityType === 'inte
     return (
       <div
         key="internship"
-          style={{ backgroundColor: bg, color: text }}
-        className="flex-1 p-2 min-w-[300px] rounded-md shadow-md relative"
+         style={{ backgroundColor: text, color: 'white',boxShadow: `0 8px 20px 4px ${text}` }}
+        className="flex-1 p-2 min-w-[300px] max-w-[500px] rounded-md shadow-md relative"
       >
            <ShineBorder borderWidth={3} shineColor={text}  />
         <h1 className="text-xl font-bold mb-2 text-center">Internship</h1>
         {internshipAnno.map((e, idx) => (
-          <div key={e?._id} className="flex items-start m-1 p-2 rounded-md">
+          <div key={e?._id} className="flex items-start m-1 p-2 text-lg rounded-md">
             <h2 className="font-bold mr-2">{idx + 1}.</h2>
             <h2 className="font-medium text-md">{e?.content}</h2>
           </div>
