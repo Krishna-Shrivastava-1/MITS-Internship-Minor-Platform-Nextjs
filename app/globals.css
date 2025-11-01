@@ -181,9 +181,18 @@
   --grid-line-color: rgba(71, 85, 105, 0.2); /* slate-600ish */
   --grid-sphere-color-start: rgba(139, 92, 246, 0.25); /* violet-500 glow */
   --grid-sphere-color-end: rgba(139, 92, 246, 0.1);
+
+   --grid-radial-light: rgba(37, 99, 235, 0.25);
+  --grid-radial-light-fade: rgba(37, 99, 235, 0.1);
 }
 
 .dark {
+
+  --grid-radial-light: rgba(37, 99, 235, 0.35);
+  --grid-radial-light-fade: rgba(37, 99, 235, 0.15);
+
+
+
   --sidebar-bg: var(--color-sidebar);
   --sidebar-text: var(--color-sidebar-foreground);
   --sidebar-hover-bg: var(--color-sidebar-accent);

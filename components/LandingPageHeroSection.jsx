@@ -31,58 +31,8 @@ import { AuroraText } from './ui/aurora-text'
 import { useTheme } from 'next-themes'
 
 const LandingPageHeroSection = () => {
-//   const [announcementData, setannouncementData] = useState([])
-//    const [open, setOpen] = useState(false)
 
-//      useEffect(() => {
-//     // 🧠 Check if user has already seen it in this session
-//     const hasSeenDialog = sessionStorage.getItem('hasSeenAnnouncementDialog')
-
-//     if (!hasSeenDialog) {
-//       setOpen(true) // open automatically
-//       sessionStorage.setItem('hasSeenAnnouncementDialog', 'true') // prevent reopening
-//     }
-//   }, [])
-//   const fetchAnnouncement = async () => {
-//     try {
-//       const resp = await axios.get('/api/announcement/getannouncementforlandingpageandfiltered')
-//       if (resp?.data?.success) {
-//         setannouncementData(resp?.data?.getAnnouncement)
-//       }
-//     } catch (error) {
-//       console.log(error.message)
-//     }
-//   }
-//   useEffect(() => {
-//     fetchAnnouncement()
-//   }, [])
-// let usedHues = new Set();
-
-// const randomBgColor = () => {
-//   let hue;
-//   do {
-//     hue = Math.floor(Math.random() * 360);
-//   } while (usedHues.has(hue) && usedHues.size < 360);
-
-//   usedHues.add(hue);
-//   if (usedHues.size >= 360) usedHues.clear(); // reset when full
-
-//   return {
-//     bg: `hsla(${hue}, 100%, 50%, 0.2)`,
-//     text: `hsl(${hue}, 100%, 20%)`,
-//   };
-// };
   const { theme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    // Avoid rendering mismatched HTML before theme is ready
-    return null
-  }
 
 
 // console.log(theme)
@@ -91,26 +41,27 @@ const LandingPageHeroSection = () => {
 <div className=" w-full bg-background relative overflow-hidden">
   {/* Grid Background (theme-aware, non-interfering) */}
   <div
-    className="absolute inset-0 z-0 transition-colors duration-500 pointer-events-none"
-    style={{
-      opacity: 0.95, // reduce visibility
-      backgroundImage: `
-        linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px),
-         radial-gradient(circle at 50% 50%, rgba(37, 99, 235, ${theme==='dark' ? 0.35 : 0.25}) 0%, rgba(37, 99, 235, ${theme==='dark' ? 0.15 : 0.1}) 40%, transparent 80%)
-      `,
-      backgroundSize: "32px 32px, 32px 32px, 100% 100%",
-      maskImage: "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))", // 👈 bottom fade
-      WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))",
-    }}
-  />
+  className="absolute inset-0 z-0 transition-colors duration-500 pointer-events-none"
+  style={{
+    opacity: 0.95,
+    backgroundImage: `
+      linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, var(--grid-radial-light) 0%, var(--grid-radial-light-fade) 40%, transparent 80%)
+    `,
+    backgroundSize: '32px 32px, 32px 32px, 100% 100%',
+    maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))',
+    WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))',
+  }}
+/>
+
 
   {/* Actual content */}
   <section className="w-full text-sm pb-2 mt-24 relative z-10">
-    <BlurFade delay={0.25} duration={0.7} inView>
+    {/* <BlurFade delay={0.25} duration={0.5} inView> */}
       <h5 className="text-4xl md:text-7xl font-bold tracking-tighter max-w-[850px] p-2 text-center mx-auto">
         Welcome to the{" "}
-        <AuroraText speed='2'
+        <AuroraText speed='2.3'
           colors={["#FF0080", "#7928CA", "#0070F3", "#38bdf8"]}
         >
           MITS-DU
@@ -119,7 +70,7 @@ const LandingPageHeroSection = () => {
         <Highlighter
           animationDuration={4000}
           action="highlight"
-          iterations={62}
+          iterations={5}
           isView
       color={theme === "dark" ? "#2563EB" : "#87CEFA"}
         >
@@ -134,7 +85,7 @@ const LandingPageHeroSection = () => {
         ensures a smooth experience for both students and faculty, keeping all
         academic and career-related data streamlined and accessible.
       </p>
-    </BlurFade>
+    {/* </BlurFade> */}
 
     {/* Get Started Button */}
     <div className="mx-auto flex flex-col items-center justify-center gap-3 mt-6">
@@ -156,9 +107,9 @@ const LandingPageHeroSection = () => {
         </Link>
       </div>
 
-      <div className="py-6 m-3 text-slate-600 mt-4 flex items-center justify-center">
+      <div className="py-6 m-3 text-nowrap text-slate-600 mt-4 flex items-center justify-center">
         Trusted by - :
-        <span className="flex items-center justify-center ml-2">
+        <span className="flex items-center justify-center text-wrap text-center ml-2">
           <Image
             src={"https://web.mitsgwalior.in/images/mits-logo.png"}
             alt="logo"
