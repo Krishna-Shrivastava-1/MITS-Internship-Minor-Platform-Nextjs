@@ -53,10 +53,10 @@ const LandingPageNavbar = () => {
                         </div>
                     </div>
                 </Link>
-                <div>
+                {/* <div>
 
                 <AnimatedThemeToggler className='size-3' />
-                </div>
+                </div> */}
         <div
   className={`transition-all duration-300  ease-out group text-white transform ${
     scrollY > 480 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10 pointer-events-none"
