@@ -10,6 +10,8 @@ import { supabase } from '@/lib/supabase'
 import { Spinner } from '@/components/ui/spinner'
 import { Textarea } from '@/components/ui/textarea'
 import { mutate } from 'swr'
+import ShinyText from '@/components/ShinyText'
+
 const page = () => {
   const { userIdFromToken, fetchUserByIdState } = DataProviderContextAPI()
   // console.log(fetchUserByIdState)
@@ -224,7 +226,10 @@ const uploadedCompletionCertificateUrl = await handleCompletionLetterUpload()
          <Spinner />
        </div>
      )}
-   
+   {/* <ShinyText   text="Just some shiny text!" 
+  disabled={false} 
+  speed={3} 
+  /> */}
      <h1 className="text-2xl font-bold mb-6">Add Internship Details</h1>
    
      <form onSubmit={handleSubmit} className="space-y-4">

@@ -369,7 +369,7 @@ const handleExport = async () => {
                                                     <DialogTitle className="text-xl font-bold text-red-600">
                                                         Delete Internship Record
                                                     </DialogTitle>
-                                                    <DialogDescription className="text-md text-primary-foreground">
+                                                    <DialogDescription className="text-md text-primary">
                                                         Please review the details below before confirming deletion.
                                                     </DialogDescription>
                                                 </DialogHeader>

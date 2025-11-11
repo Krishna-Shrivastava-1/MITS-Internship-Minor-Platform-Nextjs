@@ -16,7 +16,7 @@ import AnimatedContent from "./AnimatedContent";
 export function UspToShow() {
   return (
     <div className="overflow-x-hidden">
-      <AnimatedContent
+      {/* <AnimatedContent
   distance={150}
   direction="vertical"
   reverse={false}
@@ -27,21 +27,21 @@ export function UspToShow() {
   scale={1.1}
   threshold={0.2}
   delay={0.3}
->
+> */}
 
    <MagicBento
   textAutoHide={true}
   enableStars={true}
   enableSpotlight={true}
   enableBorderGlow={true}
-  enableTilt={false}
-  enableMagnetism={false}
-  clickEffect={true}
-  spotlightRadius={400}
+  enableTilt={true}
+  enableMagnetism={true}
+  clickEffect={false}
+  spotlightRadius={100}
   particleCount={62}
   glowColor="0, 176, 245"
 />
-</AnimatedContent>
+{/* </AnimatedContent> */}
     </div>
   );
 }

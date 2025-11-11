@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
+import AnimatedContent from '../AnimatedContent';
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
@@ -673,7 +674,7 @@ const MagicBento = ({
   style={{
     ...cardStyle,
     height: "auto",         // allow flexible height
-    minHeight: "420px",     // slightly more height for video
+    minHeight: "520px",     // slightly more height for video
     width: "100%",
   }}
   disableAnimations={shouldDisableAnimations}
@@ -683,7 +684,19 @@ const MagicBento = ({
   clickEffect={clickEffect}
   enableMagnetism={enableMagnetism}
 >
-  {/* Header */}
+   <AnimatedContent
+  distance={150}
+  direction="vertical"
+  reverse={false}
+  duration={1.2}
+  ease="power3.out"
+  initialOpacity={0.2}
+  animateOpacity
+  scale={1.1}
+  threshold={0.2}
+  delay={0.3}
+>
+   {/* Header */}
   <div className="card__header flex justify-between items-center gap-3 relative p-3">
     <span className="card__label text-sm font-medium text-neutral-700 dark:text-neutral-300">
       {card.label}
@@ -722,6 +735,8 @@ const MagicBento = ({
       {card.description}
     </p>
   </div>
+</AnimatedContent>
+ 
 </ParticleCard>
 
 

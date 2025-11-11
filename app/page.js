@@ -99,7 +99,7 @@ const techLogos = [
   <LandingPageHeroSection />
    <div className="flex items-center justify-center w-full">
      <div className='flex items-center sm:flex-nowrap w-[90%] flex-wrap' style={{ height: '200px', position: 'relative', overflow: 'hidden'}}>
-      <h1 className="font-bold text-2xl">Our Placement Partners</h1>
+      {/* <h1 className="font-bold text-2xl">Our Placement Partners</h1> */}
       <LogoLoop
         logos={techLogos}
         speed={100}

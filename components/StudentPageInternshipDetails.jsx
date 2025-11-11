@@ -123,7 +123,7 @@ const StudentPageInternshipDetails = ({ internships }) => {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             href={e?.offerLetter}
-                                            className="text-blue-600 font-semibold text-md cursor-pointer select-none hover:underline hover:text-blue-500"
+                                            className="text-sky-500 font-semibold text-md cursor-pointer select-none hover:underline hover:text-sky-400"
                                         >
                                             View
                                         </a>
@@ -139,7 +139,7 @@ const StudentPageInternshipDetails = ({ internships }) => {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             href={e?.completionCertificate}
-                                            className="text-blue-600 font-semibold text-md cursor-pointer select-none hover:underline hover:text-blue-500"
+                                            className="text-sky-500 font-semibold text-md cursor-pointer select-none hover:underline hover:text-sky-400"
                                         >
                                             View
                                         </a>

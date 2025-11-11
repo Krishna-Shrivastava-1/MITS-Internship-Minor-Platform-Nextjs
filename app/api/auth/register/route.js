@@ -21,7 +21,7 @@ export async function POST(req, res) {
         success: false,
       });
     }
-console.log(role)
+// console.log(role)
     const isUserExist = await studentModel.findOne({ email }) || await teacherModel.findOne({ email });
     if (isUserExist) {
       return NextResponse.json({

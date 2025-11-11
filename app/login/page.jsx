@@ -210,7 +210,7 @@ const page = () => {
     <div className="z-30 md:w-[60%] w-[95%] text-center">
       <div className="w-full flex items-center justify-center m-1">
         <div
-          className="md:w-lg w-[90%] bg-card shadow-xl shadow-border rounded-lg backdrop-blur-lg relative p-4"
+          className="md:w-lg w-[90%] bg-card/70 backdrop-blur-md shadow-xl shadow-border rounded-lg backdrop-blur-lg relative p-4"
         >
           <ShineBorder
             borderWidth={3}

@@ -1,5 +1,5 @@
 'use client'
-import { ArrowRight, Dot } from 'lucide-react'
+import { ArrowRight, Dot, Spotlight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -44,7 +44,7 @@ const LandingPageHeroSection = () => {
   className="absolute inset-0 z-0 transition-colors duration-500 pointer-events-none"
   style={{
     opacity: 0.95,
-    backgroundImage: `
+  backgroundImage: `
       linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px),
       linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px),
       radial-gradient(circle at 50% 50%, var(--grid-radial-light) 0%, var(--grid-radial-light-fade) 40%, transparent 80%)
