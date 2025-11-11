@@ -25,7 +25,7 @@ const NocDetailCountCards = ({nocResponseCount,userDat}) => {
   return (
     <div>
    
-      <h1 className='text-center font-bold text-4xl mt-20'>Hi,   <AuroraText>
+      <h1 className='text-center font-bold text-4xl mt-20'>Hello,   <AuroraText>
         {userDat?.name}
       </AuroraText></h1>
       {userDat?.assignedDepartmentForNocRequest && (

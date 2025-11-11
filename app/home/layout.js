@@ -28,7 +28,7 @@ export default function SuperAdminPage({children}) {
       sticky top-0 z-40
       bg-sidebar text-sidebar-foreground
       backdrop-blur supports-[backdrop-filter]:bg-sidebar/80
-      border-b border-border
+    
       transition-[width,height] ease-linear
       group-data-[collapsible=icon]/sidebar-wrapper:h-12
     ">

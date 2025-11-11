@@ -196,7 +196,7 @@ const data = {
   {...props}
 >
   {/* Sidebar Header */}
-  <SidebarHeader className="bg-sidebar text-sidebar-foreground border-b border-border">
+  <SidebarHeader className="bg-sidebar text-sidebar-foreground  ">
     <TeamSwitcher teams={data.teams} />
   </SidebarHeader>
 
