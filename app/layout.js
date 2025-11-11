@@ -1,9 +1,10 @@
 import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
 import { ContextProvider } from "@/components/ContextApi";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "sonner";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -35,13 +36,14 @@ export default function RootLayout({ children }) {
         className={`${montserrat.variable} antialiased`}
       >
         <ContextProvider>
-           <Toaster />
+         
             <ThemeProvider
          attribute="class"
             defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >
+              <Toaster richColors position="top-center" />
             {children}
          <div >
                 <Footer />

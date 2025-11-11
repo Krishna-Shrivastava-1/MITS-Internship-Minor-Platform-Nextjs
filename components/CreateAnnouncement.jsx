@@ -23,9 +23,10 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "./ui/button";
-import toast from "react-hot-toast";
+
 import { BellPlus, Pencil } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
+import { toast } from "sonner";
 const CreateAnnouncement = () => {
     const [open, setOpen] = useState(false)
     const [content, setContent] = useState("");

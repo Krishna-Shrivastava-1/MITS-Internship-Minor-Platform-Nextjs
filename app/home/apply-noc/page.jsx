@@ -8,9 +8,10 @@ import { DataProviderContextAPI } from '@/components/ContextApi'
 import { Textarea } from '@/components/ui/textarea'
 import { Loader2 } from 'lucide-react'
 import PdfUploader from '@/components/PdfUploader'
-import toast from 'react-hot-toast'
+
 import { supabase } from '@/lib/supabase'
 import { Spinner } from '@/components/ui/spinner'
+import { toast } from 'sonner'
 
 const page = () => {
   const { userIdFromToken, fetchUserByIdState } = DataProviderContextAPI()

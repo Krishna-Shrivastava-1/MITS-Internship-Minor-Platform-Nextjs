@@ -9,8 +9,9 @@ import { Textarea } from '@/components/ui/textarea'
 import { Loader2 } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import { Spinner } from '@/components/ui/spinner'
-import toast from 'react-hot-toast'
+
 import { supabase } from '@/lib/supabase'
+import { toast } from 'sonner'
 const page = () => {
     const {id}  =useParams()
     const router = useRouter()

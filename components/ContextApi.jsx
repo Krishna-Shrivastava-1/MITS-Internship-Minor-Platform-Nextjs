@@ -3,7 +3,8 @@
 import axios from "axios"
 import { usePathname, useRouter } from "next/navigation"
 import { createContext, useContext, useEffect, useState } from "react"
-import toast from "react-hot-toast"
+import { toast } from "sonner"
+
 
 const ContextApi = createContext(null)
 export const ContextProvider = ({ children }) => {

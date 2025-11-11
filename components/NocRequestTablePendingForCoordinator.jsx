@@ -31,8 +31,9 @@ import { Loader2 } from 'lucide-react'
 import axios from 'axios'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
-import toast from 'react-hot-toast'
+
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
     const router = useRouter()
     const [loading, setloading] = useState(true)
@@ -96,21 +97,7 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
         try {
             if (teacherDecision === 'Pending') {
                 setopen(false)
-                toast("Nothing to update.", {
-                    icon: 'ℹ️',
-                    style: {
-                        border: '1px solid #2563eb',     // blue-600 border
-                        // padding: '14px 16px',
-                        color: '#ffffff',                 // blue-600 text
-                        background: '#04417a',            // white background
-                        fontWeight: 500,
-                        borderRadius: '8px',
-                    },
-                    iconTheme: {
-                        primary: '#2563eb',               // blue icon background
-                        secondary: '#ffffff',             // white icon
-                    },
-                });
+                toast.info("Nothing to update.");
 
                 return
             }

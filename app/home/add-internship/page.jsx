@@ -5,12 +5,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button'
 import axios from 'axios'
 import { DataProviderContextAPI } from '@/components/ContextApi'
-import toast from 'react-hot-toast'
+
 import { supabase } from '@/lib/supabase'
 import { Spinner } from '@/components/ui/spinner'
 import { Textarea } from '@/components/ui/textarea'
 import { mutate } from 'swr'
 import ShinyText from '@/components/ShinyText'
+import { toast } from 'sonner'
 
 const page = () => {
   const { userIdFromToken, fetchUserByIdState } = DataProviderContextAPI()

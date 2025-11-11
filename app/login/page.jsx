@@ -7,7 +7,8 @@ import axios from 'axios'
 import { ChevronLeft, Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
+
 
 const page = () => {
     const [logger, setlogger] = useState('SignUp')

@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Loader2 } from 'lucide-react'
 import axios from 'axios'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
+
 const page = () => {
   const { fetchUserByIdState } = DataProviderContextAPI()
   // console.log(fetchUserByIdState)

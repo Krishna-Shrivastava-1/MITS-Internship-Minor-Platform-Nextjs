@@ -31,8 +31,9 @@ import { Loader2 } from 'lucide-react'
 import axios from 'axios'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
-import toast from 'react-hot-toast'
+
 import { DepartmentSelectorforStudentRegister } from './DepartmentSelectorforStudentRegister'
+import { toast } from 'sonner'
 const SuperAdminNOCRequestsTable = () => {
     const [loading, setloading] = useState(true)
     const [nocRequestsDataPending, setnocRequestsDataPending] = useState([])
