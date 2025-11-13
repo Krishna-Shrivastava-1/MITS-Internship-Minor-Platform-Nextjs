@@ -173,14 +173,14 @@ const StudentNocRequestTable = ({ studentNocData }) => {
                                 <TableCell>{e?.workType}</TableCell>
                                 <TableCell> {moment(e?.startDate).format("DD-MMM-YYYY")}</TableCell>
                                 <TableCell>  {moment(e?.endDate).format("DD-MMM-YYYY")}</TableCell>
-                              <TableCell className='text-center'>
-  {moment(e?.createdAt).format("DD-MMM-YYYY")}
+<TableCell className='text-center'>
+ 
 <span className='ml-2'>
       {
     // Calculate the difference in days
     moment().diff(moment(e?.createdAt), 'days') < 1
-      ? moment(e?.createdAt).fromNow() // Show "from now" if less than 5 days
-      : '' // Hide "from now" if 5 days or more
+      ? moment(e?.createdAt).fromNow() // Show "from now" if less than 1 days
+      : moment(e?.createdAt).format("DD-MMM-YYYY") // Hide "from now" if 1 days or more
   }
 </span>
 </TableCell>
