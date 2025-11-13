@@ -10,6 +10,7 @@ import {
   GalleryVerticalEnd,
   House,
   Map,
+  Megaphone,
   PieChart,
   Settings2,
   SquareTerminal,
@@ -94,7 +95,7 @@ const {fetchUserByIdState} = DataProviderContextAPI()
     {
       title: "Announcements",
       url: "/superadmin/announcement",
-      icon: UserRoundPlus,
+      icon: Megaphone,
     
     },
     // {

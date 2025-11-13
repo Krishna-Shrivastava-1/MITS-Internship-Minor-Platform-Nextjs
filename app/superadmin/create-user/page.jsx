@@ -65,12 +65,12 @@ const [role, setrole] = useState("student")
   // console.log(department)
   return (
     <div>
-      <h1>If you are creating teacher account no need to enter enrollment number.</h1>
+      <h1 className='text-center'>If you are creating teacher account no need to enter enrollment number.</h1>
       <div className='w-full h-full flex items-center justify-center'>
 
         <div className='z-30 md:w-3xl w-[90%] text-center '>
           <div className='w-full flex items-center justify-center ' style={{ margin: '4px' }}>
-            <div style={{ padding: '10px' }} className='md:w-[50%] w-[90%]   shadow-xl shadow-black rounded-sm backdrop-blur-lg relative'>
+            <div style={{ padding: '10px' }} className='md:w-[50%] w-[90%] border  shadow-xl shadow-black rounded-sm backdrop-blur-lg relative'>
               {
                 loading && <div className='absolute left-0 top-0 h-full w-full bg-white/45 flex items-center justify-center rounded-sm'>
                   <Loader2 className='animate-spin' />

@@ -21,7 +21,8 @@ import { Input } from './ui/input'
 import { DepartmentSelectorforStudentRegister } from './DepartmentSelectorforStudentRegister'
 import { Button } from './ui/button'
 import axios from 'axios'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
+
 const AllTeacherDataForSuperAdmin = ({ allTeacherDataProp }) => {
   const [allTeacherData, setAllTeacherData] = useState(allTeacherDataProp||[]);
   const [newTeacherName, setnewTeacherName] = useState('')
@@ -55,21 +56,7 @@ const AllTeacherDataForSuperAdmin = ({ allTeacherDataProp }) => {
     ) {
       // console.log('nope')
       // toast("N")
-       toast("No changes detected — nothing to update.", {
-    icon: 'ℹ️',
-    style: {
-      border: '1px solid #2563eb',     // blue-600 border
-      // padding: '14px 16px',
-      color: '#ffffff',                 // blue-600 text
-      background: '#04417a',            // white background
-      fontWeight: 500,
-      borderRadius: '8px',
-    },
-    iconTheme: {
-      primary: '#2563eb',               // blue icon background
-      secondary: '#ffffff',             // white icon
-    },
-  });
+       toast.info("No changes detected — nothing to update.");
 
       setdialogueOpen(false);
       

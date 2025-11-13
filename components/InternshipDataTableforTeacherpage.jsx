@@ -22,6 +22,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -37,6 +38,7 @@ import { supabase } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { DialogClose } from '@radix-ui/react-dialog'
 const InternshipDataTableforTeacherpage = ({userDat}) => {
 
     const [internshipData, setinternshipData] = useState([])
@@ -212,9 +214,41 @@ const handleExport = async () => {
           <h1 className='text-xl font-bold m-3'>Internship Data</h1>
 
             <div className="flex w-full justify-end gap-2 flex-wrap items-center">
-                  <Button className='cursor-pointer select-none' onClick={handleExport} disabled={loading}>
+                <Dialog>
+  <DialogTrigger asChild>
+    <Button className="cursor-pointer select-none" disabled={loading}>
+      Export to Excel
+    </Button>
+  </DialogTrigger>
+
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Download Excel Data</DialogTitle>
+      <DialogDescription>
+        Data will be downloaded in excel format as per your selected filters.
+      </DialogDescription>
+    </DialogHeader>
+
+    <DialogFooter>
+      <DialogClose asChild>
+        <Button className="cursor-pointer select-none" variant="outline">
+          Cancel
+        </Button>
+      </DialogClose>
+      <Button
+        className="cursor-pointer select-none"
+        onClick={handleExport}
+        disabled={loading}
+      >
+        Download
+      </Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+
+                  {/* <Button className='cursor-pointer select-none' onClick={handleExport} disabled={loading}>
   Export to Excel
-</Button>
+</Button> */}
                 <div>
                     <Label>Year of Study</Label>
                     <Select value={yearOfStudy} onValueChange={setyearOfStudy}>

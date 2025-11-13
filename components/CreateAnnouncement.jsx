@@ -149,8 +149,17 @@ const handleUpdate = async (id) => {
 // console.log(opportunityType)
     return (
         <div>
-            <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger ><div className="flex items-center bg-blue-700 cursor-pointer select-none hover:bg-blue-600 font-semibold text-white p-1 px-3 text-sm rounded-full gap-x-1.5 "><BellPlus /> Add New Announcement</div></DialogTrigger>
+           <div className="w-full justify-around items-center flex p-3 flex-wrap">
+            <h1 className="font-bold text-xl my-4 mx-2">Announcements</h1>
+             <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger asChild>
+  <div className="flex items-center cursor-pointer select-none font-semibold p-1 px-3 text-sm rounded-full gap-x-1.5
+                  bg-primary text-primary-foreground dark:bg-primary-dark dark:text-primary-foreground-dark
+                  hover:bg-primary/90 dark:hover:bg-primary-dark/90 transition-colors">
+    <BellPlus /> Add New Announcement
+  </div>
+</DialogTrigger>
+
                 <DialogContent >
                     <DialogHeader>
                         <DialogTitle>Add Announcement</DialogTitle>
@@ -229,6 +238,7 @@ const handleUpdate = async (id) => {
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
+           </div>
 
             <div className="w-full overflow-x-auto border p-2 px-5">
                 <Table>

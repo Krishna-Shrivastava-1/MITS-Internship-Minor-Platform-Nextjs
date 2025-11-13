@@ -210,7 +210,11 @@ const NocRequestTablePendingForCoordinator = ({ coordinatorDepartment }) => {
 
                                 <TableCell>
                                     <Dialog isOpen={open} onOpenChange={setopen}>
-                                        <DialogTrigger>Actions</DialogTrigger>
+                                       <DialogTrigger asChild>
+                                          <Button className="cursor-pointer select-none" >
+                                            Action
+                                          </Button>
+                                        </DialogTrigger>
                                         <DialogContent>
                                             <DialogHeader>
                                                 <DialogTitle>Respond to the NOC Requests</DialogTitle>
